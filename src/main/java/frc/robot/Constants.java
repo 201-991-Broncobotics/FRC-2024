@@ -22,16 +22,30 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-  public static final Mode currentMode = Mode.REAL;
+  public static final Mode currentMode = Mode.SIM;
 
   public static enum Mode {
     /** Running on a real robot. */
     REAL,
-
     /** Running a physics simulator. */
     SIM,
-
     /** Replaying from a log file. */
     REPLAY
+  }
+
+  public static class DriveConstants {
+    // Front Left, Front Right, Back Left, Back Right
+    // IN DEGREES
+    public static final double[] moduleAngles = new double[] {0, 0, 0, 0};
+
+    public static final int[] turnCanIds = new int[] {1, 4, 7, 10};
+    public static final int[] driveCanIds = new int[] {0, 3, 6, 9};
+    public static final int[] canCoderIds = new int[] {2, 5, 8, 11};
+  }
+
+  public static class IntakeConstants {
+    public static final int intakeCANId = 12;
+
+    public static final double intakeOnPower = 0.1;
   }
 }
