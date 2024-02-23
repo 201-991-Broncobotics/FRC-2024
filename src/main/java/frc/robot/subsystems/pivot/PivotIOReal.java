@@ -1,4 +1,4 @@
-package frc.robot.subsystems.outtake.pivot;
+package frc.robot.subsystems.pivot;
 
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
