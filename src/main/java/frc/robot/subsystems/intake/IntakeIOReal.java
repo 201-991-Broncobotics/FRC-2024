@@ -1,26 +1,20 @@
 package frc.robot.subsystems.intake;
 
-import com.ctre.phoenix6.BaseStatusSignal;
-import com.ctre.phoenix6.StatusSignal;
-import com.ctre.phoenix6.hardware.TalonFX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkLowLevel.MotorType;
+
 import frc.robot.Constants.IntakeConstants;
 
 public class IntakeIOReal implements IntakeIO {
-  private final TalonFX motor;
-  private final StatusSignal<Double> current;
+  private final CANSparkMax motor;
 
   public IntakeIOReal() {
-    motor = new TalonFX(IntakeConstants.intakeCANId);
-    current = motor.getStatorCurrent();
-
-    BaseStatusSignal.setUpdateFrequencyForAll(20.0, current);
-    motor.optimizeBusUtilization();
+    motor = new CANSparkMax(IntakeConstants.intakeCANId, MotorType.kBrushless);
   }
 
   @Override
   public void updateInputs(IntakeIO.IntakeIOInputs inputs) {
-    BaseStatusSignal.refreshAll(current);
-    inputs.current = current.getValue();
+    inputs.current = motor.getOutputCurrent();
   }
 
   @Override

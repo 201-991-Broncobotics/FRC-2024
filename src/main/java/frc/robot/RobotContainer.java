@@ -23,16 +23,10 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.FeedForwardCharacterization;
-import frc.robot.subsystems.drive.Drive;
-import frc.robot.subsystems.drive.GyroIO;
-import frc.robot.subsystems.drive.GyroIOPigeon2;
-import frc.robot.subsystems.drive.ModuleIO;
-import frc.robot.subsystems.drive.ModuleIOSim;
-import frc.robot.subsystems.drive.ModuleIOTalonFX;
-import frc.robot.subsystems.intake.Intake;
-import frc.robot.subsystems.intake.IntakeIO;
-import frc.robot.subsystems.intake.IntakeIOReal;
-import frc.robot.subsystems.intake.IntakeIOSim;
+import frc.robot.subsystems.drive.*;
+import frc.robot.subsystems.intake.*;
+import frc.robot.subsystems.pivot.*;
+import frc.robot.subsystems.shooter.*;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
@@ -45,6 +39,8 @@ public class RobotContainer {
   // Subsystems
   private final Drive drive;
   private final Intake intake;
+  private final Pivot pivot;
+  private final Shooter shooter;
 
   // Controller
   private final CommandXboxController driver = new CommandXboxController(0);
@@ -66,6 +62,8 @@ public class RobotContainer {
                 new ModuleIOTalonFX(3));
 
         intake = new Intake(new IntakeIOReal());
+        pivot = new Pivot(new PivotIOReal());
+        shooter = new Shooter(new ShooterIOReal());
 
         break;
 
@@ -80,6 +78,8 @@ public class RobotContainer {
                 new ModuleIOSim());
 
         intake = new Intake(new IntakeIOSim());
+        pivot = new Pivot(new PivotIOSim());
+        shooter = new Shooter(new ShooterIOSim());
 
         break;
 
@@ -94,6 +94,8 @@ public class RobotContainer {
                 new ModuleIO() {});
 
         intake = new Intake(new IntakeIO() {});
+        pivot = new Pivot(new PivotIO() {});
+        shooter = new Shooter(new ShooterIO() {});
 
         break;
     }
