@@ -13,6 +13,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Rotation2d;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -47,5 +49,31 @@ public final class Constants {
     public static final int intakeCANId = 12;
 
     public static final double intakeOnPower = 0.1;
+  }
+
+  public static class PivotConstants {
+    public static final int pivotCANId = 13;
+
+    // 80 falcon rotations = 1 pivot rotation
+    // 5:1 planetary + 5:1 planetary + 5:1 planetary + 48:15 chain
+    public static final int pivotGearRatio = 400;
+
+    // the mechanically stopped beginning of the pivot is at a negative angle from the ground
+    // 0 degrees is parallel to the ground and facing the same direction as the back of the robot
+    public static Rotation2d pivotStart = Rotation2d.fromDegrees(-8.265688);
+    public static Rotation2d pivotEnd = Rotation2d.fromDegrees(129.056487);
+    // less than this angle, we won't be able to shoot a note
+    public static Rotation2d minShootingAngle = Rotation2d.fromDegrees(25);
+
+    public static final double p = 0.05, i = 0, d = 0;
+  }
+
+  public static class ShooterConstants {
+    public static final int conveyorCANId = 14;
+    public static final int topShooterCANId = 15;
+    public static final int bottomShooterCANId = 16;
+
+    public static final double shootingPower = 0.5;
+    public static final double conveyorPower = 0.2;
   }
 }

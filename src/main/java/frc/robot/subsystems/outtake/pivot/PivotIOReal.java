@@ -26,7 +26,11 @@ public class PivotIOReal implements PivotIO {
     config.CurrentLimits.SupplyCurrentLimit = 30;
     config.CurrentLimits.SupplyCurrentLimitEnable = true;
     config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
-    config.Slot0 = new Slot0Configs().withKP(PivotConstants.p).withKI(PivotConstants.i).withKD(PivotConstants.d);
+    config.Slot0 =
+        new Slot0Configs()
+            .withKP(PivotConstants.p)
+            .withKI(PivotConstants.i)
+            .withKD(PivotConstants.d);
 
     pivotMotor.getConfigurator().apply(config);
 
@@ -49,25 +53,23 @@ public class PivotIOReal implements PivotIO {
     inputs.pivotTargetAngle = targetPosition;
   }
 
-  /**
-   * sets the target position where 0 is facing towards the back of the robot
-   */
+  /** sets the target position where 0 is facing towards the back of the robot */
   public void setTargetPosition(Rotation2d target) {
     targetPosition = target;
     pivotMotor.setPosition(encoderFromAngle(target));
   }
 
-
   private Rotation2d angleFromEncoder(double encoderTicks) {
     // 2048 ticks per rotation
-    var delta = Rotation2d.fromRotations((encoderTicks - zeroPosition) / PivotConstants.pivotGearRatio);
+    var delta =
+        Rotation2d.fromRotations((encoderTicks - zeroPosition) / PivotConstants.pivotGearRatio);
 
     return delta.plus(PivotConstants.pivotStart);
-
   }
 
   private double encoderFromAngle(Rotation2d angle) {
-    var delta = angle.minus(PivotConstants.pivotStart).getRotations() * PivotConstants.pivotGearRatio;
+    var delta =
+        angle.minus(PivotConstants.pivotStart).getRotations() * PivotConstants.pivotGearRatio;
 
     return delta + zeroPosition;
   }

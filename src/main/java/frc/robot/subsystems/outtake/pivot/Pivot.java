@@ -1,4 +1,4 @@
-package frc.robot.subsystems.outtake.pivot; 
+package frc.robot.subsystems.outtake.pivot;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -12,12 +12,10 @@ public class Pivot extends SubsystemBase {
   }
 
   public void setTargetPosition(Rotation2d target) {
-    if (target.getRadians() < PivotConstants.pivotStart.getRadians() 
-    || target.getRadians() > PivotConstants.pivotEnd.getRadians()) {
+    if (target.getRadians() < PivotConstants.pivotStart.getRadians()
+        || target.getRadians() > PivotConstants.pivotEnd.getRadians()) {
       throw new IllegalArgumentException("Target position is out of bounds");
     }
     io.setTargetPosition(target);
   }
-
-
 }
