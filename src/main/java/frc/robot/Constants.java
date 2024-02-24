@@ -40,13 +40,13 @@ public final class Constants {
     // IN DEGREES
     public static final double[] moduleAngles = new double[] {0, 0, 0, 0};
 
-    public static final int[] turnCanIds = new int[] {1, 4, 7, 10};
-    public static final int[] driveCanIds = new int[] {0, 3, 6, 9};
-    public static final int[] canCoderIds = new int[] {2, 5, 8, 11};
+    public static final int[] turnCanIds = new int[] {2, 5, 8, 11};
+    public static final int[] driveCanIds = new int[] {1, 4, 7, 10};
+    public static final int[] canCoderIds = new int[] {3, 6, 9, 12};
   }
 
   public static class IntakeConstants {
-    public static final int intakeCANId = 12;
+    public static final int intakeCANId = 20;
 
     public static final double intakeOnPower = 0.1;
   }
@@ -55,8 +55,8 @@ public final class Constants {
     public static final int pivotCANId = 13;
 
     // 80 falcon rotations = 1 pivot rotation
-    // 5:1 planetary + 5:1 planetary + 5:1 planetary + 48:15 chain
-    public static final int pivotGearRatio = 400;
+    // 5:1 planetary + 5:1 planetary + 48:21 chain
+    public static final double pivotGearRatio = 57.1429;
 
     // the mechanically stopped beginning of the pivot is at a negative angle from the ground
     // 0 degrees is parallel to the ground and facing the same direction as the back of the robot
@@ -69,9 +69,9 @@ public final class Constants {
   }
 
   public static class ShooterConstants {
-    public static final int conveyorCANId = 14;
-    public static final int topShooterCANId = 15;
-    public static final int bottomShooterCANId = 16;
+    public static final int conveyorCANId = 19;
+    public static final int topShooterCANId = 16;
+    public static final int bottomShooterCANId = 17;
 
     public static final double shootingPower = 0.5;
     public static final double conveyorPower = 0.2;
