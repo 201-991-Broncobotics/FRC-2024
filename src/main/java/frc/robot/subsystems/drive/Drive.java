@@ -18,6 +18,8 @@ import com.pathplanner.lib.pathfinding.Pathfinding;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PathPlannerLogging;
 import com.pathplanner.lib.util.ReplanningConfig;
+
+import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -236,6 +238,10 @@ public class Drive extends SubsystemBase {
       positions[i] = modules[i].getPosition();
     }
     return positions;
+  }
+
+  public void addVisionMeasurement(double xyStds, double degStds, Pose2d pose, double latency) {
+    poseEstimator.addVisionMeasurement(pose, latency, VecBuilder.fill(xyStds, xyStds, Units.degreesToRadians(degStds)));
   }
 
   /** Returns an array of module translations. */

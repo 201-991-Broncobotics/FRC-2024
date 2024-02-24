@@ -25,6 +25,7 @@ import frc.robot.commands.FeedForwardCharacterization;
 import frc.robot.commands.PivotCommands;
 import frc.robot.subsystems.drive.*;
 import frc.robot.subsystems.intake.*;
+import frc.robot.subsystems.limelight.*;
 import frc.robot.subsystems.pivot.*;
 import frc.robot.subsystems.shooter.*;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
@@ -41,6 +42,7 @@ public class RobotContainer {
   private final Intake intake;
   private final Pivot pivot;
   private final Shooter shooter;
+  private final Limelight limelight;
 
   // Controller
   private final GenericHID driver = new GenericHID(0); // hotas
@@ -64,6 +66,8 @@ public class RobotContainer {
         intake = new Intake(new IntakeIOReal());
         pivot = new Pivot(new PivotIOReal());
         shooter = new Shooter(new ShooterIOReal());
+        limelight = new Limelight(new LimelightIOReal(), drive);
+        
 
         break;
 
@@ -80,6 +84,7 @@ public class RobotContainer {
         intake = new Intake(new IntakeIOSim());
         pivot = new Pivot(new PivotIOSim());
         shooter = new Shooter(new ShooterIOSim());
+        limelight = new Limelight(new LimelightIO() {}, drive);
 
         break;
 
@@ -96,6 +101,7 @@ public class RobotContainer {
         intake = new Intake(new IntakeIO() {});
         pivot = new Pivot(new PivotIO() {});
         shooter = new Shooter(new ShooterIO() {});
+        limelight = new Limelight(new LimelightIO() {}, drive);
 
         break;
     }
@@ -129,16 +135,6 @@ public class RobotContainer {
 
     var stopWithXButton = new Trigger(() -> driver.getRawButton(2));
     stopWithXButton.onTrue(Commands.runOnce(drive::stopWithX, drive));
-
-    // driver
-    //     .b()
-    //     .onTrue(
-    //         Commands.runOnce(
-    //                 () ->
-    //                     drive.setPose(
-    //                         new Pose2d(drive.getPose().getTranslation(), new Rotation2d())),
-    //                 drive)
-    //             .ignoringDisable(true));
 
     operator.a().toggleOnTrue(intake.onCommand());
     operator.b().toggleOnTrue(intake.offCommand());
