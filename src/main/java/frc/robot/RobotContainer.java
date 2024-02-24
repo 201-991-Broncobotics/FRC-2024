@@ -14,13 +14,12 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.FeedForwardCharacterization;
 import frc.robot.commands.PivotCommands;
@@ -44,8 +43,8 @@ public class RobotContainer {
   private final Shooter shooter;
 
   // Controller
-  private final CommandXboxController driver = new CommandXboxController(0);
-  private final CommandXboxController operator = new CommandXboxController(1);
+  private final GenericHID driver = new GenericHID(0); // hotas
+  private final CommandXboxController operator = new CommandXboxController(1); // xbox controller
 
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
@@ -123,19 +122,23 @@ public class RobotContainer {
   private void configureButtonBindings() {
     drive.setDefaultCommand(
         DriveCommands.joystickDrive(
-            drive, () -> -driver.getLeftY(), () -> -driver.getLeftX(), () -> -driver.getRightX()));
+            drive,
+            () -> -driver.getRawAxis(1),
+            () -> -driver.getRawAxis(0),
+            () -> -driver.getRawAxis(5)));
 
-    driver.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
+    var stopWithXButton = new Trigger(() -> driver.getRawButton(2));
+    stopWithXButton.onTrue(Commands.runOnce(drive::stopWithX, drive));
 
-    driver
-        .b()
-        .onTrue(
-            Commands.runOnce(
-                    () ->
-                        drive.setPose(
-                            new Pose2d(drive.getPose().getTranslation(), new Rotation2d())),
-                    drive)
-                .ignoringDisable(true));
+    // driver
+    //     .b()
+    //     .onTrue(
+    //         Commands.runOnce(
+    //                 () ->
+    //                     drive.setPose(
+    //                         new Pose2d(drive.getPose().getTranslation(), new Rotation2d())),
+    //                 drive)
+    //             .ignoringDisable(true));
 
     operator.a().toggleOnTrue(intake.onCommand());
     operator.b().toggleOnTrue(intake.offCommand());

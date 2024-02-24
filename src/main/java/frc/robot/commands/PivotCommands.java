@@ -13,12 +13,9 @@ public class PivotCommands {
   public static Command basicOperatorControl(Pivot pivot, DoubleSupplier rotationSupplier) {
     return Commands.run(
         () -> {
-double delta = MathUtil.applyDeadband(rotationSupplier.getAsDouble(), 0.1, 1);
+          double delta = MathUtil.applyDeadband(rotationSupplier.getAsDouble(), 0.1, 1);
 
-          var target =
-              pivot
-                  .getCurrentPosition()
-                  .plus(Rotation2d.fromDegrees(delta));
+          var target = pivot.getCurrentPosition().plus(Rotation2d.fromDegrees(delta));
 
           pivot.setTargetPosition(target);
         },
