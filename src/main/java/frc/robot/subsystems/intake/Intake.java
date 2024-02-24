@@ -20,19 +20,19 @@ public class Intake extends SubsystemBase {
     Logger.processInputs("Intake", inputs);
   }
 
-  public void turnOn() {
+  public void on() {
     io.setPower(IntakeConstants.intakeOnPower);
   }
 
-  public void turnOff() {
+  public void off() {
     io.setPower(0.0);
   }
 
-  public Command on() {
-    return new InstantCommand(this::turnOn, this);
+  public Command onCommand() {
+    return new InstantCommand(this::on, this);
   }
 
-  public Command off() {
-    return new InstantCommand(this::turnOff, this);
+  public Command offCommand() {
+    return new InstantCommand(this::off, this);
   }
 }

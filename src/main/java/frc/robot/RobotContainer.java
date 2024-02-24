@@ -136,8 +136,13 @@ public class RobotContainer {
                     drive)
                 .ignoringDisable(true));
 
-    operator.a().onTrue(intake.on());
-    operator.b().onTrue(intake.off());
+    operator.a().toggleOnTrue(intake.onCommand());
+    operator.b().toggleOnTrue(intake.offCommand());
+    operator.rightBumper().toggleOnTrue(shooter.shootersOnCommand());
+    operator.leftBumper().toggleOnTrue(shooter.shootersOffCommand());
+    operator.x().toggleOnTrue(shooter.conveyorOnCommand());
+    operator.y().toggleOnTrue(shooter.conveyorOffCommand());
+
   }
 
   /**
