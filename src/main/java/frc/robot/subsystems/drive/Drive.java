@@ -18,10 +18,10 @@ import com.pathplanner.lib.pathfinding.Pathfinding;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PathPlannerLogging;
 import com.pathplanner.lib.util.ReplanningConfig;
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.geometry.Twist2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -50,8 +50,10 @@ public class Drive extends SubsystemBase {
   private final Module[] modules = new Module[4]; // FL, FR, BL, BR
 
   private SwerveDriveKinematics kinematics = new SwerveDriveKinematics(getModuleTranslations());
-  private Pose2d pose = new Pose2d();
   private Rotation2d lastGyroRotation = new Rotation2d();
+  private SwerveDrivePoseEstimator poseEstimator =
+      new SwerveDrivePoseEstimator(
+          kinematics, lastGyroRotation, getModulePositions(), new Pose2d());
 
   public Drive(
       GyroIO gyroIO,
@@ -126,19 +128,7 @@ public class Drive extends SubsystemBase {
         wheelDeltas[moduleIndex] = modules[moduleIndex].getPositionDeltas()[deltaIndex];
       }
 
-      // The twist represents the motion of the robot since the last
-      // sample in x, y, and theta based only on the modules, without
-      // the gyro. The gyro is always disconnected in simulation.
-      var twist = kinematics.toTwist2d(wheelDeltas);
-      if (gyroInputs.connected) {
-        // If the gyro is connected, replace the theta component of the twist
-        // with the change in angle since the last sample.
-        Rotation2d gyroRotation = gyroInputs.odometryYawPositions[deltaIndex];
-        twist = new Twist2d(twist.dx, twist.dy, gyroRotation.minus(lastGyroRotation).getRadians());
-        lastGyroRotation = gyroRotation;
-      }
-      // Apply the twist (change since last sample) to the current pose
-      pose = pose.exp(twist);
+      poseEstimator.update(gyroInputs.odometryYawPositions[deltaIndex], wheelDeltas);
     }
   }
 
@@ -212,17 +202,22 @@ public class Drive extends SubsystemBase {
   /** Returns the current odometry pose. */
   @AutoLogOutput(key = "Odometry/Robot")
   public Pose2d getPose() {
-    return pose;
+    return poseEstimator.getEstimatedPosition();
   }
 
   /** Returns the current odometry rotation. */
   public Rotation2d getRotation() {
-    return pose.getRotation();
+    return poseEstimator.getEstimatedPosition().getRotation();
   }
 
   /** Resets the current odometry pose. */
   public void setPose(Pose2d pose) {
-    this.pose = pose;
+    var gyroRotation =
+        gyroInputs.connected
+            ? gyroInputs.odometryYawPositions[gyroInputs.odometryYawPositions.length - 1]
+            : new Rotation2d();
+
+    poseEstimator.resetPosition(gyroRotation, getModulePositions(), pose);
   }
 
   /** Returns the maximum linear speed in meters per sec. */
@@ -233,6 +228,14 @@ public class Drive extends SubsystemBase {
   /** Returns the maximum angular speed in radians per sec. */
   public double getMaxAngularSpeedRadPerSec() {
     return MAX_ANGULAR_SPEED;
+  }
+
+  public SwerveModulePosition[] getModulePositions() {
+    SwerveModulePosition[] positions = new SwerveModulePosition[4];
+    for (int i = 0; i < 4; i++) {
+      positions[i] = modules[i].getPosition();
+    }
+    return positions;
   }
 
   /** Returns an array of module translations. */
