@@ -1,8 +1,7 @@
 package frc.robot.subsystems.intake;
 
-import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
-
+import com.revrobotics.CANSparkMax;
 import frc.robot.Constants.IntakeConstants;
 
 public class IntakeIOReal implements IntakeIO {

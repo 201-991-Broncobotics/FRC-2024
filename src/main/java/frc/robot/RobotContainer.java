@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.FeedForwardCharacterization;
+import frc.robot.commands.PivotCommands;
 import frc.robot.subsystems.drive.*;
 import frc.robot.subsystems.intake.*;
 import frc.robot.subsystems.pivot.*;
@@ -143,6 +144,9 @@ public class RobotContainer {
     operator.x().toggleOnTrue(shooter.conveyorOnCommand());
     operator.y().toggleOnTrue(shooter.conveyorOffCommand());
 
+    pivot.setDefaultCommand(
+        PivotCommands.basicOperatorControl(
+            pivot, () -> operator.getRightX() - operator.getLeftX()));
   }
 
   /**
