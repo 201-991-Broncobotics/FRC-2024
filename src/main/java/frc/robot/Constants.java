@@ -24,7 +24,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-  public static final Mode currentMode = Mode.SIM;
+  public static final Mode currentMode = Mode.REAL;
 
   public static enum Mode {
     /** Running on a real robot. */
@@ -37,8 +37,8 @@ public final class Constants {
 
   public static class DriveConstants {
     // Front Left, Front Right, Back Left, Back Right
-    // IN DEGREES
-    public static final double[] moduleAngles = new double[] {0, 0, 0, 0};
+    // IN RADIANS
+    public static final double[] moduleAngles = new double[] {-2.46, -0.79, 2.45, -1.38};
 
     public static final int[] turnCanIds = new int[] {2, 5, 8, 11};
     public static final int[] driveCanIds = new int[] {1, 4, 7, 10};
@@ -48,7 +48,7 @@ public final class Constants {
   public static class IntakeConstants {
     public static final int intakeCANId = 20;
 
-    public static final double intakeOnPower = 0.1;
+    public static final double intakeOnPower = 0.65;
   }
 
   public static class PivotConstants {
@@ -60,12 +60,12 @@ public final class Constants {
 
     // the mechanically stopped beginning of the pivot is at a negative angle from the ground
     // 0 degrees is parallel to the ground and facing the same direction as the back of the robot
-    public static Rotation2d pivotStart = Rotation2d.fromDegrees(-8.265688);
+    public static Rotation2d pivotStart = Rotation2d.fromRadians(-0.13969988112131737);
     public static Rotation2d pivotEnd = Rotation2d.fromDegrees(129.056487);
     // less than this angle, we won't be able to shoot a note
     public static Rotation2d minShootingAngle = Rotation2d.fromDegrees(25);
 
-    public static final double p = 0.05, i = 0, d = 0;
+    public static final double p = 0.00005, i = 0, d = 0;
   }
 
   public static class ShooterConstants {
@@ -73,7 +73,7 @@ public final class Constants {
     public static final int topShooterCANId = 16;
     public static final int bottomShooterCANId = 17;
 
-    public static final double shootingPower = 0.5;
-    public static final double conveyorPower = 0.2;
+    public static final double shootingPower = -0.75;
+    public static final double conveyorPower = 0.6;
   }
 }

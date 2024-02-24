@@ -72,7 +72,7 @@ public class ModuleIOTalonFX implements ModuleIO {
     driveTalon = new TalonFX(DriveConstants.driveCanIds[index]);
     turnTalon = new TalonFX(DriveConstants.turnCanIds[index]);
     cancoder = new CANcoder(DriveConstants.canCoderIds[index]);
-    absoluteEncoderOffset = Rotation2d.fromDegrees(DriveConstants.moduleAngles[index]);
+    absoluteEncoderOffset = Rotation2d.fromRadians(DriveConstants.moduleAngles[index]);
 
     var driveConfig = new TalonFXConfiguration();
     driveConfig.CurrentLimits.StatorCurrentLimit = 40.0;

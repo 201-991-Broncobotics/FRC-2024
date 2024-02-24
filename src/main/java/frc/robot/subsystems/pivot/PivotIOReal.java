@@ -5,6 +5,7 @@ import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.math.geometry.Rotation2d;
 import frc.robot.Constants.PivotConstants;
@@ -18,6 +19,8 @@ public class PivotIOReal implements PivotIO {
   Rotation2d targetPosition;
   TalonFXConfiguration config;
 
+  private final StatusSignal<Double> current;
+
   public PivotIOReal() {
     pivotMotor = new TalonFX(PivotConstants.pivotCANId);
 
@@ -26,6 +29,7 @@ public class PivotIOReal implements PivotIO {
     config.CurrentLimits.SupplyCurrentLimit = 30;
     config.CurrentLimits.SupplyCurrentLimitEnable = true;
     config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+    config.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
     config.Slot0 =
         new Slot0Configs()
             .withKP(PivotConstants.p)
@@ -36,8 +40,10 @@ public class PivotIOReal implements PivotIO {
 
     // in rotations!!
     position = pivotMotor.getPosition();
+    
+    current = pivotMotor.getTorqueCurrent();
 
-    BaseStatusSignal.setUpdateFrequencyForAll(20.0, position);
+    BaseStatusSignal.setUpdateFrequencyForAll(20.0, position, current);
     pivotMotor.optimizeBusUtilization(1.0);
 
     // PivotConstants.pivotStart
@@ -51,6 +57,7 @@ public class PivotIOReal implements PivotIO {
 
     inputs.pivotCurentAngle = angleFromEncoder(currentPosition);
     inputs.pivotTargetAngle = targetPosition;
+    inputs.motorCurrent = current.getValueAsDouble();
   }
 
   /** sets the target position where 0 is facing towards the back of the robot */

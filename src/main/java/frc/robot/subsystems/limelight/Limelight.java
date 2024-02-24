@@ -1,5 +1,7 @@
 package frc.robot.subsystems.limelight;
 
+import org.littletonrobotics.junction.Logger;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.drive.Drive;
@@ -13,8 +15,10 @@ public class Limelight extends SubsystemBase {
     this.drive = drive;
   }
 
+  @Override
   public void periodic() {
     io.updateInputs(inputs);
+    Logger.processInputs("Limelight", inputs);
 
     if (inputs.pose.getX() == 0) {
       return;
@@ -40,7 +44,10 @@ public class Limelight extends SubsystemBase {
         return;
       }
 
-      drive.addVisionMeasurement(xyStds, degStds, new Pose2d(inputs.pose, inputs.yaw), inputs.latency);
+      var pose = new Pose2d(inputs.pose, inputs.yaw);
+      Logger.recordOutput("Limelight/Pose", pose);
+
+      drive.addVisionMeasurement(xyStds, degStds, pose, inputs.latency);
     }
 
   }

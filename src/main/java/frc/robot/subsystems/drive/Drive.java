@@ -53,9 +53,7 @@ public class Drive extends SubsystemBase {
 
   private SwerveDriveKinematics kinematics = new SwerveDriveKinematics(getModuleTranslations());
   private Rotation2d lastGyroRotation = new Rotation2d();
-  private SwerveDrivePoseEstimator poseEstimator =
-      new SwerveDrivePoseEstimator(
-          kinematics, lastGyroRotation, getModulePositions(), new Pose2d());
+  private SwerveDrivePoseEstimator poseEstimator ;
 
   public Drive(
       GyroIO gyroIO,
@@ -91,6 +89,10 @@ public class Drive extends SubsystemBase {
         (targetPose) -> {
           Logger.recordOutput("Odometry/TrajectorySetpoint", targetPose);
         });
+
+      poseEstimator =
+      new SwerveDrivePoseEstimator(
+          kinematics, lastGyroRotation, getModulePositions(), new Pose2d());
   }
 
   public void periodic() {
@@ -130,7 +132,13 @@ public class Drive extends SubsystemBase {
         wheelDeltas[moduleIndex] = modules[moduleIndex].getPositionDeltas()[deltaIndex];
       }
 
-      poseEstimator.update(gyroInputs.odometryYawPositions[deltaIndex], wheelDeltas);
+      Rotation2d r;
+      if (gyroInputs.odometryYawPositions.length > 0) {
+        r = gyroInputs.odometryYawPositions[gyroInputs.odometryYawPositions.length - 1];
+      } else {
+        r = lastGyroRotation;
+      }
+      poseEstimator.update(r, wheelDeltas);
     }
   }
 
@@ -234,6 +242,7 @@ public class Drive extends SubsystemBase {
 
   public SwerveModulePosition[] getModulePositions() {
     SwerveModulePosition[] positions = new SwerveModulePosition[4];
+    
     for (int i = 0; i < 4; i++) {
       positions[i] = modules[i].getPosition();
     }
