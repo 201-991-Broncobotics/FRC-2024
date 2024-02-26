@@ -40,7 +40,6 @@ public class PivotIOReal implements PivotIO {
 
     // in rotations!!
     position = pivotMotor.getPosition();
-    
     current = pivotMotor.getTorqueCurrent();
 
     BaseStatusSignal.setUpdateFrequencyForAll(20.0, position, current);

@@ -9,11 +9,14 @@ public class IntakeIOReal implements IntakeIO {
 
   public IntakeIOReal() {
     motor = new CANSparkMax(IntakeConstants.intakeCANId, MotorType.kBrushless);
+
+    motor.setSmartCurrentLimit(25);
   }
 
   @Override
   public void updateInputs(IntakeIO.IntakeIOInputs inputs) {
     inputs.current = motor.getOutputCurrent();
+    inputs.voltage = motor.getBusVoltage();
   }
 
   @Override

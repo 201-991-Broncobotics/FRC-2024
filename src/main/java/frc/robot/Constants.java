@@ -59,10 +59,12 @@ public final class Constants {
 
     // the mechanically stopped beginning of the pivot is at a negative angle from the ground
     // 0 degrees is parallel to the ground and facing the same direction as the back of the robot
-    public static Rotation2d pivotStart = Rotation2d.fromRadians(-0.13969988112131737);
-    public static Rotation2d pivotEnd = Rotation2d.fromDegrees(129.056487);
+    public static final Rotation2d pivotStart = Rotation2d.fromRadians(-0.13969988112131737);
+    public static final Rotation2d pivotEnd = Rotation2d.fromDegrees(129.056487);
+    /** spot where the intake conveyor can take a note from the intake */
+    public static final Rotation2d intakePosition = Rotation2d.fromDegrees(25);
     // less than this angle, we won't be able to shoot a note
-    public static Rotation2d minShootingAngle = Rotation2d.fromDegrees(25);
+    public static final Rotation2d minShootingAngle = Rotation2d.fromDegrees(25);
 
     public static final double p = 0.00005, i = 0, d = 0;
   }

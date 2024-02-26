@@ -7,6 +7,9 @@ public interface HangIO {
   public static class HangIOInputs {
     public double mainCurrent = 0.0;
     public double followerCurrent = 0.0;
+
+    public double mainPosition = 0.0;
+    public double followerPosition = 0.0;
   }
 
   default void updateInputs(HangIOInputs inputs) {}

@@ -16,6 +16,8 @@ public class HangIOReal implements HangIO {
 
   StatusSignal<Double> leaderCurrent;
   StatusSignal<Double> followerCurrent;
+  StatusSignal<Double> leaderPosition;
+  StatusSignal<Double> followerPosition;
 
   public HangIOReal() {
 
@@ -35,9 +37,11 @@ public class HangIOReal implements HangIO {
 
     leaderCurrent = leader.getTorqueCurrent();
     followerCurrent = follower.getTorqueCurrent();
+    leaderPosition = leader.getPosition();
+    followerPosition = follower.getPosition();
 
     // don't really need this to update that often b/c it's just for data visualization
-    BaseStatusSignal.setUpdateFrequencyForAll(100.0, leaderCurrent, followerCurrent);
+    BaseStatusSignal.setUpdateFrequencyForAll(100.0, leaderCurrent, followerCurrent, followerPosition, leaderPosition);
     leader.optimizeBusUtilization(1.0);
     follower.optimizeBusUtilization(1.0);
 
