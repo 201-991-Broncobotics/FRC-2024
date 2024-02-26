@@ -54,7 +54,6 @@ public final class Constants {
   public static class PivotConstants {
     public static final int pivotCANId = 13;
 
-    // 80 falcon rotations = 1 pivot rotation
     // 5:1 planetary + 5:1 planetary + 48:21 chain
     public static final double pivotGearRatio = 57.1429;
 
@@ -75,5 +74,10 @@ public final class Constants {
 
     public static final double shootingPower = -0.75;
     public static final double conveyorPower = 0.6;
+  }
+
+  public static class HangConstants {
+    public static final int leaderCANId = 14;
+    public static final int followerCANId = 15;
   }
 }

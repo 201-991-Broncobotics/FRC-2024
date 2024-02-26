@@ -24,6 +24,7 @@ import frc.robot.commands.DriveCommands;
 import frc.robot.commands.FeedForwardCharacterization;
 import frc.robot.commands.PivotCommands;
 import frc.robot.subsystems.drive.*;
+import frc.robot.subsystems.hang.*;
 import frc.robot.subsystems.intake.*;
 import frc.robot.subsystems.limelight.*;
 import frc.robot.subsystems.pivot.*;
@@ -43,6 +44,7 @@ public class RobotContainer {
   private final Pivot pivot;
   private final Shooter shooter;
   private final Limelight limelight;
+  private final Hang hang;
 
   // Controller
   private final GenericHID driver = new GenericHID(0); // hotas
@@ -67,6 +69,7 @@ public class RobotContainer {
         pivot = new Pivot(new PivotIOReal());
         shooter = new Shooter(new ShooterIOReal());
         limelight = new Limelight(new LimelightIOReal(), drive);
+        hang = new Hang(new HangIOReal());
         
 
         break;
@@ -85,6 +88,7 @@ public class RobotContainer {
         pivot = new Pivot(new PivotIOSim());
         shooter = new Shooter(new ShooterIOSim());
         limelight = new Limelight(new LimelightIO() {}, drive);
+        hang = new Hang(new HangIOSim());
 
         break;
 
@@ -102,6 +106,7 @@ public class RobotContainer {
         pivot = new Pivot(new PivotIO() {});
         shooter = new Shooter(new ShooterIO() {});
         limelight = new Limelight(new LimelightIO() {}, drive);
+        hang = new Hang(new HangIO() {});
 
         break;
     }
@@ -146,6 +151,9 @@ public class RobotContainer {
     pivot.setDefaultCommand(
         PivotCommands.basicOperatorControl(
             pivot, () -> operator.getRightX() - operator.getLeftX()));
+
+    hang.setDefaultCommand(hang.operatorControl(() -> 
+      operator.getRightTriggerAxis() - operator.getLeftTriggerAxis()));
   }
 
   /**
