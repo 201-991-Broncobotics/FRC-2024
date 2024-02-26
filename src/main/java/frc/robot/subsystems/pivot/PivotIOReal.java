@@ -4,9 +4,12 @@ import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+
+// import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import frc.robot.Constants.PivotConstants;
 
@@ -18,8 +21,10 @@ public class PivotIOReal implements PivotIO {
   double zeroPosition;
   Rotation2d targetPosition;
   TalonFXConfiguration config;
+  PositionDutyCycle request;
 
   private final StatusSignal<Double> current;
+  private final StatusSignal<Double> voltage;
 
   public PivotIOReal() {
     pivotMotor = new TalonFX(PivotConstants.pivotCANId);
@@ -41,9 +46,12 @@ public class PivotIOReal implements PivotIO {
     // in rotations!!
     position = pivotMotor.getPosition();
     current = pivotMotor.getTorqueCurrent();
+    voltage = pivotMotor.getMotorVoltage();
 
-    BaseStatusSignal.setUpdateFrequencyForAll(20.0, position, current);
+    BaseStatusSignal.setUpdateFrequencyForAll(100.0, position, current, voltage);
     pivotMotor.optimizeBusUtilization(1.0);
+
+    request = new PositionDutyCycle(position.getValueAsDouble()).withSlot(0);
 
     // PivotConstants.pivotStart
     zeroPosition = position.getValueAsDouble();
@@ -51,18 +59,19 @@ public class PivotIOReal implements PivotIO {
   }
 
   public void updateInputs(PivotIOInputs inputs) {
-    BaseStatusSignal.refreshAll(position);
+    BaseStatusSignal.refreshAll(position, current,voltage);
     double currentPosition = position.getValueAsDouble();
 
     inputs.pivotCurentAngle = angleFromEncoder(currentPosition);
     inputs.pivotTargetAngle = targetPosition;
     inputs.motorCurrent = current.getValueAsDouble();
+    inputs.motorVoltage = voltage.getValueAsDouble();
   }
 
   /** sets the target position where 0 is facing towards the back of the robot */
   public void setTargetPosition(Rotation2d target) {
     targetPosition = target;
-    pivotMotor.setPosition(encoderFromAngle(target));
+    pivotMotor.setControl(request.withPosition(encoderFromAngle(target)));
   }
 
   private Rotation2d angleFromEncoder(double encoderTicks) {

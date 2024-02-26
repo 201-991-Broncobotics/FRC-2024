@@ -27,6 +27,9 @@ public class Pivot extends SubsystemBase {
         || target.getRadians() > PivotConstants.pivotEnd.getRadians()) {
       throw new IllegalArgumentException("Target position is out of bounds");
     }
+
+    Logger.recordOutput("Pivot/TargetThing", target);
+
     io.setTargetPosition(target);
   }
 

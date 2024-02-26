@@ -37,7 +37,7 @@ public class PhoenixOdometryThread extends Thread {
       new ReentrantLock(); // Prevents conflicts when registering signals
   private BaseStatusSignal[] signals = new BaseStatusSignal[0];
   private final List<Queue<Double>> queues = new ArrayList<>();
-  private boolean isCANFD = false;
+  private boolean isCANFD = true;
 
   private static PhoenixOdometryThread instance = null;
 

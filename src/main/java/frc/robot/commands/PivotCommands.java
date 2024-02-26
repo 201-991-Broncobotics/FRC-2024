@@ -15,7 +15,7 @@ public class PivotCommands {
         () -> {
           double delta = MathUtil.applyDeadband(rotationSupplier.getAsDouble(), 0.1, 1);
 
-          var target = pivot.getCurrentPosition().plus(Rotation2d.fromDegrees(delta));
+          var target = pivot.getCurrentPosition().plus(Rotation2d.fromDegrees(delta*4));
 
           pivot.setTargetPosition(target);
         },

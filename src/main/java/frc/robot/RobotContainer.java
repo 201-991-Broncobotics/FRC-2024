@@ -14,6 +14,8 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -57,6 +59,13 @@ public class RobotContainer {
   public RobotContainer() {
     switch (Constants.currentMode) {
       case REAL:
+            //   drive =
+            // new Drive(
+            //     new GyroIO() {},
+            //     new ModuleIOSim(),
+            //     new ModuleIOSim(),
+            //     new ModuleIOSim(),
+            //     new ModuleIOSim());
         drive =
             new Drive(
                 new GyroIOPigeon2(true),
@@ -150,7 +159,7 @@ public class RobotContainer {
 
     pivot.setDefaultCommand(
         PivotCommands.basicOperatorControl(
-            pivot, () -> operator.getRightX() - operator.getLeftX()));
+            pivot, () -> MathUtil.applyDeadband(operator.getRightX() - operator.getLeftX(), 0.1)));
 
     hang.setDefaultCommand(hang.operatorControl(() -> 
       operator.getRightTriggerAxis() - operator.getLeftTriggerAxis()));

@@ -66,7 +66,7 @@ public final class Constants {
     // less than this angle, we won't be able to shoot a note
     public static final Rotation2d minShootingAngle = Rotation2d.fromDegrees(25);
 
-    public static final double p = 0.00005, i = 0, d = 0;
+    public static final double p = 0.5, i = 0, d = 0;
   }
 
   public static class ShooterConstants {
@@ -75,7 +75,7 @@ public final class Constants {
     public static final int bottomShooterCANId = 17;
 
     public static final double shootingPower = -0.75;
-    public static final double conveyorPower = 0.6;
+    public static final double conveyorPower = 0.35;
   }
 
   public static class HangConstants {
