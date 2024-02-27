@@ -152,7 +152,7 @@ public class RobotContainer {
 
     operator.a().toggleOnTrue(new SmartIntake(shooter, intake));
     operator.b().toggleOnTrue(Commands.runOnce(intake::off, intake));
-    operator.rightBumper().toggleOnTrue(Commands.runOnce(shooter::shootersOn, shooter));
+    operator.rightBumper().toggleOnTrue(new SmartShoot(shooter));
     operator.leftBumper().toggleOnTrue(Commands.runOnce(shooter::shootersOff, shooter));
     operator.x().toggleOnTrue(Commands.runOnce(shooter::conveyorOn, shooter));
     operator.y().toggleOnTrue(Commands.runOnce(shooter::conveyorOff, shooter));
@@ -168,12 +168,7 @@ public class RobotContainer {
   private void configureNamedCommands() {
     NamedCommands.registerCommand("SmartIntake", new SmartIntake(shooter, intake));
     NamedCommands.registerCommand("PivotToIntake", PivotCommands.goToIntake(pivot));
-    // todo: make this like SmartIntake
-    NamedCommands.registerCommand("SmartShoot", Commands.startEnd(
-      () -> {shooter.shootersOn(); shooter.conveyorOn();}, 
-      () -> {shooter.shootersOff(); shooter.conveyorOff();},
-      shooter
-    ).withTimeout(1.0));
+    NamedCommands.registerCommand("SmartShoot", new SmartShoot(shooter));
   }
 
   /**

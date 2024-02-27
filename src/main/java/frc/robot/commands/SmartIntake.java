@@ -18,6 +18,8 @@ public class SmartIntake extends Command {
   public SmartIntake(Shooter shooter, Intake intake) {
     this.shooter = shooter;
     this.intake = intake;
+
+    addRequirements(shooter, intake);
   }
 
   @Override

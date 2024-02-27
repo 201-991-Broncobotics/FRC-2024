@@ -2,6 +2,8 @@ package frc.robot.subsystems.shooter;
 
 import static frc.robot.Constants.ShooterConstants.*;
 
+import com.ctre.phoenix6.BaseStatusSignal;
+import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
@@ -13,6 +15,8 @@ public class ShooterIOReal implements ShooterIO {
   private TalonFX topShooter;
   private TalonFX bottomShooter;
   private CANSparkMax conveyor;
+
+  private StatusSignal<Double> topShooterCurrent, bottomShooterCurrent;
 
   public ShooterIOReal() {
     topShooter = new TalonFX(topShooterCANId);
@@ -34,6 +38,14 @@ public class ShooterIOReal implements ShooterIO {
     conveyor.restoreFactoryDefaults();
     conveyor.setIdleMode(IdleMode.kBrake);
     conveyor.setSmartCurrentLimit(20);
+
+    topShooterCurrent = topShooter.getTorqueCurrent();
+    bottomShooterCurrent = bottomShooter.getTorqueCurrent();
+
+    BaseStatusSignal.setUpdateFrequencyForAll(50, topShooterCurrent, bottomShooterCurrent);
+
+    topShooter.optimizeBusUtilization(1.0);
+    bottomShooter.optimizeBusUtilization(1.0);
   }
 
   public void setTopShooterPower(double power) {

@@ -37,4 +37,8 @@ public class Shooter extends SubsystemBase {
   public void conveyorOff() {
     io.setConveyorPower(0);
   }
+
+  public double getAverageShooterCurrent() {
+    return (inputs.bottomShooterCurrent + inputs.topShooterCurrent)  / 2;
+  }
 }
