@@ -37,6 +37,10 @@ public class Pivot extends SubsystemBase {
     return inputs.pivotCurentAngle;
   }
 
+  public Rotation2d getTargetPosition() {
+    return inputs.pivotTargetAngle;
+  }
+
   @Override
   public void periodic() {
     io.updateInputs(inputs);

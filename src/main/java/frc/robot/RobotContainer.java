@@ -14,6 +14,7 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -22,9 +23,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.commands.DriveCommands;
-import frc.robot.commands.FeedForwardCharacterization;
-import frc.robot.commands.PivotCommands;
+import frc.robot.commands.*;
 import frc.robot.subsystems.drive.*;
 import frc.robot.subsystems.hang.*;
 import frc.robot.subsystems.intake.*;
@@ -131,6 +130,7 @@ public class RobotContainer {
 
     // Configure the button bindings
     configureButtonBindings();
+    configureNamedCommands();
   }
 
   /**
@@ -150,7 +150,7 @@ public class RobotContainer {
     var stopWithXButton = new Trigger(() -> driver.getRawButton(2));
     stopWithXButton.onTrue(Commands.runOnce(drive::stopWithX, drive));
 
-    operator.a().toggleOnTrue(Commands.runOnce(intake::on, intake));
+    operator.a().toggleOnTrue(new SmartIntake(shooter, intake));
     operator.b().toggleOnTrue(Commands.runOnce(intake::off, intake));
     operator.rightBumper().toggleOnTrue(Commands.runOnce(shooter::shootersOn, shooter));
     operator.leftBumper().toggleOnTrue(Commands.runOnce(shooter::shootersOff, shooter));
@@ -163,6 +163,17 @@ public class RobotContainer {
 
     hang.setDefaultCommand(hang.operatorControl(() -> 
       operator.getRightTriggerAxis() - operator.getLeftTriggerAxis()));
+  }
+
+  private void configureNamedCommands() {
+    NamedCommands.registerCommand("SmartIntake", new SmartIntake(shooter, intake));
+    NamedCommands.registerCommand("PivotToIntake", PivotCommands.goToIntake(pivot));
+    // todo: make this like SmartIntake
+    NamedCommands.registerCommand("SmartShoot", Commands.startEnd(
+      () -> {shooter.shootersOn(); shooter.conveyorOn();}, 
+      () -> {shooter.shootersOff(); shooter.conveyorOff();},
+      shooter
+    ).withTimeout(1.0));
   }
 
   /**

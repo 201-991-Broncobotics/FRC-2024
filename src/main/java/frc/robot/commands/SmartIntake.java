@@ -3,13 +3,10 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.IntakeConstants;
-import frc.robot.Constants.PivotConstants;
 import frc.robot.subsystems.intake.Intake;
-import frc.robot.subsystems.pivot.Pivot;
 import frc.robot.subsystems.shooter.Shooter;
 
-public class IntakeToShooter extends Command {
-  Pivot pivot;
+public class SmartIntake extends Command {
   Shooter shooter;
   Intake intake;
   // basically, the way we want this command to work is when the intake shoots to high voltage, then goes back down, we know we're done intaking. so, we keep track of the intake current on the previous periodic run
@@ -18,8 +15,7 @@ public class IntakeToShooter extends Command {
   double endTime;
 
 
-  public IntakeToShooter(Pivot pivot, Shooter shooter, Intake intake) {
-    this.pivot = pivot;
+  public SmartIntake(Shooter shooter, Intake intake) {
     this.shooter = shooter;
     this.intake = intake;
   }
@@ -35,7 +31,6 @@ public class IntakeToShooter extends Command {
 
   @Override
   public void initialize() {
-    pivot.setTargetPosition(PivotConstants.intakePosition);
     intake.on();
     shooter.conveyorOn();
     // not sure if we need this here, but whatever

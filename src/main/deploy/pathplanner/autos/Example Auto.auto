@@ -2,25 +2,25 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 2.0,
-      "y": 7.0
+      "x": 1.0362868269501009,
+      "y": 7.068721083188694
     },
-    "rotation": 180.0
+    "rotation": 0.14258439223781336
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
-          "type": "named",
-          "data": {
-            "name": "Run Flywheel"
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "Example Path"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "SmartShoot"
           }
         }
       ]
