@@ -40,7 +40,7 @@ public class Swerve extends SubsystemBase {
 
         gyro = new Pigeon2(Constants.BaseFalconSwerveConstants.pigeonID);
         gyro.getConfigurator().apply(new Pigeon2Configuration());
-        zeroGyro(starting_yaw);
+        gyro.setYaw(starting_yaw);
 
         swerveModules = new SwerveModule[] {
             new SwerveModule(0, Constants.BaseFalconSwerveConstants.Mod0.constants),
@@ -53,6 +53,7 @@ public class Swerve extends SubsystemBase {
         resetModulesToAbsolute(); // shouldn't be needed
 
         poseEstimator = new SwerveDrivePoseEstimator(Constants.BaseFalconSwerveConstants.swerveKinematics, getGyroYaw(), getModulePositions(), new Pose2d());
+        last_manual_time = Timer.getFPGATimestamp();
 
         // PathPlanner
 
@@ -139,6 +140,8 @@ public class Swerve extends SubsystemBase {
 
         if (translation.getNorm() < swerve_min_manual_translation * Constants.BaseFalconSwerveConstants.maxSpeed) translation = new Translation2d();
         if (Math.abs(rotation) < swerve_min_manual_rotation * Constants.BaseFalconSwerveConstants.maxAngularVelocity) rotation = 0;
+
+        rotation *= -1; // oops
 
         SwerveModuleState[] swerveModuleStates =
             Constants.BaseFalconSwerveConstants.swerveKinematics.toSwerveModuleStates(

@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.autonomous.*;
+import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.defaultCommands.*;
 import frc.robot.subsystems.*;
 
@@ -42,6 +43,10 @@ public class RobotContainer {
 
     /* Subsystems */
     private final Swerve swerve = new Swerve();
+    private final Intake intake = new Intake();
+    private final Conveyor conveyor = new Conveyor();
+    private final Pivot pivot = new Pivot();
+    private final Hang hang = new Hang();
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -91,6 +96,20 @@ public class RobotContainer {
             );
         }
 
+        pivot.setDefaultCommand(
+            new TeleopPivot(
+                pivot, 
+                () -> driver_TFlightHotasOne.getRawAxis(2)
+            )
+        );
+
+        hang.setDefaultCommand(
+            new TeleopHang(
+                hang, 
+                () -> driver_TFlightHotasOne.getRawAxis(6)
+            )
+        );
+
         configureButtonBindings();
         configureNamedCommands();
     }
@@ -106,8 +125,10 @@ public class RobotContainer {
         terminateCommands.toggleOnTrue(new InstantCommand());
 
         /* Driver Triggers */
-        zeroGyro.onTrue(new InstantCommand());
+        zeroGyro.onTrue(new InstantCommand(() -> swerve.zeroGyro(0)));
         makeX.onTrue(new InstantCommand());
+
+        new JoystickButton(driver_TFlightHotasOne, 5).toggleOnTrue(new IntakeCommand(intake, conveyor));
         
         /* Operator Triggers */
 

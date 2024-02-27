@@ -3,6 +3,7 @@ package frc.robot;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -18,10 +19,10 @@ public final class Constants {
 
     public static final class TuningConstants { // Basically stuff you have to tune
 
-        public static final double CANCoder0_zero = 250.75, // Front Left
-                                   CANCoder1_zero = 326.51, // Front Right
-                                   CANCoder2_zero = 318.16, // Back Left
-                                   CANCoder3_zero = 137.98; // Back Right
+        public static final double CANCoder0_zero = 142.03, // Front Left
+                                   CANCoder1_zero = -17.31, // Front Right
+                                   CANCoder2_zero = 139.31, // Back Left
+                                   CANCoder3_zero = -146.39; // Back Right
         
         /* Swerve Drive Constants */
 
@@ -55,9 +56,21 @@ public final class Constants {
         
         /* Pivot Constants */
 
-        public static final double pivot_p = 0.045, 
-                                   pivot_i = 0, 
-                                   pivot_e = 1.1;
+        public static final double pivot_p = 0.0, // temporarily disabled
+                                   pivot_i = 0.0, 
+                                   pivot_e = 1.0;
+        
+        /* Hang Constants */
+        
+        public static final double hang_p = 0.0, // temporarily disabled
+                                   hang_i = 0.0, 
+                                   hang_e = 1.0;
+        
+        /* Intaking Constants */
+
+        public static final double min_intake_time = 1,   // shouldn't be necessary but whatever
+                                   add_intake_time = 0.2; // how much we intake after the note has passed through
+
     }
 
     public static final class Buttons {
@@ -259,8 +272,8 @@ public final class Constants {
 
         /* Back Right Module - Module 3 */
         public static final class Mod3 {
-            public static final int driveMotorID = 10;
-            public static final int angleMotorID = 11;
+            public static final int driveMotorID = 11; // bc they were messed up from the can id thing
+            public static final int angleMotorID = 10;
             public static final int canCoderID = 12;
             public static final Rotation2d angleOffset = Rotation2d.fromDegrees(TuningConstants.CANCoder3_zero);
             public static final SwerveModuleConstants constants = 
@@ -299,14 +312,152 @@ public final class Constants {
     }
     
     public static final class IntakeConstants {
+
+        /* CAN IDs */
+
+        public static final int intake_motor_id = 20; // Neo
         
+        /* Motor Parameters */
+
+        public static final MotorType intake_motor_type = MotorType.kBrushless;
+        
+        public static final boolean intake_motor_invert = false, 
+                                    intake_motor_brake = true;
+        
+        public static final int intake_motor_max_continuous_current = 10;
+
+        public static final double intake_motor_max_current = 25, 
+                                   intake_motor_max_percent_output_per_second = 3;
+
+        /* Subsystem Variables */
+
+        public static final double intake_motor_speed = 0.6;
+        
+    }
+
+    public static final class ConveyorConstants {
+
+        /* CAN IDs */
+
+        public static final int conveyor_motor_id = 19; // Neo
+        
+        /* Motor Parameters */
+        
+        public static final MotorType conveyor_motor_type = MotorType.kBrushless;
+
+        public static final boolean conveyor_motor_invert = false, 
+                                    conveyor_motor_brake = true;
+        
+        public static final int conveyor_motor_max_continuous_current = 10;
+
+        public static final double conveyor_motor_max_current = 25, 
+                                           
+                                   conveyor_motor_max_percent_output_per_second = 3;
+
+        /* Subsystem Variables */
+
+        public static final double conveyor_intake_speed = 0.3, 
+                                   conveyor_outtake_speed = 0.8;
+
     }
 
     public static final class PivotConstants {
 
+        /* CAN IDs */
+
+        public static final int pivot_motor_ID = 13; // Falcon 500
+
+        /* Motor Parameters */
+
+        public static final boolean pivot_motor_invert = false, 
+                                    pivot_motor_brake = true, 
+                                    pivot_motor_invert_sensor = false;
+                
+        public static final double pivot_motor_max_continuous_current = 10,
+                                   pivot_motor_max_current = 15, 
+
+                                   pivot_motor_min_percent_output = 0.02, 
+                                   pivot_motor_max_percent_output = 0.95, 
+                                   
+                                   pivot_motor_max_percent_output_per_second = 3, 
+                                   
+                                   pivot_motor_gear_ratio = (5.0 / 1.0) * (5.0 / 1.0) * (48.0 / 21.0), 
+                                   
+                                   pivot_motor_calibration_time = 0.25;
+
+        /* Subsystem Variables */
+
+        public static final double starting_angle = -8.265688, 
+                                   intake_angle = 57.607635, // 60 for V1, but this doesn't really matter anymore
+                                   amp_angle = 129.056487;
+
     }
 
-    public static final class ShooterConstants {
+    public static final class FlywheelConstants {
+
+        /* CAN IDs */
+
+        public static final int top_flywheel_motor_ID = 16, 
+                                bottom_flywheel_motor_ID = 17;
+
+        /* Motor Parameters */
+
+        public static final boolean flywheel_motors_invert = false, 
+                                    flywheel_motors_brake = true, 
+                                    flywheel_motors_invert_sensor = false;
+                
+        public static final double flywheel_motors_max_continuous_current = 10,
+                                   flywheel_motors_max_current = 15, 
+
+                                   flywheel_motors_min_percent_output = 0.02, 
+                                   flywheel_motors_max_percent_output = 0.95, 
+                                   
+                                   flywheel_motors_max_percent_output_per_second = 3, 
+                                   
+                                   flywheel_motors_gear_ratio = 1.0, 
+                                   
+                                   flywheel_motors_calibration_time = 0.25;
+
+        /* Subsystem Variables */
+
+        public static final boolean flywheel_motors_opposite = false; // they should turn in the same direction
+
+        public static final double flywheel_outtake_power = 0.95, 
+                                   flywheel_amp_power = 0.25;
 
     }
+
+    public static final class HangConstants {
+
+        /* CAN IDs */
+
+        public static final int left_hang_motor_ID = 14,
+                                right_hang_motor_ID = 15; // Falcon 500
+
+        /* Motor Parameters */
+
+        public static final boolean hang_motors_invert = false, 
+                                    hang_motors_brake = true, 
+                                    hang_motors_invert_sensor = false;
+                
+        public static final double hang_motors_max_continuous_current = 10,
+                                   hang_motors_max_current = 15, 
+
+                                   hang_motors_min_percent_output = 0.02, 
+                                   hang_motors_max_percent_output = 0.95, 
+                                   
+                                   hang_motors_max_percent_output_per_second = 3, 
+                                   
+                                   hang_motors_gear_ratio = 1.0, // doesn't really matter because its a linear relationship
+                                   
+                                   hang_motors_calibration_time = 0.25;
+
+        /* Subsystem Variables */
+        
+        public static final boolean hang_motors_opposite = true; // they should turn in opposite directions
+
+        public static final double hanging_position = 4000;
+
+    }
+
 }
