@@ -39,20 +39,4 @@ public class Shooter extends SubsystemBase {
   public void conveyorOff() {
     io.setConveyorPower(0);
   }
-
-  public Command shootersOnCommand() {
-    return new InstantCommand(this::shootersOn, this);
-  }
-
-  public Command shootersOffCommand() {
-    return new InstantCommand(this::shootersOff, this);
-  }
-
-  public Command conveyorOnCommand() {
-    return new InstantCommand(this::conveyorOn, this);
-  }
-
-  public Command conveyorOffCommand() {
-    return new InstantCommand(this::conveyorOff, this);
-  }
 }

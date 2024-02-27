@@ -150,12 +150,12 @@ public class RobotContainer {
     var stopWithXButton = new Trigger(() -> driver.getRawButton(2));
     stopWithXButton.onTrue(Commands.runOnce(drive::stopWithX, drive));
 
-    operator.a().toggleOnTrue(intake.onCommand());
-    operator.b().toggleOnTrue(intake.offCommand());
-    operator.rightBumper().toggleOnTrue(shooter.shootersOnCommand());
-    operator.leftBumper().toggleOnTrue(shooter.shootersOffCommand());
-    operator.x().toggleOnTrue(shooter.conveyorOnCommand());
-    operator.y().toggleOnTrue(shooter.conveyorOffCommand());
+    operator.a().toggleOnTrue(Commands.runOnce(intake::on, intake));
+    operator.b().toggleOnTrue(Commands.runOnce(intake::off, intake));
+    operator.rightBumper().toggleOnTrue(Commands.runOnce(shooter::shootersOn, shooter));
+    operator.leftBumper().toggleOnTrue(Commands.runOnce(shooter::shootersOff, shooter));
+    operator.x().toggleOnTrue(Commands.runOnce(shooter::conveyorOn, shooter));
+    operator.y().toggleOnTrue(Commands.runOnce(shooter::conveyorOff, shooter));
 
     pivot.setDefaultCommand(
         PivotCommands.basicOperatorControl(
