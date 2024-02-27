@@ -49,6 +49,8 @@ public final class Constants {
     public static final int intakeCANId = 20;
 
     public static final double intakeOnPower = 0.65;
+    /** how much time after the note is completely thorugh the intake that it's at the end of the conveyor */
+    public static final double intakeToConveyorTime = 0.2;
   }
 
   public static class PivotConstants {
@@ -62,7 +64,7 @@ public final class Constants {
     public static final Rotation2d pivotStart = Rotation2d.fromRadians(-0.13969988112131737);
     public static final Rotation2d pivotEnd = Rotation2d.fromDegrees(129.056487);
     /** spot where the intake conveyor can take a note from the intake */
-    public static final Rotation2d intakePosition = Rotation2d.fromDegrees(25);
+    public static final Rotation2d intakePosition = Rotation2d.fromDegrees(60);
     // less than this angle, we won't be able to shoot a note
     public static final Rotation2d minShootingAngle = Rotation2d.fromDegrees(25);
 

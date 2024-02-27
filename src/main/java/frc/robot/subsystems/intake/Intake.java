@@ -38,4 +38,8 @@ public class Intake extends SubsystemBase {
   public Command offCommand() {
     return new InstantCommand(this::off, this);
   }
+
+  public double getCurrent() {
+    return inputs.current;
+  }
 }
