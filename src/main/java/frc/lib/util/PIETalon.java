@@ -4,6 +4,7 @@ import java.util.function.DoubleSupplier;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj.Timer;
@@ -17,14 +18,14 @@ public class PIETalon {
     private final double calibrationTime, maxPercentOutputPerSecond, multiplier;
     private double minPosition, maxPosition, previousTime, time, lmtPosition, prevPower;
 
-    public PIETalon(
-        int CANID, double continuousCurrentLimit, double peakCurrentLimit, 
-        boolean brake, boolean inverted, double startingAngle, double minPosition, double maxPosition, double minPercentOutput, double maxPercentOutput, 
+    public PIETalon(int CANID, double continuousCurrentLimit, double peakCurrentLimit, boolean brake, boolean clockwise_positive, 
+        double startingAngle, double minPosition, double maxPosition, double minPercentOutput, double maxPercentOutput, 
         double maxPercentOutputPerSecond, double gear_ratio, boolean invertEncoder, double calibrationTime, double kP, double kI, double kE
     ) {
 
         TalonFXConfiguration configuration = new TalonFXConfiguration();
 
+        configuration.MotorOutput.Inverted = clockwise_positive ? InvertedValue.Clockwise_Positive : InvertedValue.CounterClockwise_Positive;
         configuration.MotorOutput.NeutralMode = brake ? NeutralModeValue.Brake : NeutralModeValue.Coast;
 
         configuration.CurrentLimits.SupplyCurrentLimitEnable = true;
@@ -39,15 +40,12 @@ public class PIETalon {
 
         motor = new TalonFX(CANID);
 
-        multiplier = (invertEncoder ? -1 : 1) * gear_ratio / 360.0; // 2048 per revolution and its in degrees
-
         motor.getConfigurator().apply(new TalonFXConfiguration());
         motor.getConfigurator().apply(configuration);
-
-        motor.setInverted(inverted);
         
         Timer.delay(1.0);
         
+        multiplier = (invertEncoder ? -1 : 1) * gear_ratio / 360.0; // 2048 per revolution and its in degrees
         motor.setPosition(startingAngle * multiplier);
 
         this.minPosition = minPosition;

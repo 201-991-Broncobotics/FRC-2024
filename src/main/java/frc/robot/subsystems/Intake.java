@@ -12,7 +12,7 @@ public class Intake extends SubsystemBase {
 
     public Intake() {
         intake_motor = new EasyCANSparkMax(intake_motor_id, intake_motor_type, intake_motor_max_continuous_current, 
-            intake_motor_max_current, intake_motor_invert, intake_motor_brake, intake_motor_max_percent_output_per_second);
+            intake_motor_max_current, intake_motor_clockwise_positive, intake_motor_brake, intake_motor_max_percent_output_per_second);
     }
 
     public void intake() {
@@ -27,6 +27,10 @@ public class Intake extends SubsystemBase {
 
     public double getCurrent() {
         return intake_motor.getCurrent();
+    }
+
+    public boolean isFree() {
+        return getCurrent() < intake_motor_free_current;
     }
 
     @Override

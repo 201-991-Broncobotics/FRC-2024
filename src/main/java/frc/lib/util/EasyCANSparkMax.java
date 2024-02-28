@@ -11,11 +11,11 @@ public class EasyCANSparkMax {
     private final CANSparkMax motor;
 
     public EasyCANSparkMax(int CANID, MotorType motorType, double continuousCurrentLimit, double peakCurrentLimit, 
-                           boolean invert, boolean brake, double max_percent_output_per_second) {
+                           boolean clockwise_positive, boolean brake, double max_percent_output_per_second) {
         motor = new CANSparkMax(CANID, motorType);
         
         motor.restoreFactoryDefaults();
-        motor.setInverted(invert);
+        motor.setInverted(clockwise_positive); // uninverted is counterclockwise positive
 
         Timer.delay(1.0);
         

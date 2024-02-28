@@ -13,8 +13,6 @@ public class IntakeCommand extends Command {
 
     private double starting_time = 0;
     private double finish_time = 0;
-    
-    private boolean not_ready_to_finish;
 
     public IntakeCommand(Intake intake, Conveyor conveyor) {
         this.intake = intake;
@@ -30,15 +28,11 @@ public class IntakeCommand extends Command {
 
         starting_time = Timer.getFPGATimestamp();
         finish_time = Timer.getFPGATimestamp() + add_intake_time;
-
-        not_ready_to_finish = true;
     }
 
     @Override
     public void execute() {
-        if (intake.getCurrent() < 10 && Timer.getFPGATimestamp() > starting_time + min_intake_time) {
-            not_ready_to_finish = false;
-        } if (not_ready_to_finish) {
+        if (!intake.isFree() || Timer.getFPGATimestamp() < starting_time + min_intake_time) {
             finish_time = Timer.getFPGATimestamp() + add_intake_time;
         }
     }

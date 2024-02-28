@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.autonomous.*;
 import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.OuttakeCommand;
+import frc.robot.commands.SetArmPosition;
 import frc.robot.commands.defaultCommands.*;
 import frc.robot.subsystems.*;
 
@@ -45,6 +47,7 @@ public class RobotContainer {
     private final Swerve swerve = new Swerve();
     private final Intake intake = new Intake();
     private final Conveyor conveyor = new Conveyor();
+    private final Flywheel flywheel = new Flywheel();
     private final Pivot pivot = new Pivot();
     private final Hang hang = new Hang();
 
@@ -99,7 +102,7 @@ public class RobotContainer {
         pivot.setDefaultCommand(
             new TeleopPivot(
                 pivot, 
-                () -> driver_TFlightHotasOne.getRawAxis(2)
+                () -> -driver_TFlightHotasOne.getRawAxis(2) // WHY IS IT SO SPECIAL ED
             )
         );
 
@@ -129,6 +132,9 @@ public class RobotContainer {
         makeX.onTrue(new InstantCommand());
 
         new JoystickButton(driver_TFlightHotasOne, 5).toggleOnTrue(new IntakeCommand(intake, conveyor));
+        new JoystickButton(driver_TFlightHotasOne, 6).toggleOnTrue(new OuttakeCommand(flywheel, conveyor));
+
+        new JoystickButton(driver_TFlightHotasOne, 8).toggleOnTrue(new SetArmPosition(pivot, 60));
         
         /* Operator Triggers */
 

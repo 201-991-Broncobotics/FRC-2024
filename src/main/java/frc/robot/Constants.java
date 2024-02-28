@@ -19,10 +19,12 @@ public final class Constants {
 
     public static final class TuningConstants { // Basically stuff you have to tune
 
-        public static final double CANCoder0_zero = 142.03, // Front Left
-                                   CANCoder1_zero = -17.31, // Front Right
-                                   CANCoder2_zero = 139.31, // Back Left
-                                   CANCoder3_zero = -146.39; // Back Right
+        /* For these, align all the wheels so their gears are facing away from the intake */
+
+        public static final double CANCoder0_zero = 179.65, // Front Left
+                                   CANCoder1_zero = 157.61, // Front Right
+                                   CANCoder2_zero = -127.01, // Back Left
+                                   CANCoder3_zero = -30.55; // Back Right
         
         /* Swerve Drive Constants */
 
@@ -56,9 +58,9 @@ public final class Constants {
         
         /* Pivot Constants */
 
-        public static final double pivot_p = 0.0, // temporarily disabled
-                                   pivot_i = 0.0, 
-                                   pivot_e = 1.0;
+        public static final double pivot_p = 0.01, // temporarily disabled
+                                   pivot_i = 0, 
+                                   pivot_e = 1.1;
         
         /* Hang Constants */
         
@@ -68,8 +70,13 @@ public final class Constants {
         
         /* Intaking Constants */
 
-        public static final double min_intake_time = 1,   // shouldn't be necessary but whatever
-                                   add_intake_time = 0.2; // how much we intake after the note has passed through
+        public static final double min_intake_time = 0.5,   // shouldn't be necessary but whatever
+                                   add_intake_time = 0.05; // how much we intake after the note has passed through
+        
+        /* Outtaking Constants */
+
+        public static final double min_flywheel_acceleration_time = 1.5, // also shouldn't be necessary but whatever
+                                   min_outtake_time = 1; 
 
     }
 
@@ -84,9 +91,9 @@ public final class Constants {
 
         /* Which is which */
 
-        public static final int joystick_usb_port = 2, 
-                                driver_usb_port = 1, 
-                                operator_usb_port = 0;
+        public static final int joystick_usb_port = 0, 
+                                driver_usb_port = 2, 
+                                operator_usb_port = 1;
 
         /* Driver Buttons */
 
@@ -245,7 +252,7 @@ public final class Constants {
             public static final int driveMotorID = 1;
             public static final int angleMotorID = 2;
             public static final int canCoderID = 3;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(TuningConstants.CANCoder0_zero);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(TuningConstants.CANCoder0_zero + 90);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -255,7 +262,7 @@ public final class Constants {
             public static final int driveMotorID = 4;
             public static final int angleMotorID = 5;
             public static final int canCoderID = 6;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(TuningConstants.CANCoder1_zero);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(TuningConstants.CANCoder1_zero + 90);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -265,7 +272,7 @@ public final class Constants {
             public static final int driveMotorID = 7;
             public static final int angleMotorID = 8;
             public static final int canCoderID = 9;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(TuningConstants.CANCoder2_zero);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(TuningConstants.CANCoder2_zero + 90);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -275,7 +282,7 @@ public final class Constants {
             public static final int driveMotorID = 11; // bc they were messed up from the can id thing
             public static final int angleMotorID = 10;
             public static final int canCoderID = 12;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(TuningConstants.CANCoder3_zero);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(TuningConstants.CANCoder3_zero + 90);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -321,13 +328,16 @@ public final class Constants {
 
         public static final MotorType intake_motor_type = MotorType.kBrushless;
         
-        public static final boolean intake_motor_invert = false, 
+        public static final boolean intake_motor_clockwise_positive = false, 
                                     intake_motor_brake = true;
         
-        public static final int intake_motor_max_continuous_current = 10;
+        public static final int intake_motor_max_continuous_current = 15;
 
         public static final double intake_motor_max_current = 25, 
-                                   intake_motor_max_percent_output_per_second = 3;
+
+                                   intake_motor_max_percent_output_per_second = 3, 
+
+                                   intake_motor_free_current = 10;
 
         /* Subsystem Variables */
 
@@ -345,14 +355,16 @@ public final class Constants {
         
         public static final MotorType conveyor_motor_type = MotorType.kBrushless;
 
-        public static final boolean conveyor_motor_invert = false, 
+        public static final boolean conveyor_motor_clockwise_positive = false, 
                                     conveyor_motor_brake = true;
         
         public static final int conveyor_motor_max_continuous_current = 10;
 
-        public static final double conveyor_motor_max_current = 25, 
+        public static final double conveyor_motor_max_current = 15, 
                                            
-                                   conveyor_motor_max_percent_output_per_second = 3;
+                                   conveyor_motor_max_percent_output_per_second = 3,
+
+                                   conveyor_motor_free_current = 8;
 
         /* Subsystem Variables */
 
@@ -369,27 +381,31 @@ public final class Constants {
 
         /* Motor Parameters */
 
-        public static final boolean pivot_motor_invert = false, 
-                                    pivot_motor_brake = true, 
+        public static final boolean pivot_motor_clockwise_positive = true, 
+                                    pivot_motor_brake = false, 
                                     pivot_motor_invert_sensor = false;
                 
-        public static final double pivot_motor_max_continuous_current = 10,
-                                   pivot_motor_max_current = 15, 
+        public static final double pivot_motor_max_continuous_current = 15,
+                                   pivot_motor_max_current = 25, 
 
                                    pivot_motor_min_percent_output = 0.02, 
                                    pivot_motor_max_percent_output = 0.95, 
                                    
-                                   pivot_motor_max_percent_output_per_second = 3, 
+                                   pivot_motor_max_percent_output_per_second = 10, 
                                    
-                                   pivot_motor_gear_ratio = (5.0 / 1.0) * (5.0 / 1.0) * (48.0 / 21.0), 
+                                   pivot_motor_gear_ratio = (5.0 / 1.0) * (5.0 / 1.0) * (34.0 / 10.0), 
                                    
-                                   pivot_motor_calibration_time = 0.25;
+                                   pivot_motor_calibration_time = 0.2,
+
+                                   pivot_motor_free_current = 10;
 
         /* Subsystem Variables */
 
-        public static final double starting_angle = -8.265688, 
-                                   intake_angle = 57.607635, // 60 for V1, but this doesn't really matter anymore
-                                   amp_angle = 129.056487;
+        public static final double starting_angle = -9.255644, // all in degrees
+                                   intake_angle = 59.006106, // 60 for V1, but this doesn't really matter anymore
+                                   amp_angle = 125.388397, 
+                                   
+                                   pivot_angle_tolerance = 5;
 
     }
 
@@ -398,16 +414,16 @@ public final class Constants {
         /* CAN IDs */
 
         public static final int top_flywheel_motor_ID = 16, 
-                                bottom_flywheel_motor_ID = 17;
+                                bottom_flywheel_motor_ID = 17; // Falcon 500
 
         /* Motor Parameters */
 
-        public static final boolean flywheel_motors_invert = false, 
+        public static final boolean flywheel_motors_clockwise_positive = true, 
                                     flywheel_motors_brake = true, 
                                     flywheel_motors_invert_sensor = false;
                 
-        public static final double flywheel_motors_max_continuous_current = 10,
-                                   flywheel_motors_max_current = 15, 
+        public static final double flywheel_motors_max_continuous_current = 15,
+                                   flywheel_motors_max_current = 25, 
 
                                    flywheel_motors_min_percent_output = 0.02, 
                                    flywheel_motors_max_percent_output = 0.95, 
@@ -416,7 +432,9 @@ public final class Constants {
                                    
                                    flywheel_motors_gear_ratio = 1.0, 
                                    
-                                   flywheel_motors_calibration_time = 0.25;
+                                   flywheel_motors_calibration_time = 0.25,
+
+                                   flywheel_motors_free_current = 10;
 
         /* Subsystem Variables */
 
@@ -436,12 +454,12 @@ public final class Constants {
 
         /* Motor Parameters */
 
-        public static final boolean hang_motors_invert = false, 
+        public static final boolean hang_motors_clockwise_positive = false, // Literally does not matter
                                     hang_motors_brake = true, 
                                     hang_motors_invert_sensor = false;
                 
-        public static final double hang_motors_max_continuous_current = 10,
-                                   hang_motors_max_current = 15, 
+        public static final double hang_motors_max_continuous_current = 15,
+                                   hang_motors_max_current = 25, 
 
                                    hang_motors_min_percent_output = 0.02, 
                                    hang_motors_max_percent_output = 0.95, 
@@ -450,13 +468,15 @@ public final class Constants {
                                    
                                    hang_motors_gear_ratio = 1.0, // doesn't really matter because its a linear relationship
                                    
-                                   hang_motors_calibration_time = 0.25;
+                                   hang_motors_calibration_time = 0.25, 
+                                   
+                                   hang_motors_free_current = 10; // should be 100% unnecessary lmao
 
         /* Subsystem Variables */
         
         public static final boolean hang_motors_opposite = true; // they should turn in opposite directions
 
-        public static final double hanging_position = 4000;
+        public static final double hanging_position = 16000;
 
     }
 
