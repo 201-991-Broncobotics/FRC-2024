@@ -58,13 +58,6 @@ public class RobotContainer {
   public RobotContainer() {
     switch (Constants.currentMode) {
       case REAL:
-            //   drive =
-            // new Drive(
-            //     new GyroIO() {},
-            //     new ModuleIOSim(),
-            //     new ModuleIOSim(),
-            //     new ModuleIOSim(),
-            //     new ModuleIOSim());
         drive =
             new Drive(
                 new GyroIOPigeon2(true),
@@ -79,24 +72,6 @@ public class RobotContainer {
         limelight = new Limelight(new LimelightIOReal(), drive);
         hang = new Hang(new HangIOReal());
         
-
-        break;
-
-      case SIM:
-        // Sim robot, instantiate physics sim IO implementations
-        drive =
-            new Drive(
-                new GyroIO() {},
-                new ModuleIOSim(),
-                new ModuleIOSim(),
-                new ModuleIOSim(),
-                new ModuleIOSim());
-
-        intake = new Intake(new IntakeIOSim());
-        pivot = new Pivot(new PivotIOSim());
-        shooter = new Shooter(new ShooterIOSim());
-        limelight = new Limelight(new LimelightIO() {}, drive);
-        hang = new Hang(new HangIOSim());
 
         break;
 
@@ -122,12 +97,6 @@ public class RobotContainer {
     // Set up auto routines
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
 
-    // Set up feedforward characterization
-    autoChooser.addOption(
-        "Drive FF Characterization",
-        new FeedForwardCharacterization(
-            drive, drive::runCharacterizationVolts, drive::getCharacterizationVelocity));
-
     // Configure the button bindings
     configureButtonBindings();
     configureNamedCommands();
@@ -148,7 +117,7 @@ public class RobotContainer {
             () -> -driver.getRawAxis(5)));
 
     var stopWithXButton = new Trigger(() -> driver.getRawButton(2));
-    stopWithXButton.onTrue(Commands.runOnce(drive::stopWithX, drive));
+    stopWithXButton.onTrue(Commands.runOnce(drive::makeX, drive));
 
     operator.a().toggleOnTrue(new SmartIntake(shooter, intake));
     operator.b().toggleOnTrue(Commands.runOnce(intake::off, intake));

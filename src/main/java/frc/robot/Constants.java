@@ -29,22 +29,19 @@ public final class Constants {
   public static enum Mode {
     /** Running on a real robot. */
     REAL,
-    /** Running a physics simulator. */
-    SIM,
     /** Replaying from a log file. */
     REPLAY
   }
 
   public static class DriveConstants {
     // Front Left, Front Right, Back Left, Back Right
-    // IN RADIANS
-    public static final double[] moduleAngles = new double[] {-2.46, -0.79, 2.45, -1.38};
+    // IN DEGREES
+    public static final double[] moduleAngles = new double[] {-9.49, -39.99, 50.18, 145.63};
 
-    public static final int[] turnCanIds = new int[] {2, 5, 8, 11};
-    public static final int[] driveCanIds = new int[] {1, 4, 7, 10};
+    public static final int[] turnCanIds = new int[] {2, 5, 8, 10};
+    public static final int[] driveCanIds = new int[] {1, 4, 7, 11};
     public static final int[] canCoderIds = new int[] {3, 6, 9, 12};
   }
-
   public static class IntakeConstants {
     public static final int intakeCANId = 20;
 
@@ -84,4 +81,52 @@ public final class Constants {
     public static final int leaderCANId = 14;
     public static final int followerCANId = 15;
   }
+
+  public static class TuningConstants {
+        /* Swerve Drive Constants */
+
+        public static final double drive_motor_p = 0.05,
+                                   drive_static_voltage = 0.32, 
+                                   drive_equilibrium_voltage = 1.51, 
+                                   drive_acceleration_voltage = 0.27, // SYSID values: KS, KV, KA; they are automatically divided by 12 later
+                                   max_linear_speed = 10, // feet per second; theoretical max is 13.5
+                                   max_angular_speed = 225; // degrees per second; theoretical max is theoretical maximum is max_linear_speed * 46.6436741705 which is roughly 629.6896013018
+
+        /* PathPlanner PID Constants */
+
+        public static final double autonomous_max_linear_speed = 8,
+                                   autonomous_ramp_up_time_linear = 2.5, // in seconds to reach max 
+                                   autonomous_max_angular_speed = 180, 
+                                   autonomous_ramp_up_time_angular = 1.5,
+                                   autonomous_translation_p_controller = 2, 
+                                   autonomous_angle_p_controller = 4;
+        
+        /* Driving PID Constants */
+
+        public static final double teleop_angle_p = 0.165,
+                                   teleop_angle_i = 0,
+                                   teleop_angle_e = 1.35,
+                                   teleop_translation_p = 0.4, 
+                                   teleop_translation_i = 0,
+                                   teleop_translation_e = 1;
+        
+        public static final double turn_slow_ratio = 2; // because slowing down rotation and translation by the same factor is insane
+                                    // ex. it its 4, then 0.6 translation ratio goes to a 0.9 turning ratio
+        
+  }
+
+  public static final class TeleopSwerveConstants {
+        public static final double swerve_min_pid_rotation = 0.05,
+                                   swerve_max_pid_rotation = 0.8, 
+                                   swerve_calibration_time = 0.5, 
+                                   swerve_min_manual_translation = 0.05, 
+                                   swerve_min_manual_rotation = 0.02,
+
+                                   teleop_swerve_slow_factor = 0.5, 
+                                   
+                                   vision_tolerance = 15, 
+                                   
+                                   teleop_rotation_percent = 0.75, 
+                                   swerve_bumper_turn_sensitivity = 0.35; // ratio of teleop swerve rotation speed vs maximum swerve rotation speed
+    }
 }

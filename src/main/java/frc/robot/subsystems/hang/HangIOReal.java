@@ -41,7 +41,7 @@ public class HangIOReal implements HangIO {
     followerPosition = follower.getPosition();
 
     // don't really need this to update that often b/c it's just for data visualization
-    BaseStatusSignal.setUpdateFrequencyForAll(100.0, leaderCurrent, followerCurrent, followerPosition, leaderPosition);
+    BaseStatusSignal.setUpdateFrequencyForAll(10.0, leaderCurrent, followerCurrent, followerPosition, leaderPosition);
     leader.optimizeBusUtilization(1.0);
     follower.optimizeBusUtilization(1.0);
 

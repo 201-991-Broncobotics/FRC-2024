@@ -48,7 +48,7 @@ public class PivotIOReal implements PivotIO {
     current = pivotMotor.getTorqueCurrent();
     voltage = pivotMotor.getMotorVoltage();
 
-    BaseStatusSignal.setUpdateFrequencyForAll(100.0, position, current, voltage);
+    BaseStatusSignal.setUpdateFrequencyForAll(10.0, position, current, voltage);
     pivotMotor.optimizeBusUtilization(1.0);
 
     request = new PositionDutyCycle(position.getValueAsDouble()).withSlot(0);
