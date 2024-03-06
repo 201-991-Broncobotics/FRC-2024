@@ -377,7 +377,7 @@ public final class Constants {
 
         /* CAN IDs */
 
-        public static final int pivot_motor_ID = 13; // Falcon 500
+        public static final int pivot_motor_ID = 13; // kraken
 
         /* Motor Parameters */
 

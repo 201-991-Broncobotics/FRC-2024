@@ -37,8 +37,6 @@ public class Robot extends TimedRobot implements Logged {
         // autonomous chooser on the dashboard.
         robotContainer = new RobotContainer();
 
-        Limelight.init();
-
         boolean fileOnly = false;
         boolean lazyLogging = false;
         Monologue.setupMonologue(this, "Robot", fileOnly, lazyLogging);
@@ -61,7 +59,7 @@ public class Robot extends TimedRobot implements Logged {
         
         // setFileOnly is used to shut off NetworkTables broadcasting for most logging calls.
         // Basing this condition on the connected state of the FMS is a suggestion only.
-        Monologue.setFileOnly(DriverStation.isFMSAttached());
+        // Monologue.setFileOnly(false);
         // This method needs to be called periodically, or no logging annotations will process properly.
         Monologue.updateAll();
     }

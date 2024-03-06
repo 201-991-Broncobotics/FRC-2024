@@ -18,11 +18,11 @@ public class Autonomous {
             switch ((int) temp[0]) {
                 case 0:
                     allianceString = "Blue";
-                    Limelight.setSide("blue");
+                    // Limelight.setSide("blue");
                     break;
                 case 1:
                     allianceString = "Red";
-                    Limelight.setSide("red");
+                    // Limelight.setSide("red");
                     break;
             }
             switch ((int) temp[1]) {

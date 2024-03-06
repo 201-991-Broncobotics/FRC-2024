@@ -51,6 +51,7 @@ public class RobotContainer {
     private final Flywheel flywheel = new Flywheel();
     private final Pivot pivot = new Pivot();
     private final Hang hang = new Hang();
+    private final Limelight limelight = new Limelight(swerve);
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {

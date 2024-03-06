@@ -4,6 +4,7 @@ import frc.lib.util.PIECalculator;
 import frc.robot.Constants;
 import frc.robot.Variables;
 import monologue.Logged;
+import monologue.Annotations.Log;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -15,11 +16,13 @@ import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 
+import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -204,6 +207,7 @@ public class Swerve extends SubsystemBase implements Logged {
         }
     }
 
+    @Log.NT
     public Pose2d getPose() {
         return poseEstimator.getEstimatedPosition();
     }
@@ -243,24 +247,6 @@ public class Swerve extends SubsystemBase implements Logged {
     public void periodic() {
         poseEstimator.updateWithTime(Timer.getFPGATimestamp(), getGyroYaw(), getModulePositions());
 
-        Pose2d vision_estimate = Limelight.getRobotPosition();
-
-        log("vision_pose", vision_estimate);
-        log("vision_heading", vision_estimate.getRotation());
-
-        if (vision_estimate.getTranslation().getNorm() > 0.1 && (Math.abs(normalizeAngle(getGyroYaw().getDegrees() - vision_estimate.getRotation().getDegrees())) < vision_tolerance)) {
-            poseEstimator.addVisionMeasurement(vision_estimate, Timer.getFPGATimestamp() - Limelight.getLatency());
-            log("vision_status", "used");
-        } else if (vision_estimate.getTranslation().getNorm() > 0.1) {
-            log("vision_status", "not_used");
-        } else {
-            log("vision_status", "none");
-        }
-
-        log("gyro_yaw", getGyroYaw());
-        log("pose", getPose());
-        log("pose_yaw", getHeading());
-
         double angle_current = 0;
         double drive_current = 0;
 
@@ -283,4 +269,9 @@ public class Swerve extends SubsystemBase implements Logged {
     public void teleopInit() {
         changeHeading(0);
     }
+
+    public void addVisionMeasurement(double xyStds, double degStds, Pose2d pose, double latency) {
+    poseEstimator.addVisionMeasurement(pose, latency, VecBuilder.fill(xyStds, xyStds, Units.degreesToRadians(degStds)));
+  }
+
 }
