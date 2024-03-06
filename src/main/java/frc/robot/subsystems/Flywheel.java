@@ -1,12 +1,12 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.util.PIETalon;
+import monologue.Logged;
 
 import static frc.robot.Constants.FlywheelConstants.*;
 
-public class Flywheel extends SubsystemBase {
+public class Flywheel extends SubsystemBase implements Logged {
 
     private PIETalon top_flywheel_motor;
     private PIETalon bottom_flywheel_motor;
@@ -54,6 +54,8 @@ public class Flywheel extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Flywheel Motor Current", getAverageCurrent());
+        log("average_current", getAverageCurrent());
+        log("top_current", top_flywheel_motor.getCurrent());
+        log("bottom_current", bottom_flywheel_motor.getCurrent());
     }
 }

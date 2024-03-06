@@ -53,7 +53,6 @@ public class Limelight { // Not technically a subsystem; everything should be st
     }
 
     public static Pose2d getRobotPosition() {
-
         SmartDashboard.putString("Limelight Ping", "" + Math.round(
             latency.getAsDouble() * 1000
         ) + " ms");

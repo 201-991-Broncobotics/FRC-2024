@@ -1,13 +1,15 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.util.PIETalon;
+import monologue.Logged;
 
 import static frc.robot.Constants.TuningConstants.*;
 import static frc.robot.Constants.PivotConstants.*;
 
-public class Pivot extends SubsystemBase {
+public class Pivot extends SubsystemBase implements Logged {
     
     private PIETalon pivot_motor;
 
@@ -35,20 +37,20 @@ public class Pivot extends SubsystemBase {
         pivot_motor.resetTarget();
     }
 
-    public void setTarget(double angle) {
-        pivot_motor.setTarget(angle);
+    public void setTarget(Rotation2d angle) {
+        pivot_motor.setTarget(angle.getDegrees());
     }
 
-    public double getTargetAngle() {
-        return pivot_motor.getTarget();
+    public Rotation2d getTargetAngle() {
+        return Rotation2d.fromDegrees(pivot_motor.getTarget());
     }
     
-    public double getPosition() {
-        return pivot_motor.getEncoderPosition();
+    public Rotation2d getPosition() {
+        return Rotation2d.fromDegrees(pivot_motor.getEncoderPosition());
     }
     
     public double getCurrentError() {
-        return getTargetAngle() - getPosition();
+        return getTargetAngle().getDegrees() - getPosition().getDegrees();
     }
 
     public boolean pidCloseEnough() {
@@ -61,7 +63,8 @@ public class Pivot extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Pivot Current", pivot_motor.getCurrent());
-        SmartDashboard.putNumber("Pivot Position", pivot_motor.getEncoderPosition());
+        log("Current", pivot_motor.getCurrent());
+        log("Position", pivot_motor.getEncoderPosition());
+        log("Target", pivot_motor.getTarget());
     }
 }

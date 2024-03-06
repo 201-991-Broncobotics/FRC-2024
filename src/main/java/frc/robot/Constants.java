@@ -393,7 +393,7 @@ public final class Constants {
                                    
                                    pivot_motor_max_percent_output_per_second = 10, 
                                    
-                                   pivot_motor_gear_ratio = (5.0 / 1.0) * (5.0 / 1.0) * (34.0 / 10.0), 
+                                   pivot_motor_gear_ratio = (5.0 / 1.0) * (9.0 / 1.0) * (34.0 / 10.0), 
                                    
                                    pivot_motor_calibration_time = 0.2,
 

@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import frc.lib.util.PIECalculator;
 import frc.robot.Constants;
 import frc.robot.Variables;
+import monologue.Logged;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -20,14 +21,13 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static frc.robot.Constants.TuningConstants.*;
 import static frc.robot.Constants.GeneralConstants.*;
 import static frc.robot.Constants.TeleopSwerveConstants.*;
 
-public class Swerve extends SubsystemBase {
+public class Swerve extends SubsystemBase implements Logged {
     public SwerveDrivePoseEstimator poseEstimator;
     public SwerveModule[] swerveModules;
     public Pigeon2 gyro;
@@ -245,40 +245,39 @@ public class Swerve extends SubsystemBase {
 
         Pose2d vision_estimate = Limelight.getRobotPosition();
 
+        log("vision_pose", vision_estimate);
+        log("vision_heading", vision_estimate.getRotation());
+
         if (vision_estimate.getTranslation().getNorm() > 0.1 && (Math.abs(normalizeAngle(getGyroYaw().getDegrees() - vision_estimate.getRotation().getDegrees())) < vision_tolerance)) {
             poseEstimator.addVisionMeasurement(vision_estimate, Timer.getFPGATimestamp() - Limelight.getLatency());
-            SmartDashboard.putString("Vision Pose", "(" + Math.round(vision_estimate.getTranslation().getX() * 100) / 100.0 + ", " + Math.round(vision_estimate.getTranslation().getY() * 100) / 100.0 + ")");
-            SmartDashboard.putString("Vision Heading", "" + Math.round(vision_estimate.getRotation().getDegrees() * 100) / 100.0 + " degrees");
+            log("vision_status", "used");
         } else if (vision_estimate.getTranslation().getNorm() > 0.1) {
-            SmartDashboard.putString("Vision Pose", "Vision estimate did not make sense");
-            SmartDashboard.putString("Vision Heading", "Vision estimate did not make sense");
+            log("vision_status", "not_used");
         } else {
-            SmartDashboard.putString("Vision Pose", "No vision estimate");
-            SmartDashboard.putString("Vision Heading", "No vision estimate");
+            log("vision_status", "none");
         }
 
-        SmartDashboard.putNumber("Pigeon Yaw", getGyroYaw().getDegrees());
-        SmartDashboard.putNumber("Pose Estimator Yaw ", getHeading().getDegrees());
+        log("gyro_yaw", getGyroYaw());
+        log("pose", getPose());
+        log("pose_yaw", getHeading());
 
-        SmartDashboard.putString("Odometry Pose", "(" + Math.round(poseEstimator.getEstimatedPosition().getTranslation().getX() * 100) / 100.0 + ", " + Math.round(poseEstimator.getEstimatedPosition().getTranslation().getY() * 100) / 100.0 + ")");
-        SmartDashboard.putString("Odometry Heading", "" + Math.round(poseEstimator.getEstimatedPosition().getRotation().getDegrees() * 100) / 100.0 + " degrees");
-        
-        // TODO: Make a visualizer in pygame
-        
         double angle_current = 0;
         double drive_current = 0;
 
         for (SwerveModule mod : swerveModules) {
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCANcoder().getDegrees());
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated", mod.getPosition().angle.getDegrees());
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
+            String m = "Mod " + mod.moduleNumber;
+            log(m + " Cancoder", mod.getCANcoder());
+            log(m + " Integrated", mod.getPosition().angle);
+            log(m + " Velocity", mod.getState().speedMetersPerSecond);
+            log(m + " Angle Current", mod.getCurrents()[0]);
+            log(m + " Drive Current", mod.getCurrents()[1]);
             angle_current += mod.getCurrents()[0] / 4.0;
             drive_current += mod.getCurrents()[1] / 4.0;
         }
-
-        SmartDashboard.putNumber("Average Angle Motor Current", angle_current);
-        SmartDashboard.putNumber("Average Drive Motor Current", drive_current);
-        SmartDashboard.putString("Side", Variables.side);
+        
+        log("average_angle_current", angle_current);
+        log("average_drive_current", drive_current);
+        log("side", Variables.side);
     }
 
     public void teleopInit() {

@@ -3,11 +3,12 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.util.PIETalon;
+import monologue.Logged;
 
 import static frc.robot.Constants.TuningConstants.*;
 import static frc.robot.Constants.HangConstants.*;
 
-public class Hang extends SubsystemBase {
+public class Hang extends SubsystemBase implements Logged {
 
     private PIETalon left_hang_motor;
     private PIETalon right_hang_motor;
@@ -54,8 +55,9 @@ public class Hang extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Left Hang Motor Position", left_hang_motor.getEncoderPosition());
-        SmartDashboard.putNumber("Right Hang Motor Position", right_hang_motor.getEncoderPosition());
-        SmartDashboard.putNumber("Average Hang Motor Current", (left_hang_motor.getCurrent() + right_hang_motor.getCurrent()) / 2.0);
+        log("left_position", left_hang_motor.getEncoderPosition());
+        log("right_position", right_hang_motor.getEncoderPosition());
+        log("left_current", left_hang_motor.getCurrent());
+        log("right_current", right_hang_motor.getCurrent());
     }
 }

@@ -3,10 +3,11 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.util.EasyCANSparkMax;
+import monologue.Logged;
 
 import static frc.robot.Constants.ConveyorConstants.*;
 
-public class Conveyor extends SubsystemBase {
+public class Conveyor extends SubsystemBase implements Logged {
     private EasyCANSparkMax conveyor_motor;
 
     public Conveyor() {
@@ -40,6 +41,6 @@ public class Conveyor extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Conveyor Motor Current", getCurrent());
+        log("current", getCurrent());
     }
 }

@@ -3,10 +3,11 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.util.EasyCANSparkMax;
+import monologue.Logged;
 
 import static frc.robot.Constants.IntakeConstants.*;
 
-public class Intake extends SubsystemBase {
+public class Intake extends SubsystemBase implements Logged {
 
     private EasyCANSparkMax intake_motor;
 
@@ -35,6 +36,6 @@ public class Intake extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Intake Motor Current", getCurrent());
+        log("current", getCurrent());
     }
 }

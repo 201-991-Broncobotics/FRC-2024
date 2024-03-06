@@ -1,5 +1,6 @@
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -134,8 +135,7 @@ public class RobotContainer {
         new JoystickButton(driver_TFlightHotasOne, 5).toggleOnTrue(new IntakeCommand(intake, conveyor));
         new JoystickButton(driver_TFlightHotasOne, 6).toggleOnTrue(new OuttakeCommand(flywheel, conveyor));
 
-        new JoystickButton(driver_TFlightHotasOne, 8).toggleOnTrue(new SetArmPosition(pivot, 60));
-        
+        new JoystickButton(driver_TFlightHotasOne, 8).toggleOnTrue(new SetArmPosition(pivot, Rotation2d.fromDegrees(60)));
         /* Operator Triggers */
 
         /* Custom Triggers */
