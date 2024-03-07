@@ -285,9 +285,4 @@ public class Swerve extends SubsystemBase {
     public void teleopInit() {
         changeHeading(0);
     }
-
-    public void addVisionMeasurement(double xyStds, double degStds, Pose2d pose, double latency) {
-    poseEstimator.addVisionMeasurement(pose, latency, VecBuilder.fill(xyStds, xyStds, Units.degreesToRadians(degStds)));
-  }
-
 }
