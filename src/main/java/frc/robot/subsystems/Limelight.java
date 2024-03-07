@@ -1,12 +1,12 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.networktables.NetworkTableInstance;
-
-import static frc.robot.Constants.GeneralConstants.*;
 
 import frc.robot.Variables;
 
@@ -54,7 +54,7 @@ public class Limelight { // Not technically a subsystem; everything should be st
 
     public static Pose2d getRobotPosition() {
 
-        log("Limelight Ping", "" + Math.round(
+        SmartDashboard.putString("Limelight Ping", "" + Math.round(
             latency.getAsDouble() * 1000
         ) + " ms");
 

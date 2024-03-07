@@ -14,11 +14,13 @@ import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 
+import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -283,4 +285,9 @@ public class Swerve extends SubsystemBase {
     public void teleopInit() {
         changeHeading(0);
     }
+
+    public void addVisionMeasurement(double xyStds, double degStds, Pose2d pose, double latency) {
+    poseEstimator.addVisionMeasurement(pose, latency, VecBuilder.fill(xyStds, xyStds, Units.degreesToRadians(degStds)));
+  }
+
 }
