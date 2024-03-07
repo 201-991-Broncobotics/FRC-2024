@@ -32,19 +32,19 @@ public class Flywheel extends SubsystemBase {
     public void outtake() {
         top_flywheel_motor.power(flywheel_outtake_power);
         bottom_flywheel_motor.power(flywheel_outtake_power);
-        log("Outtake State", "Outtaking");
+        log("Flywheel State", "Outtaking");
     }
 
     public void amp() {
         top_flywheel_motor.power(flywheel_amp_power);
         bottom_flywheel_motor.power(flywheel_amp_power);
-        log("Outtake State", "Amping");
+        log("Flywheel State", "Amping");
     }
 
     public void stop() {
         top_flywheel_motor.power(0);
         bottom_flywheel_motor.power(0);
-        log("Outtake State", "Off");
+        log("Flywheel State", "Off");
     }
     
     public double getAverageCurrent() {
