@@ -1,10 +1,10 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.util.EasyCANSparkMax;
 
 import static frc.robot.Constants.IntakeConstants.*;
+import static frc.robot.Constants.GeneralConstants.*;
 
 public class Intake extends SubsystemBase {
 
@@ -17,12 +17,12 @@ public class Intake extends SubsystemBase {
 
     public void intake() {
         intake_motor.set(intake_motor_speed);
-        SmartDashboard.putString("Intake State", "Intaking");
+        log("Intake State", "Intaking");
     }
 
     public void stop() {
         intake_motor.set(0);
-        SmartDashboard.putString("Intake State", "Stopped");
+        log("Intake State", "Off");
     }
 
     public double getCurrent() {
@@ -35,6 +35,6 @@ public class Intake extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Intake Motor Current", getCurrent());
+        log("Intake Motor Current", getCurrent());
     }
 }

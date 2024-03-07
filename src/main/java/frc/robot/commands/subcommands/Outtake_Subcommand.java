@@ -1,13 +1,14 @@
-package frc.robot.commands;
+package frc.robot.commands.subcommands;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.Flywheel;
 
 import static frc.robot.Constants.TuningConstants.*;
 
-public class OuttakeCommand extends Command {
+public class Outtake_Subcommand extends Command {
     private Flywheel flywheel;
     private Conveyor conveyor;
 
@@ -15,7 +16,7 @@ public class OuttakeCommand extends Command {
     
     private boolean ready_to_outtake = false;
 
-    public OuttakeCommand(Flywheel flywheel, Conveyor conveyor) {
+    public Outtake_Subcommand(Flywheel flywheel, Conveyor conveyor) {
         this.flywheel = flywheel;
         this.conveyor = conveyor;
 
@@ -24,6 +25,12 @@ public class OuttakeCommand extends Command {
 
     @Override
     public void initialize() {
+
+        if (SmartDashboard.getNumber("Current Pivot Angle", 0) < min_outtake_angle) {
+            this.cancel();
+            return;
+        }
+
         flywheel.outtake(); // in theory we should wait for like 2-3 seconds
         conveyor.stop();
 

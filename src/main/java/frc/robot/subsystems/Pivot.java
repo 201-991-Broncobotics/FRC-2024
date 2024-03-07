@@ -1,10 +1,10 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.util.PIETalon;
 
 import static frc.robot.Constants.TuningConstants.*;
+import static frc.robot.Constants.GeneralConstants.*;
 import static frc.robot.Constants.PivotConstants.*;
 
 public class Pivot extends SubsystemBase {
@@ -61,7 +61,8 @@ public class Pivot extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Pivot Current", pivot_motor.getCurrent());
-        SmartDashboard.putNumber("Pivot Position", pivot_motor.getEncoderPosition());
+        log("Pivot Current", pivot_motor.getCurrent());
+        log("Current Pivot Angle", pivot_motor.getEncoderPosition());
+        log("Target Pivot Angle", pivot_motor.getTarget());
     }
 }

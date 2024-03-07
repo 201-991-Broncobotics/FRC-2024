@@ -12,6 +12,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.lib.util.COTSTalonFXSwerveConstants;
 import frc.lib.util.SwerveModuleConstants;
 
@@ -61,6 +62,13 @@ public final class Constants {
         public static final double pivot_p = 0.01, // temporarily disabled
                                    pivot_i = 0, 
                                    pivot_e = 1.1;
+        
+        public static final double starting_angle = -9.255644, // all in degrees
+                                   intake_angle = 59.006106, // 60 for V1, but this doesn't really matter anymore
+                                   amp_angle = 125.388397, 
+
+                                   min_outtake_angle = 25, 
+                                   pivot_guard_angle = 3; // so we dont smack against the walls. goal is to get this to 0 soon
         
         /* Hang Constants */
         
@@ -172,6 +180,36 @@ public final class Constants {
             double calculated_power = Math.pow(error, exponent) * multiplier;
 
             return (Math.abs(calculated_power) < min_power) ? 0 : calculated_power;
+        }
+
+        /** Returns false if the key already exists with a different type */
+        public static final boolean log(String key, String value) {
+            return SmartDashboard.putString(key, value);
+        }
+
+        /** Returns false if the key already exists with a different type */
+        public static final boolean log(String key, String[] value) {
+            return SmartDashboard.putStringArray(key, value);
+        }
+        
+        /** Returns false if the key already exists with a different type */
+        public static final boolean log(String key, double value) {
+            return SmartDashboard.putNumber(key, value);
+        }
+        
+        /** Returns false if the key already exists with a different type */
+        public static final boolean log(String key, double[] value) {
+            return SmartDashboard.putNumberArray(key, value);
+        }
+        
+        /** Returns false if the key already exists with a different type */
+        public static final boolean log(String key, boolean value) {
+            return SmartDashboard.putBoolean(key, value);
+        }
+        
+        /** Returns false if the key already exists with a different type */
+        public static final boolean log(String key, boolean[] value) {
+            return SmartDashboard.putBooleanArray(key, value);
         }
     }
 
@@ -328,7 +366,7 @@ public final class Constants {
 
         public static final MotorType intake_motor_type = MotorType.kBrushless;
         
-        public static final boolean intake_motor_clockwise_positive = false, 
+        public static final boolean intake_motor_clockwise_positive = true, 
                                     intake_motor_brake = true;
         
         public static final int intake_motor_max_continuous_current = 15;
@@ -355,7 +393,7 @@ public final class Constants {
         
         public static final MotorType conveyor_motor_type = MotorType.kBrushless;
 
-        public static final boolean conveyor_motor_clockwise_positive = false, 
+        public static final boolean conveyor_motor_clockwise_positive = true, 
                                     conveyor_motor_brake = true;
         
         public static final int conveyor_motor_max_continuous_current = 10;
@@ -377,11 +415,11 @@ public final class Constants {
 
         /* CAN IDs */
 
-        public static final int pivot_motor_ID = 13; // Falcon 500
+        public static final int pivot_motor_ID = 13; // Kraken
 
         /* Motor Parameters */
 
-        public static final boolean pivot_motor_clockwise_positive = true, 
+        public static final boolean pivot_motor_clockwise_positive = false, 
                                     pivot_motor_brake = false, 
                                     pivot_motor_invert_sensor = false;
                 
@@ -401,11 +439,7 @@ public final class Constants {
 
         /* Subsystem Variables */
 
-        public static final double starting_angle = -9.255644, // all in degrees
-                                   intake_angle = 59.006106, // 60 for V1, but this doesn't really matter anymore
-                                   amp_angle = 125.388397, 
-                                   
-                                   pivot_angle_tolerance = 5;
+        public static final double pivot_angle_tolerance = 5;
 
     }
 
@@ -413,12 +447,12 @@ public final class Constants {
 
         /* CAN IDs */
 
-        public static final int top_flywheel_motor_ID = 16, 
-                                bottom_flywheel_motor_ID = 17; // Falcon 500
+        public static final int top_flywheel_motor_ID = 17, 
+                                bottom_flywheel_motor_ID = 16; // Falcon 500
 
         /* Motor Parameters */
 
-        public static final boolean flywheel_motors_clockwise_positive = true, 
+        public static final boolean flywheel_motors_clockwise_positive = false, 
                                     flywheel_motors_brake = true, 
                                     flywheel_motors_invert_sensor = false;
                 

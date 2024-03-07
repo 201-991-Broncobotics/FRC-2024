@@ -1,10 +1,10 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.util.PIETalon;
 
 import static frc.robot.Constants.TuningConstants.*;
+import static frc.robot.Constants.GeneralConstants.*;
 import static frc.robot.Constants.HangConstants.*;
 
 public class Hang extends SubsystemBase {
@@ -39,13 +39,13 @@ public class Hang extends SubsystemBase {
     public void relax() {
         left_hang_motor.setTarget(0);
         right_hang_motor.setTarget(0);
-        SmartDashboard.putString("Hang State", "Relaxed");
+        log("Hang State", "Relaxed");
     }
 
     public void hang() {
         left_hang_motor.setTarget(hanging_position);
         right_hang_motor.setTarget(hanging_position);
-        SmartDashboard.putString("Hang State", "Hanging");
+        log("Hang State", "Hanging");
     }
 
     public boolean isFree() {
@@ -54,8 +54,8 @@ public class Hang extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Left Hang Motor Position", left_hang_motor.getEncoderPosition());
-        SmartDashboard.putNumber("Right Hang Motor Position", right_hang_motor.getEncoderPosition());
-        SmartDashboard.putNumber("Average Hang Motor Current", (left_hang_motor.getCurrent() + right_hang_motor.getCurrent()) / 2.0);
+        log("Left Hang Motor Position", left_hang_motor.getEncoderPosition());
+        log("Right Hang Motor Position", right_hang_motor.getEncoderPosition());
+        log("Average Hang Motor Current", (left_hang_motor.getCurrent() + right_hang_motor.getCurrent()) / 2.0);
     }
 }

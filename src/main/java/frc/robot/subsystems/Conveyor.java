@@ -1,9 +1,9 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.util.EasyCANSparkMax;
 
+import static frc.robot.Constants.GeneralConstants.*;
 import static frc.robot.Constants.ConveyorConstants.*;
 
 public class Conveyor extends SubsystemBase {
@@ -16,18 +16,18 @@ public class Conveyor extends SubsystemBase {
 
     public void intake() {
         conveyor_motor.set(conveyor_intake_speed);
-        SmartDashboard.putString("Conveyor State", "Intaking");
+        log("Conveyor State", "Intaking");
     }
 
     public void outtake() {
         conveyor_motor.set(conveyor_outtake_speed);
-        SmartDashboard.putString("Conveyor State", "Outtaking");
+        log("Conveyor State", "Outtaking");
 
     }
 
     public void stop() {
         conveyor_motor.set(0);
-        SmartDashboard.putString("Conveyor State", "Stopped");
+        log("Conveyor State", "Off");
     }
 
     public double getCurrent() {
@@ -40,6 +40,6 @@ public class Conveyor extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Conveyor Motor Current", getCurrent());
+        log("Conveyor Motor Current", getCurrent());
     }
 }

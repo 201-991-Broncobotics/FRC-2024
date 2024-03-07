@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.subcommands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -7,14 +7,14 @@ import frc.robot.subsystems.Intake;
 
 import static frc.robot.Constants.TuningConstants.*;
 
-public class IntakeCommand extends Command {
+public class Intake_Subcommand extends Command {
     private Intake intake;
     private Conveyor conveyor;
 
     private double starting_time = 0;
     private double finish_time = 0;
 
-    public IntakeCommand(Intake intake, Conveyor conveyor) {
+    public Intake_Subcommand(Intake intake, Conveyor conveyor) {
         this.intake = intake;
         this.conveyor = conveyor;
 

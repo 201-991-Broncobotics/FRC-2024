@@ -7,10 +7,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+
 import frc.robot.autonomous.*;
-import frc.robot.commands.IntakeCommand;
-import frc.robot.commands.OuttakeCommand;
-import frc.robot.commands.SetArmPosition;
+
+import frc.robot.commands.activatedCommands.*;
 import frc.robot.commands.defaultCommands.*;
 import frc.robot.subsystems.*;
 
@@ -102,7 +102,7 @@ public class RobotContainer {
         pivot.setDefaultCommand(
             new TeleopPivot(
                 pivot, 
-                () -> -driver_TFlightHotasOne.getRawAxis(2) // WHY IS IT SO SPECIAL ED
+                () -> -driver_TFlightHotasOne.getRawAxis(2)
             )
         );
 
@@ -112,6 +112,10 @@ public class RobotContainer {
                 () -> driver_TFlightHotasOne.getRawAxis(6)
             )
         );
+
+        conveyor.setDefaultCommand(new DormantConveyor(conveyor));
+        flywheel.setDefaultCommand(new DormantFlywheel(flywheel));
+        intake.setDefaultCommand(new DormantIntake(intake));
 
         configureButtonBindings();
         configureNamedCommands();
@@ -131,10 +135,10 @@ public class RobotContainer {
         zeroGyro.onTrue(new InstantCommand(() -> swerve.zeroGyro(0)));
         makeX.onTrue(new InstantCommand());
 
-        new JoystickButton(driver_TFlightHotasOne, 5).toggleOnTrue(new IntakeCommand(intake, conveyor));
-        new JoystickButton(driver_TFlightHotasOne, 6).toggleOnTrue(new OuttakeCommand(flywheel, conveyor));
-
-        new JoystickButton(driver_TFlightHotasOne, 8).toggleOnTrue(new SetArmPosition(pivot, 60));
+        new JoystickButton(driver_TFlightHotasOne, 5).toggleOnTrue(new IntakeCommand(pivot, intake, conveyor));
+        new JoystickButton(driver_TFlightHotasOne, 6).toggleOnTrue(new OuttakeCommand(pivot, flywheel, conveyor));
+        new JoystickButton(driver_TFlightHotasOne, 7).toggleOnTrue(new AmpCommand(pivot, flywheel, conveyor));
+        new JoystickButton(driver_TFlightHotasOne, 8).toggleOnTrue(new StartingArmPosition(pivot));
         
         /* Operator Triggers */
 
