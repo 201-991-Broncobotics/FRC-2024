@@ -65,12 +65,12 @@ public class RobotContainer {
                     () -> -driver_TFlightHotasOne.getPOV(), 
                     () -> {
                         if (driver_TFlightHotasOne.getRawButton(joystickSlowButton)) {
-                            return teleop_swerve_slow_factor;
+                            return teleop_swerve_slow_factor; // also sets direct angle I guess?
                         } else {
                             return 1.0;
                         }
-                    }
-                     // what we multiply translation speed by; rotation speed is NOT affected
+                    }, // what we multiply translation speed by; rotation speed is NOT affected
+                    () -> (Variables.bypass_rotation || driver_TFlightHotasOne.getRawButton(joystickDirectAngleButton))
                 )
             );
         } else if (fancy_drive) {
@@ -83,7 +83,9 @@ public class RobotContainer {
                     () -> -driver_XBox.getRawAxis(xBoxDirectionYAxis), 
                     () -> -driver_XBox.getPOV(), 
                     () -> driver_XBox.getRawAxis(xBoxTurnLeftAxis) - driver_XBox.getRawAxis(xBoxTurnRightAxis), 
-                    () -> (driver_XBox.getRawButton(xBoxSlowButtonOne) || driver_XBox.getRawButton(xBoxSlowButtonTwo)))
+                    () -> (driver_XBox.getRawButton(xBoxSlowButtonOne) || driver_XBox.getRawButton(xBoxSlowButtonTwo)), 
+                    () -> (Variables.bypass_rotation || driver_XBox.getRawButton(1))
+                )
             );
         } else {
             swerve.setDefaultCommand(
@@ -94,7 +96,8 @@ public class RobotContainer {
                     () -> -driver_XBox.getRawAxis(xBoxRotationAxis), 
                     () -> robotCentric.getAsBoolean(), 
                     () -> -driver_XBox.getPOV(), 
-                    () -> 1 - 0.75 * driver_XBox.getRawAxis(xBoxSlowAxis) // what we multiply translation speed by; rotation speed is NOT affected
+                    () -> 1 - 0.75 * driver_XBox.getRawAxis(xBoxSlowAxis), // what we multiply translation speed by; rotation speed is NOT affected
+                    () -> (Variables.bypass_rotation || driver_XBox.getRawButton(1))
                 )
             );
         }
@@ -143,6 +146,9 @@ public class RobotContainer {
         /* Operator Triggers */
 
         /* Custom Triggers */
+
+        new JoystickButton(driver_TFlightHotasOne, 15).toggleOnTrue(new InstantCommand(() -> Variables.invert_rotation = !Variables.invert_rotation));
+        new JoystickButton(driver_TFlightHotasOne, 13).toggleOnTrue(new InstantCommand(() -> Limelight.turnOffLED()));
     }
 
     public void configureNamedCommands() {

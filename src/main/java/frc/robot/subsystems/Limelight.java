@@ -84,4 +84,12 @@ public class Limelight { // Not technically a subsystem; everything should be st
     public static void turnOffLED() {
         NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
     }
+    
+    public static void toggleLED() {
+        if (NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").getDouble(0) != 1) {
+            NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
+        } else {
+            NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(4 - NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").getDouble(3));
+        }
+    }
 }

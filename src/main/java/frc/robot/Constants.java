@@ -59,12 +59,12 @@ public final class Constants {
         
         /* Pivot Constants */
 
-        public static final double pivot_p = 0.01, // temporarily disabled
+        public static final double pivot_p = 0.015, 
                                    pivot_i = 0, 
                                    pivot_e = 1.1;
         
         public static final double starting_angle = -9.255644, // all in degrees
-                                   intake_angle = 59.006106, // 60 for V1, but this doesn't really matter anymore
+                                   intake_angle = 59.006106, 
                                    amp_angle = 125.388397, 
 
                                    min_outtake_angle = 25, 
@@ -78,13 +78,16 @@ public final class Constants {
         
         /* Intaking Constants */
 
-        public static final double min_intake_time = 0.5,   // shouldn't be necessary but whatever
-                                   add_intake_time = 0.05; // how much we intake after the note has passed through
+        public static final double acceleration_time = 2, 
+                                   min_intake_time = 60, 
+                                   add_intake_time = 0.4, 
+                                   add_conveyor_time = 0.2, 
+                                   retract_conveyor_time = 0.1; // how much we intake after the note has passed through
         
         /* Outtaking Constants */
 
-        public static final double min_flywheel_acceleration_time = 1.5, // also shouldn't be necessary but whatever
-                                   min_outtake_time = 1; 
+        public static final double min_flywheel_acceleration_time = 0.75, 
+                                   min_outtake_time = 2;
 
     }
 
@@ -131,6 +134,8 @@ public final class Constants {
                                 joystickRotationAxis = 5, // right is positive
 
                                 joystickSlowButton = 1,
+
+                                joystickDirectAngleButton = 1, // also i guess???
 
                                 joystickZeroGyroButton = 3, 
                                 joystickMakeXButton = 2, 
@@ -379,7 +384,7 @@ public final class Constants {
 
         /* Subsystem Variables */
 
-        public static final double intake_motor_speed = 0.6;
+        public static final double intake_motor_speed = 1.0;
         
     }
 
@@ -402,12 +407,14 @@ public final class Constants {
                                            
                                    conveyor_motor_max_percent_output_per_second = 3,
 
-                                   conveyor_motor_free_current = 8;
+                                   conveyor_motor_free_current = 5;
 
         /* Subsystem Variables */
 
-        public static final double conveyor_intake_speed = 0.3, 
-                                   conveyor_outtake_speed = 0.8;
+        public static final double conveyor_intake_speed = 0.7, 
+                                   conveyor_retract_speed = -0.3, 
+                                   conveyor_outtake_speed = 1.0, 
+                                   conveyor_amp_speed = 0.8;
 
     }
 

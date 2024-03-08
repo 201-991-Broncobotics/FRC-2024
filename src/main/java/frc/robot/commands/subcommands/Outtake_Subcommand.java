@@ -12,7 +12,7 @@ public class Outtake_Subcommand extends Command {
     private Flywheel flywheel;
     private Conveyor conveyor;
 
-    private double starting_time = 0;
+    private double starting_time = 0, finish_time = 0;
     
     private boolean ready_to_outtake = false;
 
@@ -35,22 +35,21 @@ public class Outtake_Subcommand extends Command {
         conveyor.stop();
 
         starting_time = Timer.getFPGATimestamp();
+        finish_time = starting_time + min_flywheel_acceleration_time + min_outtake_time;
 
         ready_to_outtake = false;
     }
 
     @Override
     public void execute() {
-        if (!ready_to_outtake && /* flywheel.isFree() && */ Timer.getFPGATimestamp() > starting_time + min_flywheel_acceleration_time) {
-            ready_to_outtake = true;
+        if (!ready_to_outtake && Timer.getFPGATimestamp() > starting_time + min_flywheel_acceleration_time) {
             conveyor.outtake();
-            starting_time = Timer.getFPGATimestamp();
         }
     }
 
     @Override
     public boolean isFinished() {
-        return ready_to_outtake && flywheel.isFree() && /* conveyor.isFree() && */ Timer.getFPGATimestamp() > starting_time + min_outtake_time;
+        return Timer.getFPGATimestamp() > finish_time;
     }
 
     @Override

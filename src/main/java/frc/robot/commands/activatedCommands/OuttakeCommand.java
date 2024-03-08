@@ -1,5 +1,6 @@
 package frc.robot.commands.activatedCommands;
 
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import frc.robot.commands.subcommands.*;
@@ -13,7 +14,10 @@ public class OuttakeCommand extends SequentialCommandGroup {
 
         addCommands(
             new OuttakeArmPosition(pivot), 
-            new Outtake_Subcommand(flywheel, conveyor)
+            new ParallelDeadlineGroup( // could also be ParallelRaceGroup
+                new Outtake_Subcommand(flywheel, conveyor), 
+                new StabilizeArmCommand(pivot, false)
+            )
         );
     }
 

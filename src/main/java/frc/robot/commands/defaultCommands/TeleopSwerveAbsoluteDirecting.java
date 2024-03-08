@@ -15,7 +15,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class TeleopSwerveAbsoluteDirecting extends Command {
-    private Swerve s_Swerve;    
+    private Swerve swerve;    
     private DoubleSupplier translationSup;
     private DoubleSupplier strafeSup;
     private DoubleSupplier directionXSup;
@@ -23,10 +23,11 @@ public class TeleopSwerveAbsoluteDirecting extends Command {
     private DoubleSupplier turnSup;
     private IntSupplier targetSup;
     private BooleanSupplier slowSup;
+    private BooleanSupplier forcedDirectingSup;
 
-    public TeleopSwerveAbsoluteDirecting(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier directionXSup, DoubleSupplier directionYSup, IntSupplier targetSup, DoubleSupplier turnSup, BooleanSupplier slowSup) {
-        this.s_Swerve = s_Swerve;
-        addRequirements(s_Swerve);
+    public TeleopSwerveAbsoluteDirecting(Swerve swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier directionXSup, DoubleSupplier directionYSup, IntSupplier targetSup, DoubleSupplier turnSup, BooleanSupplier slowSup, BooleanSupplier forcedDirectingSup) {
+        this.swerve = swerve;
+        addRequirements(swerve);
 
         this.translationSup = translationSup;
         this.strafeSup = strafeSup;
@@ -35,6 +36,7 @@ public class TeleopSwerveAbsoluteDirecting extends Command {
         this.targetSup = targetSup;
         this.turnSup = turnSup;
         this.slowSup = slowSup;
+        this.forcedDirectingSup = forcedDirectingSup;
     }
 
     @Override
@@ -58,7 +60,7 @@ public class TeleopSwerveAbsoluteDirecting extends Command {
 
         if (turnVal == 0) {
             if (x_dir != 0 || y_dir != 0) {
-                double target_heading = s_Swerve.getGyroYaw().getDegrees();
+                double target_heading = swerve.getGyroYaw().getDegrees();
 
                 if (x_dir == 0) {
                     if (y_dir > 0) {
@@ -71,15 +73,20 @@ public class TeleopSwerveAbsoluteDirecting extends Command {
                 } else {
                     target_heading = Math.atan(y_dir / x_dir) * 180.0 / Math.PI - 90;
                 }
-                turnVal = getPECorrection(normalizeAngle(target_heading - s_Swerve.getGyroYaw().getDegrees()), teleop_angle_p, teleop_angle_e, swerve_min_pid_rotation * Constants.BaseFalconSwerveConstants.maxAngularVelocity, swerve_max_pid_rotation * Constants.BaseFalconSwerveConstants.maxAngularVelocity);
+                turnVal = getPECorrection(normalizeAngle(target_heading - swerve.getGyroYaw().getDegrees()), teleop_angle_p, teleop_angle_e, swerve_min_pid_rotation * Constants.BaseFalconSwerveConstants.maxAngularVelocity, swerve_max_pid_rotation * Constants.BaseFalconSwerveConstants.maxAngularVelocity);
 
             } else if (targetSup.getAsInt() % 90 == 0) { // setTargetHeading on purpose
-                s_Swerve.setTargetHeading(targetSup.getAsInt());
+                swerve.setTargetHeading(targetSup.getAsInt());
             }
         }
 
+        if (forcedDirectingSup.getAsBoolean()) {
+            turnVal = 0;
+            swerve.targetSpeaker();
+        }
+
         /* Drive */
-        s_Swerve.drive(
+        swerve.drive(
             new Translation2d(translationVal, strafeVal).times(Constants.BaseFalconSwerveConstants.maxSpeed).times(slowVal), 
             turnVal * Constants.BaseFalconSwerveConstants.maxAngularVelocity, 
             true, 

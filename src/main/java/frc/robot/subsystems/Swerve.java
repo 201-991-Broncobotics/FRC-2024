@@ -140,7 +140,7 @@ public class Swerve extends SubsystemBase {
         if (translation.getNorm() < swerve_min_manual_translation * Constants.BaseFalconSwerveConstants.maxSpeed) translation = new Translation2d();
         if (Math.abs(rotation) < swerve_min_manual_rotation * Constants.BaseFalconSwerveConstants.maxAngularVelocity) rotation = 0;
 
-        rotation *= -1; // oops
+        if (Variables.invert_rotation) rotation *= -1;
 
         SwerveModuleState[] swerveModuleStates =
             Constants.BaseFalconSwerveConstants.swerveKinematics.toSwerveModuleStates(
@@ -236,6 +236,10 @@ public class Swerve extends SubsystemBase {
 
     public double getYawError() {
         return normalizeAngle(pie.getTarget() - getGyroYaw().getDegrees());
+    }
+
+    public void targetSpeaker() {
+        setTargetHeading(0); // TODO: Rohan do the math for this :)
     }
 
     @Override

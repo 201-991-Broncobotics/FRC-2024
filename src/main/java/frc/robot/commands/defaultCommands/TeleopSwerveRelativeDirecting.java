@@ -22,8 +22,9 @@ public class TeleopSwerveRelativeDirecting extends Command {
     private BooleanSupplier robotCentricSup;
     private IntSupplier targetSup;
     private DoubleSupplier slowSup;
+    private BooleanSupplier forcedDirectingSup;
 
-    public TeleopSwerveRelativeDirecting(Swerve swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, BooleanSupplier robotCentricSup, IntSupplier targetSup, DoubleSupplier slowSup) {
+    public TeleopSwerveRelativeDirecting(Swerve swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, BooleanSupplier robotCentricSup, IntSupplier targetSup, DoubleSupplier slowSup, BooleanSupplier forcedDirectingSup) {
         this.swerve = swerve;
         addRequirements(swerve);
 
@@ -33,6 +34,7 @@ public class TeleopSwerveRelativeDirecting extends Command {
         this.robotCentricSup = robotCentricSup;
         this.targetSup = targetSup;
         this.slowSup = slowSup;
+        this.forcedDirectingSup = forcedDirectingSup;
     }
 
     @Override
@@ -43,6 +45,11 @@ public class TeleopSwerveRelativeDirecting extends Command {
         double rotationVal = signedPower(rotationSup.getAsDouble()) * teleop_rotation_percent;
 
         if ((rotationVal) == 0 && (targetSup.getAsInt() % 90 == 0)) swerve.setTargetHeading(targetSup.getAsInt());
+
+        if (forcedDirectingSup.getAsBoolean()) {
+            rotationVal = 0;
+            swerve.targetSpeaker();
+        }
 
         /* Drive */
         swerve.drive(

@@ -13,6 +13,7 @@ public class Intake_Subcommand extends Command {
 
     private double starting_time = 0;
     private double finish_time = 0;
+    private boolean already_reset;
 
     public Intake_Subcommand(Intake intake, Conveyor conveyor) {
         this.intake = intake;
@@ -27,13 +28,16 @@ public class Intake_Subcommand extends Command {
         conveyor.intake();
 
         starting_time = Timer.getFPGATimestamp();
-        finish_time = Timer.getFPGATimestamp() + add_intake_time;
+        finish_time = Timer.getFPGATimestamp() + min_intake_time;
+
+        already_reset = false;
     }
 
     @Override
     public void execute() {
-        if (!intake.isFree() || Timer.getFPGATimestamp() < starting_time + min_intake_time) {
+        if (!intake.isFree() && Timer.getFPGATimestamp() > starting_time + acceleration_time && !already_reset) {
             finish_time = Timer.getFPGATimestamp() + add_intake_time;
+            already_reset = true;
         }
     }
 
@@ -45,6 +49,7 @@ public class Intake_Subcommand extends Command {
     @Override
     public void end(boolean interrupted) {
         intake.stop();
-        conveyor.stop();
+        
+        if (interrupted) conveyor.stop(); // bc we're supposed to finish intake after this anyway
     }
 }

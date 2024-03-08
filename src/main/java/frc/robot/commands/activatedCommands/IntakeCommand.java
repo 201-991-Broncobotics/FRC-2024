@@ -1,5 +1,6 @@
 package frc.robot.commands.activatedCommands;
 
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import frc.robot.commands.subcommands.*;
@@ -13,7 +14,12 @@ public class IntakeCommand extends SequentialCommandGroup {
 
         addCommands(
             new IntakeArmPosition(pivot), 
-            new Intake_Subcommand(intake, conveyor)
+            new ParallelDeadlineGroup( // could also be ParallelRaceGroup
+                new SequentialCommandGroup(
+                    new Intake_Subcommand(intake, conveyor), 
+                    new FinishIntakeCommand(conveyor)
+                ), new StabilizeArmCommand(pivot, false)
+            )
         );
     }
 

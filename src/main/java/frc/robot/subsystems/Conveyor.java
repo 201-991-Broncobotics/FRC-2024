@@ -22,7 +22,16 @@ public class Conveyor extends SubsystemBase {
     public void outtake() {
         conveyor_motor.set(conveyor_outtake_speed);
         log("Conveyor State", "Outtaking");
+    }
 
+    public void retract() {
+        conveyor_motor.set(conveyor_retract_speed);
+        log("Conveyor State", "Retracting");
+    }
+
+    public void amp() {
+        conveyor_motor.set(conveyor_amp_speed);
+        log("Conveyor State", "Amping");
     }
 
     public void stop() {
