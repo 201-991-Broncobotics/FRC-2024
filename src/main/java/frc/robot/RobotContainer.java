@@ -3,6 +3,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -14,6 +16,7 @@ import frc.robot.commands.activatedCommands.*;
 import frc.robot.commands.defaultCommands.*;
 import frc.robot.subsystems.*;
 
+import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
 import static frc.robot.Constants.GeneralConstants.*;
@@ -50,6 +53,8 @@ public class RobotContainer {
     private final Flywheel flywheel = new Flywheel();
     private final Pivot pivot = new Pivot();
     private final Hang hang = new Hang();
+
+    private final SendableChooser<Command> autoChooser;
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -122,6 +127,9 @@ public class RobotContainer {
 
         configureButtonBindings();
         configureNamedCommands();
+
+        autoChooser = AutoBuilder.buildAutoChooser();
+        SmartDashboard.putData("Auto", autoChooser);
     }
 
     /**
@@ -153,7 +161,6 @@ public class RobotContainer {
     }
 
     public void configureNamedCommands() {
-        NamedCommands.registerCommand("Print Hello", new InstantCommand(() -> System.out.println("Hello World!")));
         NamedCommands.registerCommand("Shoot", new OuttakeCommand(pivot, flywheel, conveyor));
         NamedCommands.registerCommand("Intake", new IntakeCommand(pivot, intake, conveyor));
         NamedCommands.registerCommand("Amp", new AmpCommand(pivot, flywheel, conveyor));
@@ -166,7 +173,8 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return Autonomous.getAutonomousCommand(swerve);
+        return autoChooser.getSelected();
+        // return Autonomous.getAutonomousCommand(swerve);
     }
 
     public void teleopInit() {
