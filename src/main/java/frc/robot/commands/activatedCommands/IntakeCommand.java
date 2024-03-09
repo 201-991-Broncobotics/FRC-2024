@@ -19,7 +19,8 @@ public class IntakeCommand extends SequentialCommandGroup {
                     new Intake_Subcommand(intake, conveyor), 
                     new WaitCommand(0.2), 
                     new FinishIntakeCommand(conveyor)
-                ), new StabilizeArmCommand(pivot, false)
+                ),
+                new StabilizeArmCommand(pivot, false)
             )
         );
     }

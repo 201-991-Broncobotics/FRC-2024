@@ -154,6 +154,10 @@ public class RobotContainer {
 
     public void configureNamedCommands() {
         NamedCommands.registerCommand("Print Hello", new InstantCommand(() -> System.out.println("Hello World!")));
+        NamedCommands.registerCommand("Shoot", new OuttakeCommand(pivot, flywheel, conveyor));
+        NamedCommands.registerCommand("Intake", new IntakeCommand(pivot, intake, conveyor));
+        NamedCommands.registerCommand("Amp", new AmpCommand(pivot, flywheel, conveyor));
+        NamedCommands.registerCommand("Finish Intake", new FinishIntakeCommand(conveyor));
     }
 
     /**
