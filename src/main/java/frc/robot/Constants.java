@@ -64,7 +64,7 @@ public final class Constants {
                                    pivot_e = 1.1;
         
         public static final double starting_angle = -9.255644, // all in degrees
-                                   intake_angle = 59.006106, 
+                                   intake_angle = 59.006106 + 3, 
                                    amp_angle = 125.388397, 
 
                                    min_outtake_angle = 25, 
@@ -78,16 +78,17 @@ public final class Constants {
         
         /* Intaking Constants */
 
-        public static final double acceleration_time = 2, 
+        public static final double acceleration_time = 1, 
                                    min_intake_time = 60, 
-                                   add_intake_time = 0.4, 
+                                   add_intake_time = 0.8, 
                                    add_conveyor_time = 0.2, 
                                    retract_conveyor_time = 0.1; // how much we intake after the note has passed through
         
         /* Outtaking Constants */
 
-        public static final double min_flywheel_acceleration_time = 0.75, 
-                                   min_outtake_time = 2;
+        public static final double min_flywheel_acceleration_time = 0.5, 
+                                   min_outtake_time = 1, 
+                                   min_amp_time = 2;
 
     }
 
@@ -380,7 +381,7 @@ public final class Constants {
 
                                    intake_motor_max_percent_output_per_second = 3, 
 
-                                   intake_motor_free_current = 10;
+                                   intake_motor_free_current = 11;
 
         /* Subsystem Variables */
 
@@ -412,8 +413,8 @@ public final class Constants {
         /* Subsystem Variables */
 
         public static final double conveyor_intake_speed = 0.7, 
-                                   conveyor_retract_speed = -0.3, 
-                                   conveyor_outtake_speed = 1.0, 
+                                   conveyor_retract_speed = -0.5, 
+                                   conveyor_outtake_speed = 0.8, 
                                    conveyor_amp_speed = 0.8;
 
     }
@@ -460,7 +461,7 @@ public final class Constants {
         /* Motor Parameters */
 
         public static final boolean flywheel_motors_clockwise_positive = false, 
-                                    flywheel_motors_brake = true, 
+                                    flywheel_motors_brake = false, 
                                     flywheel_motors_invert_sensor = false;
                 
         public static final double flywheel_motors_max_continuous_current = 15,
@@ -482,7 +483,7 @@ public final class Constants {
         public static final boolean flywheel_motors_opposite = false; // they should turn in the same direction
 
         public static final double flywheel_outtake_power = 0.95, 
-                                   flywheel_amp_power = 0.25;
+                                   flywheel_amp_power = 0.2;
 
     }
 

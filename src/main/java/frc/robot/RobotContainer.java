@@ -139,6 +139,7 @@ public class RobotContainer {
         makeX.onTrue(new InstantCommand());
 
         new JoystickButton(driver_TFlightHotasOne, 5).toggleOnTrue(new IntakeCommand(pivot, intake, conveyor));
+        new JoystickButton(driver_TFlightHotasOne, 14).toggleOnTrue(new FinishIntakeCommand(conveyor));
         new JoystickButton(driver_TFlightHotasOne, 6).toggleOnTrue(new OuttakeCommand(pivot, flywheel, conveyor));
         new JoystickButton(driver_TFlightHotasOne, 7).toggleOnTrue(new AmpCommand(pivot, flywheel, conveyor));
         new JoystickButton(driver_TFlightHotasOne, 8).toggleOnTrue(new StartingArmPosition(pivot));

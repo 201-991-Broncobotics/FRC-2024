@@ -28,7 +28,7 @@ public class Amp_Subcommand extends Command {
         conveyor.stop();
 
         starting_time = Timer.getFPGATimestamp();
-        finish_time = starting_time + min_flywheel_acceleration_time + min_outtake_time;
+        finish_time = starting_time + min_flywheel_acceleration_time + min_amp_time;
 
         ready_to_outtake = false;
     }
