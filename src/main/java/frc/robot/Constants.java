@@ -482,8 +482,8 @@ public final class Constants {
 
         public static final boolean flywheel_motors_opposite = false; // they should turn in the same direction
 
-        public static final double flywheel_outtake_power = 0.95, 
-                                   flywheel_amp_power = 0.2;
+        public static final double flywheel_shooting_rps = 4500, 
+                                   flywheel_amp_rps = 600;
 
     }
 
