@@ -59,9 +59,9 @@ public final class Constants {
         
         /* Pivot Constants */
 
-        public static final double pivot_p = 0.015, 
+        public static final double pivot_p = 0.3, 
                                    pivot_i = 0, 
-                                   pivot_e = 1.1;
+                                   pivot_e = 1.25;
         
         public static final double starting_angle = -9.255644, // all in degrees
                                    intake_angle = 59.006106 + 3, 
@@ -482,8 +482,8 @@ public final class Constants {
 
         public static final boolean flywheel_motors_opposite = false; // they should turn in the same direction
 
-        public static final double flywheel_shooting_rps = 4500, 
-                                   flywheel_amp_rps = 600;
+        public static final double flywheel_shooting_rpm = 4500, 
+                                   flywheel_amp_rpm = 600;
 
     }
 

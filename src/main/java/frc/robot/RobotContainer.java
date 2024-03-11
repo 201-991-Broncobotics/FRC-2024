@@ -4,12 +4,19 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 import frc.robot.autonomous.*;
-
+import frc.robot.commands.FlywheelCommands;
+import frc.robot.commands.PivotCommands;
+import frc.robot.commands.ShootingCommands;
 import frc.robot.commands.activatedCommands.*;
 import frc.robot.commands.defaultCommands.*;
 import frc.robot.subsystems.*;
@@ -20,6 +27,8 @@ import static frc.robot.Constants.GeneralConstants.*;
 import static frc.robot.Constants.Buttons.*;
 import static frc.robot.Constants.TeleopSwerveConstants.*;
 
+import javax.swing.GroupLayout.ParallelGroup;
+
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -29,11 +38,8 @@ import static frc.robot.Constants.TeleopSwerveConstants.*;
 public class RobotContainer {
     /* Controllers */
     private final XboxController driver_XBox = new XboxController(driver_usb_port);
-    private final XboxController operator = new XboxController(operator_usb_port);
+    private final CommandXboxController operator = new CommandXboxController(operator_usb_port);
     private final Joystick driver_TFlightHotasOne = new Joystick(joystick_usb_port);
-
-    /* Both Controllers */
-    private final Trigger terminateCommands = new JoystickButton(driver_XBox, xBoxTerminateCommandsDriverButton).or(new JoystickButton(operator, terminateCommandsOperatorButton)).or(new JoystickButton(driver_TFlightHotasOne, joystickTerminateCommandsButton));
 
     /* Driver Buttons */
     private final Trigger zeroGyro = new JoystickButton(driver_XBox, xBoxZeroGyroButton).or(new JoystickButton(driver_TFlightHotasOne, joystickZeroGyroButton));
@@ -131,20 +137,22 @@ public class RobotContainer {
      * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
-       /* Both Controllers */
-        terminateCommands.toggleOnTrue(new InstantCommand());
-
         /* Driver Triggers */
         zeroGyro.onTrue(new InstantCommand(() -> swerve.zeroGyro(0)));
         makeX.onTrue(new InstantCommand());
 
-        new JoystickButton(driver_TFlightHotasOne, 5).toggleOnTrue(new IntakeCommand(pivot, intake, conveyor));
-        new JoystickButton(driver_TFlightHotasOne, 14).toggleOnTrue(new FinishIntakeCommand(conveyor));
-        new JoystickButton(driver_TFlightHotasOne, 6).toggleOnTrue(new OuttakeCommand(pivot, flywheel, conveyor));
-        new JoystickButton(driver_TFlightHotasOne, 7).toggleOnTrue(new AmpCommand(pivot, flywheel, conveyor));
-        new JoystickButton(driver_TFlightHotasOne, 8).toggleOnTrue(new StartingArmPosition(pivot));
-        
         /* Operator Triggers */
+        operator.a().toggleOnTrue(FlywheelCommands.outtake(flywheel));
+        operator.y().toggleOnTrue(FlywheelCommands.amp(flywheel));
+        operator.b().toggleOnTrue(FlywheelCommands.off(flywheel));
+
+        // shooting
+        operator.leftTrigger(0.8).toggleOnTrue(ShootingCommands.amp(pivot, flywheel, conveyor));
+        operator.rightTrigger(0.8).toggleOnTrue(ShootingCommands.speaker(pivot, flywheel, conveyor));
+
+        // intake
+        operator.leftBumper().toggleOnTrue(new IntakeCommand(pivot, intake, conveyor));
+        operator.rightBumper().toggleOnTrue(new FinishIntakeCommand(conveyor));
 
         /* Custom Triggers */
 

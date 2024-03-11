@@ -22,11 +22,6 @@ public class SetArmPosition extends Command {
     }
 
     @Override
-    public void execute() {
-        pivot.pidPower();
-    }
-
-    @Override
     public boolean isFinished() {
         return pivot.pidCloseEnough();
     }
