@@ -27,7 +27,7 @@ public class TeleopHang extends Command { // lol
 
         // Move Arm
         hang.move(
-            motorVal * 0.2
+            motorVal * 0.4
         );
     }
 

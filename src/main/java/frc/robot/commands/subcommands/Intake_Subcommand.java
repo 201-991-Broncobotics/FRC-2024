@@ -49,7 +49,6 @@ public class Intake_Subcommand extends Command {
     @Override
     public void end(boolean interrupted) {
         intake.stop();
-        
-        if (interrupted) conveyor.stop(); // bc we're supposed to finish intake after this anyway
+        conveyor.stop();
     }
 }

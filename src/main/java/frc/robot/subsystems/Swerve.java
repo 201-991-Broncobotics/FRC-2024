@@ -21,6 +21,9 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructArrayPublisher;
+import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -35,6 +38,9 @@ public class Swerve extends SubsystemBase {
 
     private double last_manual_time;
     private PIECalculator pie;
+    StructPublisher<Pose2d> posePublisher;
+    StructArrayPublisher<SwerveModuleState> statePublisher;
+    StructPublisher<Pose2d> visionPublisher;
 
     public Swerve() {
         pie = new PIECalculator(teleop_angle_p, teleop_angle_i, teleop_angle_e, swerve_min_pid_rotation * Constants.BaseFalconSwerveConstants.maxAngularVelocity, swerve_max_pid_rotation * Constants.BaseFalconSwerveConstants.maxAngularVelocity, starting_yaw);
@@ -81,6 +87,10 @@ public class Swerve extends SubsystemBase {
             },
             this // Reference to this subsystem to set requirements
         );
+
+        posePublisher = NetworkTableInstance.getDefault().getStructTopic("/Swerve/Pose", Pose2d.struct).publish();
+        statePublisher = NetworkTableInstance.getDefault().getStructArrayTopic("/Swerve/States", SwerveModuleState.struct).publish();
+        visionPublisher = NetworkTableInstance.getDefault().getStructTopic("/Swerve/Vision", Pose2d.struct).publish();
     }
 
     /** Counterclockwise in degrees */
@@ -288,6 +298,9 @@ public class Swerve extends SubsystemBase {
         log("Average Angle Motor Current", angle_current);
         log("Average Drive Motor Current", drive_current);
         log("Side", Variables.side);
+        posePublisher.set(getPose());
+        statePublisher.set(getModuleStates());
+        visionPublisher.set(vision_estimate);
     }
 
     public void teleopInit() {

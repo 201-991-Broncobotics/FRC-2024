@@ -26,7 +26,7 @@ public class Pivot extends SubsystemBase {
     public void move(double power) {
         pivot_motor.power(power);
     }
-
+    
     public void pidPower() {
         pivot_motor.pidPower();
     }

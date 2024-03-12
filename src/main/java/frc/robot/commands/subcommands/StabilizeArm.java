@@ -3,35 +3,31 @@ package frc.robot.commands.subcommands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Pivot;
 
-public class OuttakeArmPosition extends Command {
+public class StabilizeArm extends Command {
+
     private Pivot pivot;
 
-    private double target_angle;
+    private final boolean reset_target;
 
-    public OuttakeArmPosition(Pivot pivot) {
+    public StabilizeArm(Pivot pivot, boolean reset_target) {
         this.pivot = pivot;
         addRequirements(pivot);
+
+        this.reset_target = reset_target;
     }
 
     @Override
     public void initialize() {
-
-        // TODO: Use Limelight to determine target_angle
-
-        target_angle = 40;
-
         pivot.brake();
-        pivot.setTarget(target_angle);
+
+        if (reset_target) {
+            pivot.resetTarget();
+        }
     }
 
     @Override
     public void execute() {
         pivot.pidPower();
-    }
-
-    @Override
-    public boolean isFinished() {
-        return pivot.pidCloseEnough();
     }
 
     @Override

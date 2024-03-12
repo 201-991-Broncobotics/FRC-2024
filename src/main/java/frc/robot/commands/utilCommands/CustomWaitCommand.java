@@ -4,18 +4,18 @@ import edu.wpi.first.wpilibj2.command.*;
 
 public class CustomWaitCommand extends WaitCommand {
 
-    private final Runnable function;
+    private final Runnable interruptFunction;
 
-    public CustomWaitCommand(double time, Runnable function) {
+    public CustomWaitCommand(double time, Runnable interruptFunction) {
         super(time);
 
-        this.function = function;
+        this.interruptFunction = interruptFunction;
     }
 
     @Override
     public void end(boolean interrupted) {
         super.end(interrupted);
-        function.run();
+        if (interrupted) interruptFunction.run();
     }
 
 }
