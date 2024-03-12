@@ -47,7 +47,7 @@ public class Swerve extends SubsystemBase {
 
         gyro = new Pigeon2(Constants.BaseFalconSwerveConstants.pigeonID);
         gyro.getConfigurator().apply(new Pigeon2Configuration());
-        gyro.setYaw(starting_yaw);
+        gyro.setYaw(starting_yaw + (Variables.isBlueAlliance ? 0 : 180));
 
         swerveModules = new SwerveModule[] {
             new SwerveModule(0, Constants.BaseFalconSwerveConstants.Mod0.constants),
@@ -224,6 +224,7 @@ public class Swerve extends SubsystemBase {
     }
 
     public void resetOdometry(Pose2d pose) {
+        gyro.setYaw(pose.getRotation().getDegrees());
         poseEstimator.resetPosition(getGyroYaw(), getModulePositions(), pose);
     }
 
@@ -241,7 +242,7 @@ public class Swerve extends SubsystemBase {
 
     public void zeroGyro(double yaw) { // resets robot angle. Only do if pigeon is inaccurate or at starting of match
         poseEstimator.resetPosition(Rotation2d.fromDegrees(yaw), getModulePositions(), new Pose2d(getPose().getTranslation(), Rotation2d.fromDegrees(yaw)));
-        gyro.setYaw(yaw);
+        gyro.setYaw(yaw + (Variables.isBlueAlliance ? 0 : 180));
         pie.resetTarget(yaw);
         last_manual_time = Timer.getFPGATimestamp();
     }
@@ -259,7 +260,7 @@ public class Swerve extends SubsystemBase {
     }
 
     public void targetSpeaker() {
-        setTargetHeading(swerve_yaw(Variables.x, Variables.y, Variables.side.equalsIgnoreCase("blue")));
+        setTargetHeading(swerve_yaw());
     }
 
     @Override
@@ -280,6 +281,10 @@ public class Swerve extends SubsystemBase {
             log("Vision Heading", "No vision estimate");
         }
 
+        Variables.x = poseEstimator.getEstimatedPosition().getX();
+        Variables.y = poseEstimator.getEstimatedPosition().getY();
+        Variables.angle = poseEstimator.getEstimatedPosition().getRotation().getDegrees();
+
         log("Pigeon Yaw", getGyroYaw().getDegrees());
         log("Pose Estimator Yaw ", getHeading().getDegrees());
 
@@ -299,7 +304,7 @@ public class Swerve extends SubsystemBase {
 
         log("Average Angle Motor Current", angle_current);
         log("Average Drive Motor Current", drive_current);
-        log("Side", Variables.side);
+        log("Side", Variables.isBlueAlliance ? "Blue" : "Red");
         posePublisher.set(getPose());
         statePublisher.set(getModuleStates());
         visionPublisher.set(vision_estimate);

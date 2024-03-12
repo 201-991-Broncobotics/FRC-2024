@@ -15,6 +15,8 @@ public class TeleopPivot extends Command {
 
     private DoubleSupplier motorSup;
 
+    private boolean lastBypass = false;
+
     public TeleopPivot(Pivot pivot, DoubleSupplier motorSup) {
         this.pivot = pivot;
         addRequirements(pivot);
@@ -29,9 +31,15 @@ public class TeleopPivot extends Command {
 
         // Move Arm
         if (Variables.bypass_angling) {
-            pivot.setTarget(outtake_angle(Variables.x, Variables.y, Variables.side.equals("blue")));
+            pivot.setTarget(outtake_angle());
+            pivot.pidPower();
+            lastBypass = true;
         } else {
+            if (lastBypass) {
+                pivot.resetTarget();
+            }
             pivot.move(motorVal * .5);
+            lastBypass = false;
         }
     }
 }

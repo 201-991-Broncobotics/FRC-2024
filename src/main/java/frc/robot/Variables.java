@@ -6,7 +6,7 @@ public class Variables {
     public static boolean in_auto = false;
     public static boolean in_teleop = false;
 
-    public static String side = "blue";
+    public static boolean isBlueAlliance = true;
 
     public static boolean invert_rotation = false;
     public static boolean bypass_angling = false;

@@ -1,7 +1,7 @@
 package frc.robot.commands.activatedCommands;
 
-import static frc.robot.Constants.TuningConstants.amp_angle;
-import static frc.robot.Constants.TuningConstants.pivot_guard_angle;
+import static frc.robot.Constants.GeneralConstants.log;
+import static frc.robot.Constants.TuningConstants.*;
 
 import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.Variables;
@@ -12,6 +12,9 @@ public class ShootingCommands {
 
     public static Command amp(Pivot pivot, Flywheel flywheel, Conveyor conveyor) {
         return new SequentialCommandGroup(
+        
+            new InstantCommand(() -> {}, pivot, flywheel, conveyor), 
+
             new ParallelCommandGroup(
                 FlywheelCommands.amp(flywheel), 
                 new SetArmPosition(pivot, amp_angle - pivot_guard_angle)
@@ -27,18 +30,22 @@ public class ShootingCommands {
 
     public static Command speaker(Pivot pivot, Flywheel flywheel, Conveyor conveyor) {
         return new SequentialCommandGroup(
+
+            new InstantCommand(() -> {}, flywheel, conveyor), 
+
             new ParallelCommandGroup(
                 new InstantCommand(() -> Variables.bypass_rotation = true), 
-                new ParallelCommandGroup(
+                new SequentialCommandGroup(
                     new InstantCommand(() -> Variables.bypass_angling = true), 
-                    Commands.waitUntil(pivot::pidCloseEnough)
+                    Commands.waitUntil(pivot::pidCloseEnough), 
+                    new InstantCommand(() -> log("hi", "what the fuck"))
                 ), 
                 FlywheelCommands.outtake(flywheel)
-            ), new ParallelDeadlineGroup(
-                new WaitCommand(3), 
-                Commands.runOnce(conveyor::outtake, conveyor), 
-                new StabilizeArm(pivot, false)
             ), 
+
+            new InstantCommand(() -> conveyor.outtake()), 
+            new WaitCommand(3), 
+
             new InstantCommand(() -> Variables.bypass_rotation = false), 
             new InstantCommand(() -> Variables.bypass_angling = false), 
             new InstantCommand(() -> conveyor.stop()), 

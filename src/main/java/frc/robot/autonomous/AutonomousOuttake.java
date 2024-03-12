@@ -1,7 +1,6 @@
 package frc.robot.autonomous;
 
 import edu.wpi.first.wpilibj2.command.*;
-import frc.robot.Variables;
 import frc.robot.commands.subcommands.SetArmPosition;
 import frc.robot.subsystems.*;
 
@@ -16,7 +15,7 @@ public class AutonomousOuttake extends SequentialCommandGroup {
             new ParallelRaceGroup(
                 new WaitCommand(8), 
                 new ParallelCommandGroup(
-                    new SetArmPosition(pivot, outtake_angle(Variables.x, Variables.y, Variables.side.equals("blue"))), 
+                    new SetArmPosition(pivot, outtake_angle()), 
                     new InstantCommand(() -> swerve.targetSpeaker())
                     // also need a command to drive forward like 0.4 m
                     // also, this does not fucking work :skull: bc the default commands are not running (I'm pretty sure)

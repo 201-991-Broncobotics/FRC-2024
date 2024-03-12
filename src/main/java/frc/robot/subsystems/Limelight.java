@@ -2,7 +2,6 @@ package frc.robot.subsystems;
 
 import java.util.function.DoubleSupplier;
 
-import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -13,16 +12,16 @@ import static frc.robot.Constants.GeneralConstants.*;
 
 public class Limelight { // Not technically a subsystem; everything should be static
 
-    private static String botpose_key = "botpose_wpi"; // can be botpose, botpose_wpiblue or botpose_wpired;
+    private static String botpose_key = "botpose_wpiblue"; // can be botpose, botpose_wpiblue or botpose_wpired;
 
     private static DoubleSupplier tv = () -> NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(-1); // 0 --> nothing, 1 --> something
 
     private static DoubleSupplier tid = () -> NetworkTableInstance.getDefault().getTable("limelight").getEntry("tid").getDoubleArray(new double[0])[0];
     
     private static DoubleSupplier[] position = new DoubleSupplier[] {
-        () -> NetworkTableInstance.getDefault().getTable("limelight").getEntry(botpose_key + Variables.side).getDoubleArray(new double[6])[0], // x 
-        () -> NetworkTableInstance.getDefault().getTable("limelight").getEntry(botpose_key + Variables.side).getDoubleArray(new double[6])[1], // y
-        () -> NetworkTableInstance.getDefault().getTable("limelight").getEntry(botpose_key + Variables.side).getDoubleArray(new double[6])[5]  // yaw
+        () -> NetworkTableInstance.getDefault().getTable("limelight").getEntry(botpose_key).getDoubleArray(new double[6])[0], // x 
+        () -> NetworkTableInstance.getDefault().getTable("limelight").getEntry(botpose_key).getDoubleArray(new double[6])[1], // y
+        () -> NetworkTableInstance.getDefault().getTable("limelight").getEntry(botpose_key).getDoubleArray(new double[6])[5]  // yaw
     }; // Where the robot is, relative to april tag
 
     private static DoubleSupplier latency = () -> (
@@ -32,12 +31,10 @@ public class Limelight { // Not technically a subsystem; everything should be st
 
     public static void setSide() {
 
-        if (DriverStation.getRawAllianceStation() == AllianceStationID.Red1 || 
-            DriverStation.getRawAllianceStation() == AllianceStationID.Red2 || 
-            DriverStation.getRawAllianceStation() == AllianceStationID.Red3) {
-                Variables.side = "red";
+        if (DriverStation.getAlliance().isPresent()) {
+            Variables.isBlueAlliance = DriverStation.getAlliance().get() == DriverStation.Alliance.Blue;
         } else {
-            Variables.side = "blue";
+            Variables.isBlueAlliance = true;
         }
     }
 
