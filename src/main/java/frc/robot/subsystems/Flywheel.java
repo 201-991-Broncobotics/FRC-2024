@@ -1,62 +1,111 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.lib.util.PIETalon;
-
 import static frc.robot.Constants.GeneralConstants.*;
+
+import java.util.function.DoubleSupplier;
+
+import com.ctre.phoenix6.configs.Slot0Configs;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.VelocityVoltage;
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.InvertedValue;
+
 import static frc.robot.Constants.FlywheelConstants.*;
 
 public class Flywheel extends SubsystemBase {
 
-    private PIETalon top_flywheel_motor;
-    private PIETalon bottom_flywheel_motor;
+    TalonFX top;
+    TalonFX bottom;
+
+    VelocityVoltage request = new VelocityVoltage(0).withSlot(0);
+    double targetRPS = 0;
+
+    DoubleSupplier topCurrent;
+    DoubleSupplier bottomCurrent;
+
+    DoubleSupplier topVoltage;
+    DoubleSupplier bottomVoltage;
+
+    DoubleSupplier topRPS;
+    DoubleSupplier bottomRPS;
 
     public Flywheel() {
 
-        top_flywheel_motor = new PIETalon(top_flywheel_motor_ID, flywheel_motors_max_continuous_current, flywheel_motors_max_current, 
-            flywheel_motors_brake, flywheel_motors_clockwise_positive, 0, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, flywheel_motors_min_percent_output, 
-            flywheel_motors_max_percent_output, flywheel_motors_max_percent_output_per_second, flywheel_motors_gear_ratio, 
-            flywheel_motors_invert_sensor, flywheel_motors_calibration_time, 0, 0, 1
-        );
-        
-        bottom_flywheel_motor = new PIETalon(bottom_flywheel_motor_ID, flywheel_motors_max_continuous_current, flywheel_motors_max_current, 
-            flywheel_motors_brake, flywheel_motors_clockwise_positive ^ flywheel_motors_opposite, 0, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, flywheel_motors_min_percent_output, 
-            flywheel_motors_max_percent_output, flywheel_motors_max_percent_output_per_second, flywheel_motors_gear_ratio, 
-            flywheel_motors_invert_sensor, flywheel_motors_calibration_time, 0, 0, 1
-        ); // invert and opposite: TT -> F, TF -> T, FT -> T, FF -> F; ^ is XOR
+        top = new TalonFX(top_flywheel_motor_ID);
+        bottom = new TalonFX(bottom_flywheel_motor_ID);
 
-        top_flywheel_motor.disableLimiting();
-        bottom_flywheel_motor.disableLimiting();
+        var config = new TalonFXConfiguration();
+        config.CurrentLimits.SupplyCurrentLimitEnable = true;
+        config.CurrentLimits.SupplyCurrentLimit = 30;
+        config.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+
+        var slot0 = new Slot0Configs();
+        // add this much for static friction
+        slot0.kS = .05;
+        // each rps = this many more volts
+        slot0.kV = 0.12;
+        // each rps of error = this many more volts
+        slot0.kP = 0.13;
+
+        config.Slot0 = slot0;
+
+        top.getConfigurator().apply(config);
+        bottom.getConfigurator().apply(config);
+
+        topCurrent = () -> top.getSupplyCurrent().getValueAsDouble();
+        bottomCurrent = () -> bottom.getSupplyCurrent().getValueAsDouble();
+        topVoltage = () -> top.getMotorVoltage().getValueAsDouble();
+        bottomVoltage = () -> bottom.getMotorVoltage().getValueAsDouble();
+        topRPS = () -> top.getVelocity().getValueAsDouble();
+        bottomRPS = () -> bottom.getVelocity().getValueAsDouble();
+
     }
 
     public void outtake() {
-        top_flywheel_motor.power(flywheel_outtake_power);
-        bottom_flywheel_motor.power(flywheel_outtake_power);
+        targetRPS = flywheel_shooting_rpm / 60;
         log("Flywheel State", "Outtaking");
     }
 
     public void amp() {
-        top_flywheel_motor.power(flywheel_amp_power);
-        bottom_flywheel_motor.power(flywheel_amp_power);
+        targetRPS = flywheel_amp_rpm / 60;
         log("Flywheel State", "Amping");
     }
 
     public void stop() {
-        top_flywheel_motor.power(0);
-        bottom_flywheel_motor.power(0);
+        targetRPS = 0;
         log("Flywheel State", "Off");
     }
-    
+
     public double getAverageCurrent() {
-        return (top_flywheel_motor.getCurrent() + bottom_flywheel_motor.getCurrent()) / 2.0;
+        return (topCurrent.getAsDouble() + bottomCurrent.getAsDouble()) / 2.0;
     }
 
     public boolean isFree() {
         return getAverageCurrent() < flywheel_motors_free_current;
     }
 
+    public boolean isAtSpeed() {
+        double tolerance = Math.sqrt(flywheel_shooting_rpm / 60);
+        double topError = Math.abs(targetRPS - topRPS.getAsDouble());
+        double bottomError = Math.abs(targetRPS - bottomRPS.getAsDouble());
+
+        return topError < tolerance && bottomError < tolerance;
+    }
+
     @Override
     public void periodic() {
-        log("Flywheel Motor Current", getAverageCurrent());
+        log("Flywheel Motor Average Current", getAverageCurrent());
+        log("Flywheel Top Current", topCurrent.getAsDouble());
+        log("Flywheel Bottom Current", bottomCurrent.getAsDouble());
+        log("Flywheel Top Voltage", topVoltage.getAsDouble());
+        log("Flywheel Bottom Voltage", bottomVoltage.getAsDouble());
+        log("Flywheel Top RPS", topRPS.getAsDouble());
+        log("Flywheel Bottom RPS", bottomRPS.getAsDouble());
+        log("Flywheel Target RPS", targetRPS);
+        log("Flywheel At Speed", isAtSpeed() ? "yes" : "no");
+
+        top.setControl(request.withVelocity(targetRPS));
+        bottom.setControl(request.withVelocity(targetRPS));
     }
 }
