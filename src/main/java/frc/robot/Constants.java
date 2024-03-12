@@ -22,10 +22,10 @@ public final class Constants {
 
         /* For these, align all the wheels so their gears are facing away from the intake */
 
-        public static final double CANCoder0_zero = 179.65, // Front Left
-                                   CANCoder1_zero = 157.61, // Front Right
-                                   CANCoder2_zero = -127.01, // Back Left
-                                   CANCoder3_zero = -30.55; // Back Right
+        public static final double CANCoder0_zero = 163.30, // Front Left
+                                   CANCoder1_zero = 68.99, // Front Right
+                                   CANCoder2_zero = -128.93, // Back Left
+                                   CANCoder3_zero = 70.22; // Back Right
         
         /* Swerve Drive Constants */
 
@@ -59,9 +59,9 @@ public final class Constants {
         
         /* Pivot Constants */
 
-        public static final double pivot_p = 0.3, 
+        public static final double pivot_p = 0.125, 
                                    pivot_i = 0, 
-                                   pivot_e = 1.25;
+                                   pivot_e = 2;
         
         public static final double starting_angle = -9.255644, // all in degrees
                                    intake_angle = 59.006106 + 3, 
@@ -86,7 +86,7 @@ public final class Constants {
         
         /* Outtaking Constants */
 
-        public static final double min_flywheel_acceleration_time = 0.5, 
+        public static final double min_flywheel_acceleration_time = 1, 
                                    min_outtake_time = 1, 
                                    min_amp_time = 2;
 
