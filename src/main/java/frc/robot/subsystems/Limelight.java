@@ -2,10 +2,11 @@ package frc.robot.subsystems;
 
 import java.util.function.DoubleSupplier;
 
+import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.networktables.NetworkTableInstance;
-
+import edu.wpi.first.wpilibj.DriverStation;
 import frc.robot.Variables;
 
 import static frc.robot.Constants.GeneralConstants.*;
@@ -29,10 +30,13 @@ public class Limelight { // Not technically a subsystem; everything should be st
         NetworkTableInstance.getDefault().getTable("limelight").getEntry("cl").getDouble(0)
     ) / 1000.0; // in seconds
 
-    public static void setSide(String newSide) {
-        if (newSide.toLowerCase().equals("red")) {
-            Variables.side = "red";
-        } else if (newSide.toLowerCase().equals("blue")) {
+    public static void setSide() {
+
+        if (DriverStation.getRawAllianceStation() == AllianceStationID.Red1 || 
+            DriverStation.getRawAllianceStation() == AllianceStationID.Red2 || 
+            DriverStation.getRawAllianceStation() == AllianceStationID.Red3) {
+                Variables.side = "red";
+        } else {
             Variables.side = "blue";
         }
     }
@@ -59,17 +63,6 @@ public class Limelight { // Not technically a subsystem; everything should be st
         ) + " ms");
 
         return new Pose2d(position[0].getAsDouble(), position[1].getAsDouble(), Rotation2d.fromDegrees(position[2].getAsDouble())); 
-    }
-
-    public static Pose2d adjustPoseForSide(Pose2d pose) {
-        if (Variables.side.equals("blue")) {
-            return pose;
-        }
-        return new Pose2d(
-            pose.getX(), 
-            8.02 - pose.getY(), 
-            Rotation2d.fromDegrees(-pose.getRotation().getDegrees())
-        );
     }
 
     public static double getLatency() {

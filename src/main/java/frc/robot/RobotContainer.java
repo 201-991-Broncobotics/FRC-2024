@@ -3,20 +3,10 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj2.command.*;
+import edu.wpi.first.wpilibj2.command.button.*;
 
 import frc.robot.autonomous.*;
-import frc.robot.commands.FlywheelCommands;
-import frc.robot.commands.PivotCommands;
-import frc.robot.commands.ShootingCommands;
 import frc.robot.commands.activatedCommands.*;
 import frc.robot.commands.defaultCommands.*;
 import frc.robot.subsystems.*;
@@ -26,8 +16,6 @@ import com.pathplanner.lib.auto.NamedCommands;
 import static frc.robot.Constants.GeneralConstants.*;
 import static frc.robot.Constants.Buttons.*;
 import static frc.robot.Constants.TeleopSwerveConstants.*;
-
-import javax.swing.GroupLayout.ParallelGroup;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -139,7 +127,7 @@ public class RobotContainer {
     private void configureButtonBindings() {
         /* Driver Triggers */
         zeroGyro.onTrue(new InstantCommand(() -> swerve.zeroGyro(0)));
-        makeX.onTrue(new InstantCommand());
+        makeX.onTrue(new InstantCommand(() -> swerve.makeX()));
 
         /* Operator Triggers */
         operator.a().toggleOnTrue(FlywheelCommands.outtake(flywheel));
@@ -156,12 +144,15 @@ public class RobotContainer {
 
         /* Custom Triggers */
 
-        new JoystickButton(driver_TFlightHotasOne, 15).toggleOnTrue(new InstantCommand(() -> Variables.invert_rotation = !Variables.invert_rotation));
-        new JoystickButton(driver_TFlightHotasOne, 13).toggleOnTrue(new InstantCommand(() -> Limelight.turnOffLED()));
+        new JoystickButton(driver_TFlightHotasOne, 13).toggleOnTrue(new InstantCommand(() -> swerve.overrideOdometry()));
+        new JoystickButton(driver_TFlightHotasOne, 15).toggleOnTrue(new InstantCommand(() -> Variables.bypass_rotation = !Variables.bypass_rotation));
+        // new JoystickButton(driver_TFlightHotasOne, 15).toggleOnTrue(new InstantCommand(() -> Variables.invert_rotation = !Variables.invert_rotation));
+        
     }
 
     public void configureNamedCommands() {
-        NamedCommands.registerCommand("Print Hello", new InstantCommand(() -> System.out.println("Hello World!")));
+        NamedCommands.registerCommand("AutonomousOuttake", new AutonomousOuttake(swerve, pivot, conveyor, flywheel));
+        NamedCommands.registerCommand("AutonomousIntake", new AutonomousIntake(swerve, pivot, intake, conveyor));
     }
 
     /**

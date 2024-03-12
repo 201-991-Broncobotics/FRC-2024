@@ -52,7 +52,7 @@ public final class Constants {
                                    teleop_angle_e = 1.35,
                                    teleop_translation_p = 0.4, 
                                    teleop_translation_i = 0,
-                                   teleop_translation_e = 1;
+                                   teleop_translation_tolerance = 1;
         
         public static final double turn_slow_ratio = 2; // because slowing down rotation and translation by the same factor is insane
                                     // ex. it its 4, then 0.6 translation ratio goes to a 0.9 turning ratio
@@ -79,7 +79,7 @@ public final class Constants {
         /* Intaking Constants */
 
         public static final double acceleration_time = 1, 
-                                   min_intake_time = 60, 
+                                   min_intake_time = 8, 
                                    add_intake_time = 0.8, 
                                    add_conveyor_time = 0.2, 
                                    retract_conveyor_time = 0.1; // how much we intake after the note has passed through
@@ -89,6 +89,16 @@ public final class Constants {
         public static final double min_flywheel_acceleration_time = 1, 
                                    min_outtake_time = 1, 
                                    min_amp_time = 2;
+
+        /* Functions */
+        
+        public static final double swerve_yaw(double cx, double cy, boolean blue) {
+            return 0;
+        }
+
+        public static final double outtake_angle(double cx, double cy, boolean blue) {
+            return 0;
+        }
 
     }
 

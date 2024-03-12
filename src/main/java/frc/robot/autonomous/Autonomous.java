@@ -3,7 +3,6 @@ package frc.robot.autonomous;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Swerve;
 
 public class Autonomous {
@@ -18,11 +17,9 @@ public class Autonomous {
             switch ((int) temp[0]) {
                 case 0:
                     allianceString = "Blue";
-                    Limelight.setSide("blue");
                     break;
                 case 1:
                     allianceString = "Red";
-                    Limelight.setSide("red");
                     break;
             }
             switch ((int) temp[1]) {

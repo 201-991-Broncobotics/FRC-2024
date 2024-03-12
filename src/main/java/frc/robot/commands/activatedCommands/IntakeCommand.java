@@ -7,16 +7,18 @@ import frc.robot.commands.subcommands.*;
 
 import frc.robot.subsystems.*;
 
+import static frc.robot.Constants.TuningConstants.*;
+
 public class IntakeCommand extends SequentialCommandGroup {
 
     public IntakeCommand(Pivot pivot, Intake intake, Conveyor conveyor) {
         addRequirements(pivot, intake, conveyor);
 
         addCommands(
-            new IntakeArmPosition(pivot), 
+            new SetArmPosition(pivot, intake_angle), 
             new ParallelDeadlineGroup( // could also be ParallelRaceGroup
                 new SequentialCommandGroup(
-                    new Intake_Subcommand(intake, conveyor), 
+                    new Intake_Subcommand(intake, conveyor), // ParallelDeadlineGroup???
                     new WaitCommand(0.2), 
                     new FinishIntakeCommand(conveyor)
                 ),

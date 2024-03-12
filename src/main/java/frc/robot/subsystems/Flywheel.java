@@ -35,7 +35,7 @@ public class Flywheel extends SubsystemBase {
         top = new TalonFX(top_flywheel_motor_ID);
         bottom = new TalonFX(bottom_flywheel_motor_ID);
 
-        var config = new TalonFXConfiguration();
+        TalonFXConfiguration config = new TalonFXConfiguration();
         config.CurrentLimits.SupplyCurrentLimitEnable = true;
         config.CurrentLimits.SupplyCurrentLimit = 30;
         config.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;

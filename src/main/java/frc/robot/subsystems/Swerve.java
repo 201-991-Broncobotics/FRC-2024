@@ -253,9 +253,13 @@ public class Swerve extends SubsystemBase {
     public double getYawError() {
         return normalizeAngle(pie.getTarget() - getGyroYaw().getDegrees());
     }
+    
+    public void overrideOdometry() {
+        resetOdometry(Limelight.getRobotPosition());
+    }
 
     public void targetSpeaker() {
-        setTargetHeading(0); // TODO: Rohan do the math for this :)
+        setTargetHeading(swerve_yaw(Variables.x, Variables.y, Variables.side.equalsIgnoreCase("blue")));
     }
 
     @Override
@@ -281,8 +285,6 @@ public class Swerve extends SubsystemBase {
 
         log("Odometry Pose", "(" + Math.round(poseEstimator.getEstimatedPosition().getTranslation().getX() * 100) / 100.0 + ", " + Math.round(poseEstimator.getEstimatedPosition().getTranslation().getY() * 100) / 100.0 + ")");
         log("Odometry Heading", "" + Math.round(poseEstimator.getEstimatedPosition().getRotation().getDegrees() * 100) / 100.0 + " degrees");
-        
-        // TODO: Make a visualizer in pygame
         
         double angle_current = 0;
         double drive_current = 0;

@@ -3,8 +3,10 @@ package frc.robot.commands.defaultCommands;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Variables;
 import frc.robot.subsystems.Pivot;
 
+import static frc.robot.Constants.TuningConstants.*;
 import static frc.robot.Constants.GeneralConstants.*;
 
 public class TeleopPivot extends Command {
@@ -26,6 +28,10 @@ public class TeleopPivot extends Command {
         double motorVal = signedPower(motorSup.getAsDouble());
 
         // Move Arm
-        pivot.move(motorVal * .5);
+        if (Variables.bypass_angling) {
+            pivot.setTarget(outtake_angle(Variables.x, Variables.y, Variables.side.equals("blue")));
+        } else {
+            pivot.move(motorVal * .5);
+        }
     }
 }
