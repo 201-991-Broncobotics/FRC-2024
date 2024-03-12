@@ -1,6 +1,5 @@
 package frc.robot.commands.activatedCommands;
 
-import static frc.robot.Constants.GeneralConstants.log;
 import static frc.robot.Constants.TuningConstants.*;
 
 import edu.wpi.first.wpilibj2.command.*;
@@ -37,8 +36,7 @@ public class ShootingCommands {
                 new InstantCommand(() -> Variables.bypass_rotation = true), 
                 new SequentialCommandGroup(
                     new InstantCommand(() -> Variables.bypass_angling = true), 
-                    Commands.waitUntil(pivot::pidCloseEnough), 
-                    new InstantCommand(() -> log("hi", "what the fuck"))
+                    Commands.waitUntil(pivot::pidCloseEnough)
                 ), 
                 FlywheelCommands.outtake(flywheel)
             ), 
@@ -46,10 +44,18 @@ public class ShootingCommands {
             new InstantCommand(() -> conveyor.outtake()), 
             new WaitCommand(3), 
 
-            new InstantCommand(() -> Variables.bypass_rotation = false), 
-            new InstantCommand(() -> Variables.bypass_angling = false), 
-            new InstantCommand(() -> conveyor.stop()), 
-            new InstantCommand(() -> flywheel.stop())
+            new InstantCommand(() -> {
+                Variables.bypass_rotation = false;
+                Variables.bypass_angling = false;
+                conveyor.stop();
+                flywheel.stop();
+            })
+        ).handleInterrupt(() -> {
+                Variables.bypass_rotation = false;
+                Variables.bypass_angling = false;
+                conveyor.stop();
+                flywheel.stop();
+            }
         );
     }
 }

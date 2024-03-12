@@ -24,6 +24,8 @@ public class TeleopSwerveRelativeDirecting extends Command {
     private DoubleSupplier slowSup;
     private BooleanSupplier forcedDirectingSup;
 
+    private boolean lastBypass = false;
+
     public TeleopSwerveRelativeDirecting(Swerve swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, BooleanSupplier robotCentricSup, IntSupplier targetSup, DoubleSupplier slowSup, BooleanSupplier forcedDirectingSup) {
         this.swerve = swerve;
         addRequirements(swerve);
@@ -49,6 +51,12 @@ public class TeleopSwerveRelativeDirecting extends Command {
         if (forcedDirectingSup.getAsBoolean()) {
             rotationVal = 0;
             swerve.targetSpeaker();
+            lastBypass = true;
+        } else {
+            if (lastBypass) {
+                swerve.changeHeading(0);
+            }
+            lastBypass = false;
         }
 
         /* Drive */

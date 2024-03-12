@@ -96,6 +96,10 @@ public class Swerve extends SubsystemBase {
     /** Counterclockwise in degrees */
     public void changeHeading(double delta) {
         setTargetHeading(getGyroYaw().getDegrees() + delta);
+        if (delta == 0) {
+            pie.resetTarget(getGyroYaw().getDegrees());
+            last_manual_time = Timer.getFPGATimestamp();
+        }
     }
 
     public void setTargetHeading(double target) {
