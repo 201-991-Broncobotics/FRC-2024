@@ -59,9 +59,9 @@ public final class Constants {
         
         /* Pivot Constants */
 
-        public static final double pivot_p = 0.125, 
+        public static final double pivot_p = .015, 
                                    pivot_i = 0, 
-                                   pivot_e = 2;
+                                   pivot_e = 1.1;
         
         public static final double starting_angle = -9.255644, // all in degrees
                                    intake_angle = 59.006106 + 3, 

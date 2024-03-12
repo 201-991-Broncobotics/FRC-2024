@@ -23,9 +23,13 @@ public class Pivot extends SubsystemBase {
         pivot_motor.brake();
     }
 
-    // public void move(double power) {
-    //     pivot_motor.power(power);
-    // }
+    public void move(double power) {
+        pivot_motor.power(power);
+    }
+    
+    public void pidPower() {
+        pivot_motor.pidPower();
+    }
 
     public void resetTarget() {
         pivot_motor.resetTarget();
@@ -60,7 +64,5 @@ public class Pivot extends SubsystemBase {
         log("Pivot Current", pivot_motor.getCurrent());
         log("Current Pivot Angle", pivot_motor.getEncoderPosition());
         log("Target Pivot Angle", pivot_motor.getTarget());
-
-        pivot_motor.pidPower();
     }
 }

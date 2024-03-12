@@ -26,8 +26,6 @@ public class TeleopPivot extends Command {
         double motorVal = signedPower(motorSup.getAsDouble());
 
         // Move Arm
-        pivot.setTarget(
-          pivot.getTargetAngle() + motorVal * 2
-        );
+        pivot.move(motorVal * .5);
     }
 }

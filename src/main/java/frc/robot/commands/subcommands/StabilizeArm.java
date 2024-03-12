@@ -3,27 +3,26 @@ package frc.robot.commands.subcommands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Pivot;
 
-public class SetArmPosition extends Command {
+public class StabilizeArm extends Command {
+
     private Pivot pivot;
 
-    private final double target_angle;
+    private final boolean reset_target;
 
-    public SetArmPosition(Pivot pivot, double target_angle) {
+    public StabilizeArm(Pivot pivot, boolean reset_target) {
         this.pivot = pivot;
         addRequirements(pivot);
 
-        this.target_angle = target_angle;
+        this.reset_target = reset_target;
     }
 
     @Override
     public void initialize() {
         pivot.brake();
-        pivot.setTarget(target_angle);
-    }
 
-    @Override
-    public boolean isFinished() {
-        return pivot.pidCloseEnough();
+        if (reset_target) {
+            pivot.resetTarget();
+        }
     }
 
     @Override
