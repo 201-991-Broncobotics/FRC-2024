@@ -51,7 +51,7 @@ public class Autonomous {
 
         String selectedAuto = /* allianceString + */ location + numElements;
             // form of commands: [Blue/Red] [Amp/Middle/NotAmp] [/Double/Triple]
-            // sadly, LimeLight removed a lot of fun from this
+            // sadly, PathPlanner removed a lot of fun from this
 
         SmartDashboard.putString("Autonomous", allianceString + " " + selectedAuto);
 
