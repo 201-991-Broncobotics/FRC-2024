@@ -4,9 +4,9 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Variables;
+import frc.robot.autonomous.ShootingMath;
 import frc.robot.subsystems.Pivot;
 
-import static frc.robot.Constants.TuningConstants.*;
 import static frc.robot.Constants.GeneralConstants.*;
 
 public class TeleopPivot extends Command {
@@ -31,7 +31,7 @@ public class TeleopPivot extends Command {
 
         // Move Arm
         if (Variables.bypass_angling) {
-            pivot.setTarget(outtake_angle());
+            pivot.setTarget(ShootingMath.pivotAngle().getDegrees());
             pivot.pidPower();
             lastBypass = true;
         } else {

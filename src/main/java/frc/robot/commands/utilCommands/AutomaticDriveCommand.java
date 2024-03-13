@@ -26,14 +26,14 @@ public class AutomaticDriveCommand extends Command {
 
     @Override
     public void initialize() {
-        starting_pose = swerve.getPose();
+        starting_pose = Swerve.getPose();
         end_time = Timer.getFPGATimestamp() + 1;
     }
 
     @Override
     public void execute() {
         // we might do a PID thing...
-        double conv_power = Math.min(Math.abs(power), (distance - swerve.getPose().relativeTo(starting_pose).getTranslation().getNorm()) * teleop_translation_p);
+        double conv_power = Math.min(Math.abs(power), (distance - Swerve.getPose().relativeTo(starting_pose).getTranslation().getNorm()) * teleop_translation_p);
         if (power < 0) conv_power = -conv_power;
         conv_power = power; // we could test without this line soon
         swerve.drive(new Translation2d(conv_power, 0).times(Constants.BaseFalconSwerveConstants.maxSpeed), 0, true, true);
@@ -46,7 +46,7 @@ public class AutomaticDriveCommand extends Command {
     
     @Override
     public boolean isFinished() {
-        return ((swerve.getPose().relativeTo(starting_pose).getTranslation().getNorm() > distance - teleop_translation_tolerance) || (Timer.getFPGATimestamp() > end_time));
+        return ((Swerve.getPose().relativeTo(starting_pose).getTranslation().getNorm() > distance - teleop_translation_tolerance) || (Timer.getFPGATimestamp() > end_time));
     }
     
 }

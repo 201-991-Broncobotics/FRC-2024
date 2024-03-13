@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import frc.lib.util.PIECalculator;
 import frc.robot.Constants;
 import frc.robot.Variables;
+import frc.robot.autonomous.ShootingMath;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -32,7 +33,7 @@ import static frc.robot.Constants.GeneralConstants.*;
 import static frc.robot.Constants.TeleopSwerveConstants.*;
 
 public class Swerve extends SubsystemBase {
-    public SwerveDrivePoseEstimator poseEstimator;
+    public static SwerveDrivePoseEstimator poseEstimator;
     public SwerveModule[] swerveModules;
     public Pigeon2 gyro;
 
@@ -65,7 +66,7 @@ public class Swerve extends SubsystemBase {
         // PathPlanner
 
         AutoBuilder.configureHolonomic(
-            this::getPose, // Robot pose supplier
+            Swerve::getPose, // Robot pose supplier
             this::resetOdometry, // Method to reset odometry (will be called if your auto has a starting pose)
             this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
             this::driveRobotRelative, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
@@ -223,7 +224,7 @@ public class Swerve extends SubsystemBase {
         }
     }
 
-    public Pose2d getPose() {
+    public static Pose2d getPose() {
         return poseEstimator.getEstimatedPosition();
     }
 
@@ -264,7 +265,7 @@ public class Swerve extends SubsystemBase {
     }
 
     public void targetSpeaker() {
-        setTargetHeading(swerve_yaw());
+        setTargetHeading(ShootingMath.drivetrainAngle().getDegrees());
     }
 
     @Override
@@ -284,10 +285,6 @@ public class Swerve extends SubsystemBase {
             log("Vision Pose", "No vision estimate");
             log("Vision Heading", "No vision estimate");
         }
-
-        Variables.x = poseEstimator.getEstimatedPosition().getX();
-        Variables.y = poseEstimator.getEstimatedPosition().getY();
-        Variables.angle = poseEstimator.getEstimatedPosition().getRotation().getDegrees();
 
         log("Pigeon Yaw", getGyroYaw().getDegrees());
         log("Pose Estimator Yaw ", getHeading().getDegrees());

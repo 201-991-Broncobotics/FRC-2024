@@ -22,10 +22,10 @@ public final class Constants {
 
         /* For these, align all the wheels so their gears are facing away from the intake */
 
-        public static final double CANCoder0_zero = 159.69, // Front Left
-                                   CANCoder1_zero = 16.78, // Front Right
-                                   CANCoder2_zero = -129.2, // Back Left
-                                   CANCoder3_zero = 121.99; // Back Right
+        public static final double CANCoder0_zero = 172.35, // Front Left
+                                   CANCoder1_zero = 13.62, // Front Right
+                                   CANCoder2_zero = -128.84, // Back Left
+                                   CANCoder3_zero = 105.82; // Back Right
         
         /* Swerve Drive Constants */
 
@@ -89,18 +89,6 @@ public final class Constants {
         public static final double max_flywheel_acceleration_time = 1, 
                                    min_outtake_time = 1, 
                                    min_amp_time = 2;
-
-        /* Functions */
-        
-        public static final double swerve_yaw() {
-            // current x, y, blue are Variables.x, Variables.y, Variables.isBlueAlliance
-            return 0;
-        }
-
-        public static final double outtake_angle() {
-            // current x, y, blue are Variables.x, Variables.y, Variables.isBlueAlliance
-            return 40;
-        }
 
     }
 
