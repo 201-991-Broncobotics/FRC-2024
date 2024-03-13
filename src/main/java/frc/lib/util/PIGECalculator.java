@@ -43,7 +43,7 @@ public class PIGECalculator {
         integral += error * delta_time;
         integral_correction = integral * kI;
 
-        gravity_correction = Math.sin((zeroPosition - currentPosition) * Math.PI / 180.0) * kG;
+        gravity_correction = Math.sin((zeroPosition - targetPosition) * Math.PI / 180.0) * kG;
 
         if (Math.abs(position_correction + integral_correction + gravity_correction) < minPower) return 0;
 
