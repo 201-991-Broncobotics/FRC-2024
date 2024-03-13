@@ -103,6 +103,7 @@ public class Swerve extends SubsystemBase {
         }
     }
 
+    /* Heading must be relative to blue alliance */
     public void setTargetHeading(double target) {
         pie.resetTarget(normalizeAngle(target - getGyroYaw().getDegrees()) + getGyroYaw().getDegrees());
         last_manual_time = -999;
@@ -162,6 +163,8 @@ public class Swerve extends SubsystemBase {
         if (Math.abs(rotation) < swerve_min_manual_rotation * Constants.BaseFalconSwerveConstants.maxAngularVelocity) rotation = 0;
 
         if (Variables.invert_rotation) rotation *= -1;
+
+        if (!Variables.isBlueAlliance) translation = translation.times(-1);
 
         SwerveModuleState[] swerveModuleStates =
             Constants.BaseFalconSwerveConstants.swerveKinematics.toSwerveModuleStates(
@@ -237,18 +240,21 @@ public class Swerve extends SubsystemBase {
         return getPose().getRotation();
     }
 
+    /* Heading must be relative to blue alliance */
     public void setHeading(Rotation2d heading) {
         poseEstimator.resetPosition(getGyroYaw(), getModulePositions(), new Pose2d(getPose().getTranslation(), heading));
     }
 
+    /* Heading must be relative to driver */
     public void zeroHeading() {
-        poseEstimator.resetPosition(getGyroYaw(), getModulePositions(), new Pose2d(getPose().getTranslation(), new Rotation2d()));
+        poseEstimator.resetPosition(getGyroYaw().plus(Rotation2d.fromDegrees(Variables.isBlueAlliance ? 0 : 180)), getModulePositions(), new Pose2d(getPose().getTranslation(), Rotation2d.fromDegrees(Variables.isBlueAlliance ? 0 : 180)));
     }
 
+    /* Heading must be relative to driver */
     public void zeroGyro(double yaw) { // resets robot angle. Only do if pigeon is inaccurate or at starting of match
-        poseEstimator.resetPosition(Rotation2d.fromDegrees(yaw), getModulePositions(), new Pose2d(getPose().getTranslation(), Rotation2d.fromDegrees(yaw)));
+        poseEstimator.resetPosition(Rotation2d.fromDegrees(yaw + (Variables.isBlueAlliance ? 0 : 180)), getModulePositions(), new Pose2d(getPose().getTranslation(), Rotation2d.fromDegrees(yaw + (Variables.isBlueAlliance ? 0 : 180))));
         gyro.setYaw(yaw + (Variables.isBlueAlliance ? 0 : 180));
-        pie.resetTarget(yaw);
+        pie.resetTarget(yaw + (Variables.isBlueAlliance ? 0 : 180));
         last_manual_time = Timer.getFPGATimestamp();
     }
 

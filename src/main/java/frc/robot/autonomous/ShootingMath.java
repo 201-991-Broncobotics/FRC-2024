@@ -13,11 +13,9 @@ public class ShootingMath {
     public static final Translation2d blueSpeaker = new Translation2d(0.2286, 5.55);
     public static final double height = 2.04311; // speaker height
 
-    // TODO: tune
-    public static final double outtakeOffset = 0.381; // how far outtake pivot is from center of robot
-    public static final double outtakeUp = 0.01; // how far up outtake pivot is from center of robot
+    public static final double outtakeForwardOffset = 0.19685; // how far outtake pivot is from center of robot
+    public static final double OuttakeVerticalOffset = 0.5852089896; // how far up outtake pivot is from center of robot
 
-    // TODO: offset robot pose b/c we dont shoot from center of robot
     // assuming no robot velocity; everything else is negligible 
     public static Rotation2d drivetrainAngle() {
         var speaker = Variables.isBlueAlliance ? blueSpeaker : redSpeaker;
@@ -31,21 +29,24 @@ public class ShootingMath {
         // this will return 180 because away = 0
         var angle = vector.getAngle().plus(Rotation2d.fromDegrees(180));
         log("Auto Aim Drivetrain Angle (deg)", angle.getDegrees());
+
         return angle;
     }
 
     public static Rotation2d pivotAngle() {
+        Translation2d speaker = Variables.isBlueAlliance ? blueSpeaker : redSpeaker;
 
-        var speaker = Variables.isBlueAlliance ? blueSpeaker : redSpeaker;
+        // base it on the angle we want to be, not the angle we are currently at
+        Translation2d pivot = Swerve.getPose().getTranslation().plus(new Translation2d(outtakeForwardOffset, 0).rotateBy(drivetrainAngle()));
 
         // now, we want to make a triangle with the distance to the speaker as the base,
         // and the height of the center of the speaker as the height
         // then, the angle that we're looking for will be asin(z / distance)
-        var distance = speaker.getDistance(Swerve.getPose().getTranslation());
-        var z = height - outtakeOffset;
 
-        var angle = Rotation2d.fromRadians(Math.asin(z / distance));
+        double distance = speaker.getDistance(pivot);
+        double z = height - OuttakeVerticalOffset;
 
+        Rotation2d angle = Rotation2d.fromRadians(Math.asin(z / distance));
         log("Auto Aim Pivot Angle (deg)", angle.getDegrees());
 
         return angle;
@@ -62,12 +63,12 @@ public class ShootingMath {
 
     /* Limelight stats (not for here)
      * 
-     * Forward offset from drivetrain center: -8.668716 * 0.0254
-     * Z offset from drivetrain center: 15.580301 * 0.0254
-     * Yaw: 180
-     * Pitch: 21
+     * Forward offset from drivetrain center: -0.2201853864
+     * Z offset from drivetrain center: 0.3957396454
+     * Yaw: 180°
+     * Pitch: 23°
      * 
-     * It is facing towards the outtake
-     * 
+     * Zero yaw = towards intake
+     * Zero angle = towards red alliance
      */
 }

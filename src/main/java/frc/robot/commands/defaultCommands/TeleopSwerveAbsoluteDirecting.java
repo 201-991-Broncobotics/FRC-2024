@@ -1,6 +1,7 @@
 package frc.robot.commands.defaultCommands;
 
 import frc.robot.Constants;
+import frc.robot.Variables;
 import frc.robot.subsystems.Swerve;
 
 import java.util.function.BooleanSupplier;
@@ -60,7 +61,7 @@ public class TeleopSwerveAbsoluteDirecting extends Command {
 
         if (turnVal == 0) {
             if (x_dir != 0 || y_dir != 0) {
-                double target_heading = swerve.getGyroYaw().getDegrees();
+                double target_heading = swerve.getGyroYaw().getDegrees() - (Variables.isBlueAlliance ? 0 : 180);;
 
                 if (x_dir == 0) {
                     if (y_dir > 0) {
@@ -73,10 +74,10 @@ public class TeleopSwerveAbsoluteDirecting extends Command {
                 } else {
                     target_heading = Math.atan(y_dir / x_dir) * 180.0 / Math.PI - 90;
                 }
-                turnVal = getPECorrection(normalizeAngle(target_heading - swerve.getGyroYaw().getDegrees()), teleop_angle_p, teleop_angle_e, swerve_min_pid_rotation * Constants.BaseFalconSwerveConstants.maxAngularVelocity, swerve_max_pid_rotation * Constants.BaseFalconSwerveConstants.maxAngularVelocity);
+                turnVal = getPECorrection(normalizeAngle(target_heading + (Variables.isBlueAlliance ? 0 : 180) - swerve.getGyroYaw().getDegrees()), teleop_angle_p, teleop_angle_e, swerve_min_pid_rotation * Constants.BaseFalconSwerveConstants.maxAngularVelocity, swerve_max_pid_rotation * Constants.BaseFalconSwerveConstants.maxAngularVelocity);
 
             } else if (targetSup.getAsInt() % 90 == 0) { // setTargetHeading on purpose
-                swerve.setTargetHeading(targetSup.getAsInt());
+                swerve.setTargetHeading(targetSup.getAsInt() + (Variables.isBlueAlliance ? 0 : 180));
             }
         }
 

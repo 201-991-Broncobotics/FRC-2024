@@ -1,6 +1,7 @@
 package frc.robot.commands.defaultCommands;
 
 import frc.robot.Constants;
+import frc.robot.Variables;
 import frc.robot.subsystems.Swerve;
 
 import java.util.function.BooleanSupplier;
@@ -46,7 +47,7 @@ public class TeleopSwerveRelativeDirecting extends Command {
         double strafeVal = signedPower(strafeSup.getAsDouble());
         double rotationVal = signedPower(rotationSup.getAsDouble()) * teleop_rotation_percent;
 
-        if ((rotationVal) == 0 && (targetSup.getAsInt() % 90 == 0)) swerve.setTargetHeading(targetSup.getAsInt());
+        if ((rotationVal) == 0 && (targetSup.getAsInt() % 90 == 0)) swerve.setTargetHeading(targetSup.getAsInt() + (Variables.isBlueAlliance ? 0 : 180));
 
         if (forcedDirectingSup.getAsBoolean()) {
             rotationVal = 0;

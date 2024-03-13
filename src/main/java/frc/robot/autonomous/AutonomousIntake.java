@@ -1,6 +1,7 @@
 package frc.robot.autonomous;
 
 import edu.wpi.first.wpilibj2.command.*;
+import frc.robot.Variables;
 import frc.robot.commands.activatedCommands.IntakeCommand;
 import frc.robot.commands.utilCommands.AutomaticDriveCommand;
 import frc.robot.subsystems.*;
@@ -11,7 +12,7 @@ public class AutonomousIntake extends SequentialCommandGroup { // lmao
         addRequirements(swerve, pivot, intake, conveyor);
 
         addCommands(
-            new InstantCommand(() -> swerve.setTargetHeading(0)), 
+            new InstantCommand(() -> swerve.setTargetHeading(Variables.isBlueAlliance ? 0 : 180)), 
             new ParallelRaceGroup(
                 new WaitCommand(4), 
                 new ParallelDeadlineGroup(
