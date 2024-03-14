@@ -3,7 +3,7 @@ package frc.robot.autonomous;
 import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.Variables;
 import frc.robot.commands.activatedCommands.IntakeCommand;
-import frc.robot.commands.utilCommands.AutomaticDriveCommand;
+import frc.robot.commands.utilCommands.LinearDriveCommand;
 import frc.robot.subsystems.*;
 
 public class AutonomousIntake extends SequentialCommandGroup { // lmao
@@ -17,11 +17,11 @@ public class AutonomousIntake extends SequentialCommandGroup { // lmao
                 new WaitCommand(4), 
                 new ParallelDeadlineGroup(
                     new IntakeCommand(pivot, intake, conveyor), 
-                    new AutomaticDriveCommand(swerve, 1, 0.2)
+                    new LinearDriveCommand(swerve, 1, 0.2)
                 )
             ), new ParallelRaceGroup(
                 new WaitCommand(4), 
-                new AutomaticDriveCommand(swerve, -1, 0.2)
+                new LinearDriveCommand(swerve, -1, 0.2)
             )
         );
     }

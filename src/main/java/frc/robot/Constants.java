@@ -131,18 +131,18 @@ public final class Constants {
                                 xBoxMakeXButton = XboxController.Button.kX.value, 
                                 xBoxTerminateCommandsDriverButton = XboxController.Button.kBack.value,
 
-                                joystickTranslationAxis = 1, // backward is positive
-                                joystickStrafeAxis = 0, // right is positive
+                                joystickTranslationAxis = 1, 
+                                joystickStrafeAxis = 0, 
 
-                                joystickRotationAxis = 5, // right is positive
+                                joystickRotationAxis = 5, 
 
                                 joystickSlowButton = 1,
 
-                                joystickDirectAngleButton = 1, // also i guess???
+                                joystickDirectAngleButton = 2, 
 
                                 joystickZeroGyroButton = 3, 
                                 joystickMakeXButton = 2, 
-                                joystickTerminateCommandsButton = 4; // if we push the slider forward it cancels commands
+                                joystickDriveToAmpButton = 4; // if we push the slider forward it cancels commands
                                 // .getPOV() is the same for joystick; joystick is a T.Flight Hotas One
 
         /* Operator Buttons */

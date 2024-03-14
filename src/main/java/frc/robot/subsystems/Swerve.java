@@ -15,7 +15,6 @@ import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 
-import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -80,11 +79,11 @@ public class Swerve extends SubsystemBase {
                 new ReplanningConfig() // Default path replanning config. See the API for the options here
             ),
             () -> {
-                return (
-                    DriverStation.getRawAllianceStation() == AllianceStationID.Red1 || 
-                    DriverStation.getRawAllianceStation() == AllianceStationID.Red2 || 
-                    DriverStation.getRawAllianceStation() == AllianceStationID.Red3
-                );
+                if (DriverStation.getAlliance().isPresent()) {
+                    return DriverStation.getAlliance().get() == DriverStation.Alliance.Red;
+                } else {
+                    return false;
+                }
             },
             this // Reference to this subsystem to set requirements
         );

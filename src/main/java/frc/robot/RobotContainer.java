@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.button.*;
 import frc.robot.autonomous.*;
 import frc.robot.commands.activatedCommands.*;
 import frc.robot.commands.defaultCommands.*;
+import frc.robot.commands.utilCommands.TargetDriveCommands;
 import frc.robot.subsystems.*;
 
 import com.pathplanner.lib.auto.NamedCommands;
@@ -34,7 +35,7 @@ public class RobotContainer {
 
     /* Driver Buttons */
     private final Trigger zeroGyro = new JoystickButton(driver_XBox, xBoxZeroGyroButton).or(new JoystickButton(driver_TFlightHotasOne, joystickZeroGyroButton));
-    private final Trigger makeX = new JoystickButton(driver_XBox, xBoxMakeXButton).or(new JoystickButton(driver_TFlightHotasOne, joystickMakeXButton));
+    // private final Trigger makeX = new JoystickButton(driver_XBox, xBoxMakeXButton).or(new JoystickButton(driver_TFlightHotasOne, joystickMakeXButton));
 
     private final Trigger robotCentric = new JoystickButton(driver_XBox, xBoxRobotCentricButton);
 
@@ -130,7 +131,10 @@ public class RobotContainer {
     private void configureButtonBindings() {
         /* Driver Triggers */
         zeroGyro.onTrue(new InstantCommand(() -> swerve.zeroGyro(0)));
-        makeX.onTrue(new InstantCommand(() -> swerve.makeX()));
+        
+        // makeX.onTrue(new InstantCommand(() -> swerve.makeX())); button conflict :(
+
+        new JoystickButton(driver_TFlightHotasOne, joystickDriveToAmpButton).toggleOnTrue(TargetDriveCommands.driveToAmp(swerve));
 
         /* Operator Triggers */
         operator.a().toggleOnTrue(FlywheelCommands.outtake(flywheel));
@@ -149,9 +153,7 @@ public class RobotContainer {
 
         new JoystickButton(driver_TFlightHotasOne, 13).toggleOnTrue(new InstantCommand(() -> swerve.overrideOdometry()));
         new JoystickButton(driver_TFlightHotasOne, 14).toggleOnTrue(new InstantCommand(() -> Variables.bypass_angling = !Variables.bypass_angling));
-        new JoystickButton(driver_TFlightHotasOne, 15).toggleOnTrue(new InstantCommand(() -> Variables.bypass_rotation = !Variables.bypass_rotation));
-        // new JoystickButton(driver_TFlightHotasOne, 15).toggleOnTrue(new InstantCommand(() -> Variables.invert_rotation = !Variables.invert_rotation));
-        
+        new JoystickButton(driver_TFlightHotasOne, 15).toggleOnTrue(new InstantCommand(() -> Variables.bypass_rotation = !Variables.bypass_rotation));        
     }
 
     public void configureNamedCommands() {

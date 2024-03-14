@@ -21,7 +21,7 @@ public class IntakeCommand extends SequentialCommandGroup {
                     new Intake_Subcommand(intake, conveyor), // ParallelDeadlineGroup???
                     new WaitCommand(0.2), 
                     new FinishIntakeCommand(conveyor)
-                ),
+                ).handleInterrupt(() -> new FinishIntakeCommand(conveyor).schedule()),
                 new StabilizeArm(pivot, true)
             )
         );

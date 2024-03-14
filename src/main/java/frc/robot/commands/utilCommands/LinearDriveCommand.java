@@ -9,7 +9,7 @@ import frc.robot.subsystems.Swerve;
 
 import static frc.robot.Constants.TuningConstants.*;
 
-public class AutomaticDriveCommand extends Command {
+public class LinearDriveCommand extends Command {
         
     private Swerve swerve;
     private final double power, distance;
@@ -17,7 +17,7 @@ public class AutomaticDriveCommand extends Command {
     private double end_time;
 
     /** Drive Fieldrelative Forward while doing pid for heading */
-    public AutomaticDriveCommand(Swerve swerve, double distance, double power) {
+    public LinearDriveCommand(Swerve swerve, double distance, double power) {
         this.swerve = swerve;
         this.power = power;
         this.distance = distance;
