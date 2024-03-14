@@ -62,6 +62,9 @@ public class Pivot extends SubsystemBase {
     @Override
     public void periodic() {
         log("Pivot Current", pivot_motor.getCurrent());
+        log("Pivot Motor Get", pivot_motor.get());
+        log("Pivot Motor Sine", Math.sin((pivot_zero - pivot_motor.getEncoderPosition()) * Math.PI / 180));
+        log("Possibly kG", pivot_motor.get() / Math.sin((pivot_zero - pivot_motor.getEncoderPosition()) * Math.PI / 180));
         log("Current Pivot Angle", pivot_motor.getEncoderPosition());
         log("Target Pivot Angle", pivot_motor.getTarget());
     }

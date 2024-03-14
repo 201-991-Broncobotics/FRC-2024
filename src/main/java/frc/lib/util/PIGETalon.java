@@ -173,4 +173,8 @@ public class PIGETalon {
     public double getEncoderPosition() {
         return positionSup.getAsDouble();
     }
+
+    public double get() {
+        return motor.get();
+    }
 }

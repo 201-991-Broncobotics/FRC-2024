@@ -22,10 +22,10 @@ public final class Constants {
 
         /* For these, align all the wheels so their gears are facing away from the intake */
 
-        public static final double CANCoder0_zero = 172.35, // Front Left
-                                   CANCoder1_zero = 13.62, // Front Right
-                                   CANCoder2_zero = -128.84, // Back Left
-                                   CANCoder3_zero = 105.82; // Back Right
+        public static final double CANCoder0_zero = 164.8, // Front Left
+                                   CANCoder1_zero = -60.74, // Front Right
+                                   CANCoder2_zero = -130.34, // Back Left
+                                   CANCoder3_zero = 92.98; // Back Right
         
         /* Swerve Drive Constants */
 
@@ -61,16 +61,16 @@ public final class Constants {
 
         public static final double pivot_p = .015, 
                                    pivot_i = 0, 
-                                   pivot_g = 0.018, 
+                                   pivot_g = 0.015, 
                                    pivot_e = 1.1, 
-                                   pivot_zero = 85; // center of gravity
+                                   pivot_zero = 115;
         
         public static final double starting_angle = -9.255644, // all in degrees
-                                   intake_angle = 59.006106 + 3, 
+                                   intake_angle = 59.006106, 
                                    amp_angle = 125.388397, 
 
                                    min_outtake_angle = 25, 
-                                   pivot_guard_angle = 3; // so we dont smack against the walls. goal is to get this to 0 soon
+                                   pivot_guard_angle = 0; // so we dont smack against the walls. goal is to get this to 0 soon
         
         /* Hang Constants */
         
@@ -436,7 +436,7 @@ public final class Constants {
         public static final double pivot_motor_max_continuous_current = 15,
                                    pivot_motor_max_current = 25, 
 
-                                   pivot_motor_min_percent_output = 0.02, 
+                                   pivot_motor_min_percent_output = 0, 
                                    pivot_motor_max_percent_output = 0.95, 
                                    
                                    pivot_motor_max_percent_output_per_second = 10, 

@@ -3,6 +3,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.button.*;
 
@@ -12,6 +14,7 @@ import frc.robot.commands.defaultCommands.*;
 import frc.robot.subsystems.*;
 
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.util.PathPlannerLogging;
 
 import static frc.robot.Constants.GeneralConstants.*;
 import static frc.robot.Constants.Buttons.*;
@@ -154,6 +157,18 @@ public class RobotContainer {
     public void configureNamedCommands() {
         NamedCommands.registerCommand("AutonomousOuttake", new AutonomousOuttake(swerve, pivot, conveyor, flywheel));
         NamedCommands.registerCommand("AutonomousIntake", new AutonomousIntake(swerve, pivot, intake, conveyor));
+
+        Field2d field = new Field2d();
+
+        SmartDashboard.putData("Field", field);
+
+        PathPlannerLogging.setLogTargetPoseCallback((pose) -> {
+            field.getObject("target pose").setPose(pose);
+        });
+
+        PathPlannerLogging.setLogCurrentPoseCallback((pose) -> {
+            field.setRobotPose(pose);
+        });
     }
 
     /**
@@ -167,6 +182,7 @@ public class RobotContainer {
 
     public void teleopInit() {
         swerve.teleopInit();
+        pivot.brake();
     }
 
     public Swerve getSwerve() {
