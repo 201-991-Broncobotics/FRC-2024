@@ -22,10 +22,12 @@ public final class Constants {
 
         /* For these, align all the wheels so their gears are facing away from the intake */
 
-        public static final double CANCoder0_zero = 164.8, // Front Left
-                                   CANCoder1_zero = -60.74, // Front Right
-                                   CANCoder2_zero = -130.34, // Back Left
-                                   CANCoder3_zero = 92.98; // Back Right
+        public static final double CANCoder0_zero = 156.09, // Front Left
+                                   CANCoder1_zero = -90.62, // Front Right
+                                   CANCoder2_zero = -128.49, // Back Left
+                                   CANCoder3_zero = -146.95; // Back Right
+        
+        public static final boolean useCANCoders = true;
         
         /* Swerve Drive Constants */
 

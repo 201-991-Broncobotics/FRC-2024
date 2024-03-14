@@ -166,6 +166,15 @@ public class PIGETalon {
         maxPosition = Double.POSITIVE_INFINITY;
     }
 
+    public void enableLimiting(double minimum, double maximum) {
+        minPosition = minimum;
+        maxPosition = maximum;
+    }
+
+    public void resetEncoder() {
+        motor.setPosition(0);
+    }
+
     public double getCurrent() {
         return motor.getStatorCurrent().getValueAsDouble();
     }

@@ -140,6 +140,7 @@ public class RobotContainer {
         operator.a().toggleOnTrue(FlywheelCommands.outtake(flywheel));
         operator.y().toggleOnTrue(FlywheelCommands.amp(flywheel));
         operator.b().toggleOnTrue(FlywheelCommands.off(flywheel));
+        operator.start().toggleOnTrue(new ResetHang(hang));
 
         // shooting
         operator.leftTrigger(0.8).toggleOnTrue(ShootingCommands.amp(pivot, flywheel, conveyor));

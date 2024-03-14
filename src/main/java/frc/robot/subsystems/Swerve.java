@@ -40,6 +40,7 @@ public class Swerve extends SubsystemBase {
     private PIECalculator pie;
     StructPublisher<Pose2d> posePublisher;
     StructArrayPublisher<SwerveModuleState> statePublisher;
+    StructArrayPublisher<SwerveModuleState> canStatePublisher;
     StructPublisher<Pose2d> visionPublisher;
 
     public Swerve() {
@@ -90,6 +91,7 @@ public class Swerve extends SubsystemBase {
 
         posePublisher = NetworkTableInstance.getDefault().getStructTopic("/Swerve/Pose", Pose2d.struct).publish();
         statePublisher = NetworkTableInstance.getDefault().getStructArrayTopic("/Swerve/States", SwerveModuleState.struct).publish();
+        canStatePublisher = NetworkTableInstance.getDefault().getStructArrayTopic("/Swerve/canStates", SwerveModuleState.struct).publish();
         visionPublisher = NetworkTableInstance.getDefault().getStructTopic("/Swerve/Vision", Pose2d.struct).publish();
     }
 
@@ -212,6 +214,14 @@ public class Swerve extends SubsystemBase {
         return states;
     }
 
+    public SwerveModuleState[] getCanModuleStates() {
+        SwerveModuleState[] states = new SwerveModuleState[4];
+        for (SwerveModule mod : swerveModules) {
+            states[mod.moduleNumber] = mod.getCanState();
+        }
+        return states;
+    }
+
     public SwerveModulePosition[] getModulePositions() {
         SwerveModulePosition[] positions = new SwerveModulePosition[4];
         for (SwerveModule mod : swerveModules) {
@@ -311,8 +321,10 @@ public class Swerve extends SubsystemBase {
         log("Average Angle Motor Current", angle_current);
         log("Average Drive Motor Current", drive_current);
         log("Side", Variables.isBlueAlliance ? "Blue" : "Red");
+
         posePublisher.set(getPose());
         statePublisher.set(getModuleStates());
+        canStatePublisher.set(getCanModuleStates());
         visionPublisher.set(vision_estimate);
     }
 
