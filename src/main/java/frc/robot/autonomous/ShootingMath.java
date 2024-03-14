@@ -8,13 +8,19 @@ import frc.robot.subsystems.Swerve;
 import frc.robot.Variables;
 
 public class ShootingMath {
-
+    // all in meters and seconds
     public static final Translation2d redSpeaker = new Translation2d(16.3322, 5.55);
     public static final Translation2d blueSpeaker = new Translation2d(0.2286, 5.55);
-    public static final double height = 2.04311; // speaker height
+    public static final double speaker_height = 2.04311; // speaker height
+
+    public static final double g = 9.81;
+    public static final double v = 13.56663838; // exit velocity, in m/s
 
     public static final double outtakeForwardOffset = 0.19685; // how far outtake pivot is from center of robot
     public static final double outtakeVerticalOffset = 0.5852089896; // how far up outtake pivot is from center of robot
+    
+    public static final double z = speaker_height - outtakeVerticalOffset;
+    public static final double max_distance = 5; // 6.8?
 
     // assuming no robot velocity; everything else is negligible 
     public static Rotation2d drivetrainAngle() {
@@ -37,10 +43,17 @@ public class ShootingMath {
         // base it on the angle we want to be, not the angle we are currently at
         Translation2d pivot = Swerve.getPose().getTranslation().plus(new Translation2d(outtakeForwardOffset, 0).rotateBy(drivetrainAngle()));
         
-        double distance = speaker.getDistance(pivot);
-        double z = height - outtakeVerticalOffset;
+        double d = speaker.getDistance(pivot);
 
-        Rotation2d angle = Rotation2d.fromRadians(Math.asin(z / distance));
+        if (d > max_distance) {
+            d = max_distance; // lol
+        }
+
+        double angle_radians = Math.atan(
+            (v * v * d - Math.sqrt(v * v * v * v * d * d - g * d * d * (g * d * d + 2 * v * v * z))) / (g * d * d)
+        );
+
+        Rotation2d angle = Rotation2d.fromRadians(angle_radians);
         log("Auto Aim Pivot Angle (deg)", angle.getDegrees());
 
         return angle;

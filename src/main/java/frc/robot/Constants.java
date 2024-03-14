@@ -65,7 +65,7 @@ public final class Constants {
                                    pivot_e = 1.1, 
                                    pivot_zero = 115;
         
-        public static final double starting_angle = -9.255644, // all in degrees
+        public static final double starting_angle = -7, // thanks to certain people, it's not -9.255644, // all in degrees
                                    intake_angle = 59.006106, 
                                    amp_angle = 125.388397, 
 

@@ -43,8 +43,8 @@ public class TargetDriveCommands {
         // we only want to do this IF we are facing relatively vertical and
         return modifiedPathFindCommand(
             new Pose2d(1.82, 7.41, Rotation2d.fromDegrees(90)),
-            4, 
-            30
+            6, 
+            180
         );
         
     }
