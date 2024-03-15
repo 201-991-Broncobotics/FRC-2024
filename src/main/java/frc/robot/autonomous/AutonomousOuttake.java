@@ -2,7 +2,6 @@ package frc.robot.autonomous;
 
 import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.commands.activatedCommands.ShootingCommands;
-import frc.robot.commands.defaultCommands.TeleopSwerveRelativeDirecting;
 import frc.robot.subsystems.*;
 
 public class AutonomousOuttake extends SequentialCommandGroup {
@@ -12,11 +11,8 @@ public class AutonomousOuttake extends SequentialCommandGroup {
 
         addCommands( // angle towards outtake
             new ParallelDeadlineGroup(
-                new ParallelRaceGroup(
-                    new WaitCommand(8), 
-                    ShootingCommands.autonomousSpeaker(swerve, pivot, flywheel, conveyor)
-                ), 
-                new TeleopSwerveRelativeDirecting(swerve, () -> 0, () -> 0, () -> 0, () -> false, () -> -1, () -> 1, () -> true)
+                new WaitCommand(8), 
+                ShootingCommands.autonomousSpeaker(swerve, pivot, flywheel, conveyor)
             )
         );
     }
