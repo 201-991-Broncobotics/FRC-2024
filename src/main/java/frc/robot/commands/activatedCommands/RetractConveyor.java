@@ -5,16 +5,12 @@ import frc.robot.subsystems.*;
 
 import static frc.robot.Constants.TuningConstants.*;
 
-public class FinishIntakeCommand extends SequentialCommandGroup {
+public class RetractConveyor extends SequentialCommandGroup {
 
-    public FinishIntakeCommand(Conveyor conveyor) {
+    public RetractConveyor(Conveyor conveyor) {
         addRequirements(conveyor);
 
         addCommands(
-            /* new InstantCommand(() -> conveyor.intake()), 
-            new CustomWaitCommand(add_conveyor_time, () -> conveyor.stop()), 
-            new InstantCommand(() -> conveyor.stop()), 
-            new WaitCommand(0.2), */ // because it decided to not work for no reason???
             new InstantCommand(() -> conveyor.retract()), 
             new WaitCommand(retract_conveyor_time).handleInterrupt(() -> conveyor.stop()), 
             new InstantCommand(() -> conveyor.stop())

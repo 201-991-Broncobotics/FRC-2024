@@ -271,6 +271,7 @@ public class Swerve extends SubsystemBase {
 
     public void resetOdometry(Pose2d pose) {
         gyro.setYaw(pose.getRotation().getDegrees());
+        brake();
         poseEstimator.resetPosition(getGyroYaw(), getModulePositions(), pose);
         fillCacheWithPose(poseEstimator.getEstimatedPosition());
     }
@@ -296,6 +297,7 @@ public class Swerve extends SubsystemBase {
         poseEstimator.resetPosition(Rotation2d.fromDegrees(yaw + (Variables.isBlueAlliance ? 0 : 180)), getModulePositions(), new Pose2d(getPose().getTranslation(), Rotation2d.fromDegrees(yaw + (Variables.isBlueAlliance ? 0 : 180))));
         fillCacheWithPose(poseEstimator.getEstimatedPosition());
         gyro.setYaw(yaw + (Variables.isBlueAlliance ? 0 : 180));
+        brake();
         pie.resetTarget(yaw + (Variables.isBlueAlliance ? 0 : 180));
         last_manual_time = Timer.getFPGATimestamp();
     }

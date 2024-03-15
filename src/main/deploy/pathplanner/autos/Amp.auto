@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.1443507606213523,
-      "y": 7.0116843384444
+      "x": 1.2482851585046557,
+      "y": 6.992834571294697
     },
-    "rotation": 0
+    "rotation": -0.3515034398733367
   },
   "command": {
     "type": "sequential",
@@ -18,9 +18,22 @@
           }
         },
         {
-          "type": "named",
+          "type": "sequential",
           "data": {
-            "name": "AutonomousIntake"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonomousIntake"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "AutoToNote"
+                }
+              }
+            ]
           }
         },
         {

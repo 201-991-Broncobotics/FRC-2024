@@ -15,7 +15,7 @@ public class ResetHangCommand extends SequentialCommandGroup { // basically, run
                     new InstantCommand(() -> hang.moveLeft(0)), 
                     new WaitCommand(0.2), 
                     new InstantCommand(() -> hang.moveLeft(-0.3)), 
-                    new WaitCommand(0.4), 
+                    new WaitCommand(0.2), 
                     new InstantCommand(() -> hang.moveLeft(0))
                 ), new SequentialCommandGroup(
                     new WaitCommand(0.5), 
@@ -23,7 +23,7 @@ public class ResetHangCommand extends SequentialCommandGroup { // basically, run
                     new InstantCommand(() -> hang.moveRight(0)), 
                     new WaitCommand(0.2), 
                     new InstantCommand(() -> hang.moveRight(-0.3)), 
-                    new WaitCommand(0.4), 
+                    new WaitCommand(0.2), 
                     new InstantCommand(() -> hang.moveRight(0))
                 )
             ), 

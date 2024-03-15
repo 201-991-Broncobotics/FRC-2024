@@ -61,13 +61,10 @@ public class ShootingCommands {
         );
     }
 
-    public static Command speaker(Pivot pivot, Flywheel flywheel) {
+    public static Command speaker(Pivot pivot) {
         return new SequentialCommandGroup(
-            new InstantCommand(() -> {}, flywheel), 
-            new InstantCommand(() -> { Variables.bypass_angling = true; }),
-            FlywheelCommands.outtake(flywheel)
+            new InstantCommand(() -> { Variables.bypass_angling = true; })
         ).handleInterrupt(() -> {
-                flywheel.stop();
                 Variables.bypass_angling = false;
             }
         );

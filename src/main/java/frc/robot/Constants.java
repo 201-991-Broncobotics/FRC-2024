@@ -22,12 +22,12 @@ public final class Constants {
 
         /* For these, align all the wheels so their gears are facing away from the intake */
 
-        public static final double CANCoder0_zero = 154.1, // Front Left
-                                   CANCoder1_zero = -116.1, // Front Right
-                                   CANCoder2_zero = -133.45, // Back Left
-                                   CANCoder3_zero = -129.9; // Back Right
+        public static final double CANCoder0_zero = 149.06, // Front Left
+                                   CANCoder1_zero = -153.54, // Front Right
+                                   CANCoder2_zero = -129.11, // Back Left
+                                   CANCoder3_zero = -38.58; // Back Right
         
-        public static final boolean useCANCoders = false;
+        public static final boolean useCANCoders = true;
         
         /* Swerve Drive Constants */
 
@@ -142,7 +142,7 @@ public final class Constants {
 
                                 joystickDirectAngleButton = 2, 
 
-                                joystickZeroGyroButton = 3, 
+                                joystickZeroGyroButton = 4, 
                                 joystickMakeXButton = 2, 
                                 joystickDriveToAmpButton = 4; // if we push the slider forward it cancels commands
                                 // .getPOV() is the same for joystick; joystick is a T.Flight Hotas One
@@ -435,7 +435,7 @@ public final class Constants {
                                     pivot_motor_brake = false, 
                                     pivot_motor_invert_sensor = false;
                 
-        public static final double pivot_motor_max_continuous_current = 15,
+        public static final double pivot_motor_max_continuous_current = 15, 
                                    pivot_motor_max_current = 25, 
 
                                    pivot_motor_min_percent_output = 0, 
@@ -445,7 +445,7 @@ public final class Constants {
                                    
                                    pivot_motor_gear_ratio = (5.0 / 1.0) * (9.0 / 1.0) * (34.0 / 10.0), 
                                    
-                                   pivot_motor_calibration_time = 0.2,
+                                   pivot_motor_calibration_time = 0.2, 
 
                                    pivot_motor_free_current = 10;
 
@@ -487,7 +487,7 @@ public final class Constants {
         public static final boolean flywheel_motors_opposite = false; // they should turn in the same direction
 
         public static final double flywheel_shooting_rpm = 4500, 
-                                   flywheel_amp_rpm = 600;
+                                   flywheel_amp_rpm = 800;
 
     }
 
@@ -522,7 +522,7 @@ public final class Constants {
         
         public static final boolean hang_motors_opposite = true; // they should turn in opposite directions
 
-        public static final double hanging_position = 36000;
+        public static final double hanging_position = 48000;
 
     }
 

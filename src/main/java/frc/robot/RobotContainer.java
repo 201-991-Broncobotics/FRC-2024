@@ -11,7 +11,7 @@ import frc.robot.autonomous.*;
 import frc.robot.commands.activatedCommands.*;
 import frc.robot.commands.defaultCommands.*;
 import frc.robot.commands.subcommands.SetArmPosition;
-import frc.robot.commands.utilCommands.TargetDriveCommands;
+// import frc.robot.commands.utilCommands.*;
 import frc.robot.subsystems.*;
 
 import com.pathplanner.lib.auto.NamedCommands;
@@ -135,12 +135,12 @@ public class RobotContainer {
         
         // makeX.onTrue(new InstantCommand(() -> swerve.makeX())); button conflict :(
 
-        new JoystickButton(driver_TFlightHotasOne, joystickDriveToAmpButton).toggleOnTrue(TargetDriveCommands.driveToAmp(swerve));
+        // new JoystickButton(driver_TFlightHotasOne, joystickDriveToAmpButton).toggleOnTrue(TargetDriveCommands.driveToAmp(swerve));
 
         /* Operator Triggers */
-        operator.a().toggleOnTrue(new InstantCommand(() -> flywheel.outtake(), flywheel));
-        operator.y().toggleOnTrue(new InstantCommand(() -> flywheel.amp(), flywheel));
-        operator.b().toggleOnTrue(new InstantCommand(() -> { flywheel.stop(); conveyor.stop(); }, flywheel)); // also ends all other commands requiring flywheel
+        operator.a().whileTrue(Commands.startEnd(flywheel::outtake, flywheel::stop, flywheel));
+        operator.y().whileTrue(Commands.startEnd(flywheel::amp, flywheel::stop, flywheel));
+        operator.b().toggleOnTrue(new RetractConveyor(conveyor)); // also ends all other commands requiring flywheel
 
         operator.x().toggleOnTrue(new SetArmPosition(pivot, starting_angle));
         operator.start().toggleOnTrue(new ResetHangCommand(hang));
@@ -158,9 +158,11 @@ public class RobotContainer {
                 ),
                 new InstantCommand(conveyor::outtake, conveyor), 
                 new WaitCommand(3),
-                new InstantCommand(() -> { conveyor.stop(); /* flywheel.stop(); */ }, conveyor) // , flywheel)
+                new InstantCommand(conveyor::stop, conveyor)
             ).handleInterrupt(() -> { conveyor.stop(); })
         );
+
+        // right bumper auto pivots, hotas 2 auto directs
 
         /* Custom Triggers */
 
