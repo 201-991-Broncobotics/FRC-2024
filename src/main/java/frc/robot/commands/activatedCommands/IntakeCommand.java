@@ -16,7 +16,7 @@ public class IntakeCommand extends SequentialCommandGroup {
             new SetArmPosition(pivot, intake_angle), 
             new ParallelDeadlineGroup( // could also be ParallelRaceGroup
                 new SequentialCommandGroup(
-                    new Intake_Subcommand(intake, conveyor), // ParallelDeadlineGroup???
+                    new Intake_Subcommand(intake, conveyor, false), // ParallelDeadlineGroup???
                     new WaitCommand(0.2), 
                     new RetractConveyor(conveyor)
                 ).handleInterrupt(() -> new RetractConveyor(conveyor).schedule()),

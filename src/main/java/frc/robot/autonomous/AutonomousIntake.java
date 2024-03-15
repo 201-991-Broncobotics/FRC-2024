@@ -1,19 +1,29 @@
 package frc.robot.autonomous;
 
 import edu.wpi.first.wpilibj2.command.*;
-import frc.robot.commands.activatedCommands.IntakeCommand;
+import frc.robot.commands.activatedCommands.RetractConveyor;
+import frc.robot.commands.subcommands.*;
+
 import frc.robot.subsystems.*;
 
-public class AutonomousIntake extends SequentialCommandGroup { // lmao
+import static frc.robot.Constants.TuningConstants.*;
 
-    public AutonomousIntake(Swerve swerve, Pivot pivot, Intake intake, Conveyor conveyor) {
+public class AutonomousIntake extends SequentialCommandGroup {
+
+    public AutonomousIntake(Pivot pivot, Intake intake, Conveyor conveyor) {
         addRequirements(pivot, intake, conveyor);
 
         addCommands(
-            new ParallelRaceGroup(
-                new WaitCommand(4), 
-                new IntakeCommand(pivot, intake, conveyor)
+            new SetArmPosition(pivot, intake_angle), 
+            new ParallelDeadlineGroup( // could also be ParallelRaceGroup
+                new SequentialCommandGroup(
+                    new Intake_Subcommand(intake, conveyor, true), // ParallelDeadlineGroup???
+                    new WaitCommand(0.2),
+                    new RetractConveyor(conveyor)
+                ),
+                new StabilizeArm(pivot, true)
             )
         );
     }
+
 }

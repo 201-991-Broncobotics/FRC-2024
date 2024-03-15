@@ -15,11 +15,15 @@ public class Intake_Subcommand extends Command {
     private double finish_time = 0;
     private boolean already_reset;
 
-    public Intake_Subcommand(Intake intake, Conveyor conveyor) {
+    private boolean useEnd;
+
+    public Intake_Subcommand(Intake intake, Conveyor conveyor, boolean useEnd) {
         this.intake = intake;
         this.conveyor = conveyor;
 
         addRequirements(intake, conveyor);
+
+        this.useEnd = useEnd;
     }
 
     @Override
@@ -43,7 +47,7 @@ public class Intake_Subcommand extends Command {
 
     @Override
     public boolean isFinished() {
-        return Timer.getFPGATimestamp() > finish_time;
+        return (Timer.getFPGATimestamp() > finish_time) && (useEnd);
     }
 
     @Override

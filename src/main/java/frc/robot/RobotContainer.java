@@ -150,7 +150,7 @@ public class RobotContainer {
         operator.rightTrigger(0.8).whileTrue(Commands.startEnd(() -> { Variables.bypass_angling = true; }, () -> { Variables.bypass_angling = false; }));
 
         // intake
-        operator.leftBumper().toggleOnTrue(new IntakeCommand(pivot, intake, conveyor));
+        operator.leftBumper().toggleOnTrue(new IntakeCommand(pivot, intake, conveyor).handleInterrupt(() -> new RetractConveyor(conveyor).schedule()));
         operator.rightBumper().toggleOnTrue(new SequentialCommandGroup(
                 new ParallelRaceGroup(
                     new WaitCommand(max_flywheel_acceleration_time), 
@@ -173,7 +173,7 @@ public class RobotContainer {
 
     public void configureNamedCommands() {
         NamedCommands.registerCommand("AutonomousOuttake", new AutonomousOuttake(swerve, pivot, conveyor, flywheel));
-        NamedCommands.registerCommand("AutonomousIntake", new AutonomousIntake(swerve, pivot, intake, conveyor));
+        NamedCommands.registerCommand("AutonomousIntake", new AutonomousIntake(pivot, intake, conveyor));
 
         Field2d field = new Field2d();
 
