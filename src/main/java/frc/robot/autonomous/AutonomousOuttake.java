@@ -7,7 +7,6 @@ import frc.robot.subsystems.*;
 public class AutonomousOuttake extends ParallelRaceGroup {
 
     public AutonomousOuttake(Swerve swerve, Pivot pivot, Conveyor conveyor, Flywheel flywheel) {
-        addRequirements(swerve, pivot, conveyor, flywheel);
 
         addCommands( // angle towards outtake
             new WaitCommand(8), 
