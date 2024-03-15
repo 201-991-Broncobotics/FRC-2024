@@ -82,6 +82,8 @@ public class Hang extends SubsystemBase {
     public void periodic() {
         log("Left Hang Motor Position", left_hang_motor.getEncoderPosition());
         log("Right Hang Motor Position", right_hang_motor.getEncoderPosition());
-        log("Average Hang Motor Current", (left_hang_motor.getCurrent() + right_hang_motor.getCurrent()) / 2.0);
+        
+        log("Left Hang Motor Current", left_hang_motor.getCurrent());
+        log("Right Hang Motor Current", right_hang_motor.getCurrent());
     }
 }

@@ -274,6 +274,10 @@ public class Swerve extends SubsystemBase {
     public double getYawError() {
         return normalizeAngle(pie.getTarget() - getGyroYaw().getDegrees());
     }
+
+    public boolean pidCloseEnough() {
+        return Math.abs(getYawError()) < 15; // TODO: make this in constants
+    }
     
     public void overrideOdometry() {
         resetOdometry(Limelight.getRobotPosition());

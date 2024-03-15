@@ -17,11 +17,11 @@ public class AutonomousIntake extends SequentialCommandGroup { // lmao
                 new WaitCommand(4), 
                 new ParallelDeadlineGroup(
                     new IntakeCommand(pivot, intake, conveyor), 
-                    new LinearDriveCommand(swerve, 1, 0.2)
+                    new LinearDriveCommand(swerve, 2, 0.3)
                 )
             ), new ParallelRaceGroup(
                 new WaitCommand(4), 
-                new LinearDriveCommand(swerve, -1, 0.2)
+                new LinearDriveCommand(swerve, -2, 0.3)
             )
         );
     }

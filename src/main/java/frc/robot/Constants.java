@@ -516,13 +516,13 @@ public final class Constants {
                                    
                                    hang_motors_calibration_time = 0.25, 
                                    
-                                   hang_motors_free_current = 10; // should be 100% unnecessary lmao
+                                   hang_motors_free_current = 8;
 
         /* Subsystem Variables */
         
         public static final boolean hang_motors_opposite = true; // they should turn in opposite directions
 
-        public static final double hanging_position = 16000;
+        public static final double hanging_position = 36000;
 
     }
 

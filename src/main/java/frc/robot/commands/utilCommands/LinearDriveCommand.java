@@ -27,7 +27,7 @@ public class LinearDriveCommand extends Command {
     @Override
     public void initialize() {
         starting_pose = Swerve.getPose();
-        end_time = Timer.getFPGATimestamp() + 1;
+        end_time = Timer.getFPGATimestamp() + 2.5;
     }
 
     @Override
