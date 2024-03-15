@@ -43,6 +43,13 @@ public class Swerve extends SubsystemBase {
     StructArrayPublisher<SwerveModuleState> canStatePublisher;
     StructPublisher<Pose2d> visionPublisher;
 
+    public static final int cache_size = 10;
+
+    public static Pose2d[] lastRecordedPoses = new Pose2d[cache_size];
+    public static double[] lastRecordedTimes = new double[cache_size];
+
+    public static Translation2d velocity = new Translation2d();
+
     public Swerve() {
         pie = new PIECalculator(teleop_angle_p, teleop_angle_i, teleop_angle_e, swerve_min_pid_rotation * Constants.BaseFalconSwerveConstants.maxAngularVelocity, swerve_max_pid_rotation * Constants.BaseFalconSwerveConstants.maxAngularVelocity, starting_yaw);
 
@@ -62,6 +69,8 @@ public class Swerve extends SubsystemBase {
 
         poseEstimator = new SwerveDrivePoseEstimator(Constants.BaseFalconSwerveConstants.swerveKinematics, getGyroYaw(), getModulePositions(), new Pose2d());
         last_manual_time = Timer.getFPGATimestamp();
+
+        fillCacheWithPose(poseEstimator.getEstimatedPosition());
 
         // PathPlanner
 
@@ -93,6 +102,26 @@ public class Swerve extends SubsystemBase {
         statePublisher = NetworkTableInstance.getDefault().getStructArrayTopic("/Swerve/States", SwerveModuleState.struct).publish();
         canStatePublisher = NetworkTableInstance.getDefault().getStructArrayTopic("/Swerve/canStates", SwerveModuleState.struct).publish();
         visionPublisher = NetworkTableInstance.getDefault().getStructTopic("/Swerve/Vision", Pose2d.struct).publish();
+    }
+
+    public static void fillCacheWithPose(Pose2d newPose) {
+        for (int i = 0; i < cache_size; i++) {
+            lastRecordedPoses[i] = new Pose2d(newPose.getX(), newPose.getY(), newPose.getRotation());
+            lastRecordedTimes[i] = Timer.getFPGATimestamp();
+        }
+    }
+
+    public static Translation2d addPoseToCache(Pose2d newPose) {
+        Translation2d velocity = newPose.getTranslation().minus(lastRecordedPoses[0].getTranslation()).times(1 / (Timer.getFPGATimestamp() - lastRecordedTimes[0]));
+
+        for (int i = 0; i < cache_size - 1; i++) {
+            lastRecordedPoses[i] = new Pose2d(lastRecordedPoses[i + 1].getX(), lastRecordedPoses[i + 1].getY(), lastRecordedPoses[i + 1].getRotation());
+            lastRecordedTimes[i] = lastRecordedTimes[i + 1];
+        }
+        lastRecordedPoses[cache_size - 1] = new Pose2d(newPose.getX(), newPose.getY(), newPose.getRotation());
+        lastRecordedTimes[cache_size - 1] = Timer.getFPGATimestamp();
+
+        return velocity;
     }
 
     /** Counterclockwise in degrees */
@@ -243,6 +272,7 @@ public class Swerve extends SubsystemBase {
     public void resetOdometry(Pose2d pose) {
         gyro.setYaw(pose.getRotation().getDegrees());
         poseEstimator.resetPosition(getGyroYaw(), getModulePositions(), pose);
+        fillCacheWithPose(poseEstimator.getEstimatedPosition());
     }
 
     public Rotation2d getHeading() {
@@ -252,16 +282,19 @@ public class Swerve extends SubsystemBase {
     /* Heading must be relative to blue alliance */
     public void setHeading(Rotation2d heading) {
         poseEstimator.resetPosition(getGyroYaw(), getModulePositions(), new Pose2d(getPose().getTranslation(), heading));
+        fillCacheWithPose(poseEstimator.getEstimatedPosition());
     }
 
     /* Heading must be relative to driver */
     public void zeroHeading() {
         poseEstimator.resetPosition(getGyroYaw().plus(Rotation2d.fromDegrees(Variables.isBlueAlliance ? 0 : 180)), getModulePositions(), new Pose2d(getPose().getTranslation(), Rotation2d.fromDegrees(Variables.isBlueAlliance ? 0 : 180)));
+        fillCacheWithPose(poseEstimator.getEstimatedPosition());
     }
 
     /* Heading must be relative to driver */
     public void zeroGyro(double yaw) { // resets robot angle. Only do if pigeon is inaccurate or at starting of match
         poseEstimator.resetPosition(Rotation2d.fromDegrees(yaw + (Variables.isBlueAlliance ? 0 : 180)), getModulePositions(), new Pose2d(getPose().getTranslation(), Rotation2d.fromDegrees(yaw + (Variables.isBlueAlliance ? 0 : 180))));
+        fillCacheWithPose(poseEstimator.getEstimatedPosition());
         gyro.setYaw(yaw + (Variables.isBlueAlliance ? 0 : 180));
         pie.resetTarget(yaw + (Variables.isBlueAlliance ? 0 : 180));
         last_manual_time = Timer.getFPGATimestamp();
@@ -304,6 +337,8 @@ public class Swerve extends SubsystemBase {
             log("Vision Pose", "No vision estimate");
             log("Vision Heading", "No vision estimate");
         }
+
+        velocity = addPoseToCache(poseEstimator.getEstimatedPosition());
 
         log("Pigeon Yaw", getGyroYaw().getDegrees());
         log("Pose Estimator Yaw ", getHeading().getDegrees());
