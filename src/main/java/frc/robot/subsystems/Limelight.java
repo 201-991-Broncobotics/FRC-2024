@@ -36,6 +36,12 @@ public class Limelight { // Not technically a subsystem; everything should be st
         } else {
             Variables.isBlueAlliance = true;
         }
+
+        if (Variables.isBlueAlliance) {
+            setPipeline(0);
+        } else {
+            setPipeline(1);
+        }
     }
 
     public static void init() {

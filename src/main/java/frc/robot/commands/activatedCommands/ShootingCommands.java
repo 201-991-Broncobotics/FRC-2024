@@ -9,25 +9,11 @@ import frc.robot.subsystems.*;
 
 public class ShootingCommands {
 
-    public static Command amp(Pivot pivot, Flywheel flywheel, Conveyor conveyor) {
-        return new SequentialCommandGroup(
-        
-            new InstantCommand(() -> {}, pivot, flywheel, conveyor), 
-
-            new ParallelCommandGroup(
-                FlywheelCommands.amp(flywheel), 
-                new SetArmPosition(pivot, amp_angle - pivot_guard_angle)
-            ), new ParallelDeadlineGroup(
-                new WaitCommand(3), 
-                Commands.runOnce(conveyor::amp, conveyor), 
-                new StabilizeArm(pivot, false)
-            ), 
-            new InstantCommand(() -> conveyor.stop()), 
-            new InstantCommand(() -> flywheel.stop())
-        );
+    public static Command amp(Pivot pivot) {
+        return new SetArmPosition(pivot, amp_angle - pivot_guard_angle);
     }
 
-    public static Command speaker(Pivot pivot, Flywheel flywheel, Conveyor conveyor) {
+    public static Command autonomousSpeaker(Pivot pivot, Flywheel flywheel, Conveyor conveyor) {
         return new SequentialCommandGroup(
 
             new InstantCommand(() -> {}, flywheel, conveyor), 
@@ -55,6 +41,18 @@ public class ShootingCommands {
                 Variables.bypass_angling = false;
                 conveyor.stop();
                 flywheel.stop();
+            }
+        );
+    }
+
+    public static Command speaker(Pivot pivot, Flywheel flywheel) {
+        return new SequentialCommandGroup(
+            new InstantCommand(() -> {}, flywheel), 
+            new InstantCommand(() -> { Variables.bypass_angling = true; }),
+            FlywheelCommands.outtake(flywheel)
+        ).handleInterrupt(() -> {
+                flywheel.stop();
+                Variables.bypass_angling = false;
             }
         );
     }

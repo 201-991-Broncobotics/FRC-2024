@@ -14,7 +14,7 @@ public class AutonomousOuttake extends SequentialCommandGroup {
             new ParallelDeadlineGroup(
                 new ParallelRaceGroup(
                     new WaitCommand(8), 
-                    ShootingCommands.speaker(pivot, flywheel, conveyor)
+                    ShootingCommands.autonomousSpeaker(pivot, flywheel, conveyor)
                 ), 
                 new TeleopSwerveRelativeDirecting(swerve, () -> 0, () -> 0, () -> 0, () -> false, () -> -1, () -> 1, () -> true)
             )

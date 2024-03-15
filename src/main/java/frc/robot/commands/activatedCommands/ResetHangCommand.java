@@ -3,11 +3,11 @@ package frc.robot.commands.activatedCommands;
 import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.subsystems.Hang;
 
-public class ResetHang extends SequentialCommandGroup { // basically, run the motors until they run up in amperage
+public class ResetHangCommand extends SequentialCommandGroup { // basically, run the motors until they run up in amperage
 
-    public ResetHang(Hang hang) {
+    public ResetHangCommand(Hang hang) {
         super(
-            new InstantCommand(() -> hang.move(0.4), hang), 
+            new InstantCommand(() -> hang.move(0.25), hang), 
             new ParallelCommandGroup(
                 new SequentialCommandGroup(
                     new WaitCommand(0.5), 

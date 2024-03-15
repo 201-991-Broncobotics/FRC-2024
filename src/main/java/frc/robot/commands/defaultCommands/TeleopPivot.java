@@ -38,7 +38,7 @@ public class TeleopPivot extends Command {
             if (lastBypass) {
                 pivot.resetTarget();
             }
-            pivot.move(motorVal * .5);
+            pivot.move(motorVal * 0.4);
             lastBypass = false;
         }
     }

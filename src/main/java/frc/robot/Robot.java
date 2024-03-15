@@ -65,9 +65,9 @@ public class Robot extends TimedRobot {
     public void autonomousInit() {
         Variables.in_auto = true;
         Variables.in_teleop = false;
-        autonomousCommand = robotContainer.getAutonomousCommand();
-
         Limelight.setSide();
+
+        autonomousCommand = robotContainer.getAutonomousCommand();
 
         // schedule the autonomous command (example)
         if (autonomousCommand != null) {
@@ -85,7 +85,6 @@ public class Robot extends TimedRobot {
     public void teleopInit() {
         Variables.in_auto = false;
         Variables.in_teleop = true;
-        
         Limelight.setSide();
 
         if (autonomousCommand != null) autonomousCommand.cancel();

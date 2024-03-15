@@ -7,16 +7,17 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.button.*;
-
 import frc.robot.autonomous.*;
 import frc.robot.commands.activatedCommands.*;
 import frc.robot.commands.defaultCommands.*;
+import frc.robot.commands.subcommands.SetArmPosition;
 import frc.robot.commands.utilCommands.TargetDriveCommands;
 import frc.robot.subsystems.*;
 
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.util.PathPlannerLogging;
 
+import static frc.robot.Constants.TuningConstants.*;
 import static frc.robot.Constants.GeneralConstants.*;
 import static frc.robot.Constants.Buttons.*;
 import static frc.robot.Constants.TeleopSwerveConstants.*;
@@ -103,14 +104,14 @@ public class RobotContainer {
         pivot.setDefaultCommand(
             new TeleopPivot(
                 pivot, 
-                () -> -driver_TFlightHotasOne.getRawAxis(2)
+                () -> operator.getLeftY()
             )
         );
 
         hang.setDefaultCommand(
             new TeleopHang(
                 hang, 
-                () -> driver_TFlightHotasOne.getRawAxis(6)
+                () -> operator.getRightY() // no negative sign intentionally
             )
         );
 
@@ -137,18 +138,29 @@ public class RobotContainer {
         new JoystickButton(driver_TFlightHotasOne, joystickDriveToAmpButton).toggleOnTrue(TargetDriveCommands.driveToAmp(swerve));
 
         /* Operator Triggers */
-        operator.a().toggleOnTrue(FlywheelCommands.outtake(flywheel));
-        operator.y().toggleOnTrue(FlywheelCommands.amp(flywheel));
-        operator.b().toggleOnTrue(FlywheelCommands.off(flywheel));
-        operator.start().toggleOnTrue(new ResetHang(hang));
+        operator.a().toggleOnTrue(new InstantCommand(() -> flywheel.outtake(), flywheel));
+        operator.y().toggleOnTrue(new InstantCommand(() -> flywheel.amp(), flywheel));
+        operator.b().toggleOnTrue(new InstantCommand(() -> { flywheel.stop(); conveyor.stop(); }, flywheel)); // also ends all other commands requiring flywheel
+
+        operator.x().toggleOnTrue(new SetArmPosition(pivot, starting_angle));
+        operator.start().toggleOnTrue(new ResetHangCommand(hang));
 
         // shooting
-        operator.leftTrigger(0.8).toggleOnTrue(ShootingCommands.amp(pivot, flywheel, conveyor));
-        operator.rightTrigger(0.8).toggleOnTrue(ShootingCommands.speaker(pivot, flywheel, conveyor));
+        operator.leftTrigger(0.8).toggleOnTrue(ShootingCommands.amp(pivot));
+        operator.rightTrigger(0.8).whileTrue(Commands.startEnd(() -> { Variables.bypass_angling = true; }, () -> { Variables.bypass_angling = false; }));
 
         // intake
         operator.leftBumper().toggleOnTrue(new IntakeCommand(pivot, intake, conveyor));
-        operator.rightBumper().toggleOnTrue(new FinishIntakeCommand(conveyor));
+        operator.rightBumper().toggleOnTrue(new SequentialCommandGroup(
+                new ParallelRaceGroup(
+                    new WaitCommand(max_flywheel_acceleration_time), 
+                    Commands.waitUntil(flywheel::isAtSpeed)
+                ),
+                new InstantCommand(conveyor::outtake, conveyor), 
+                new WaitCommand(3),
+                new InstantCommand(() -> { conveyor.stop(); /* flywheel.stop(); */ }, conveyor) // , flywheel)
+            ).handleInterrupt(() -> { conveyor.stop(); })
+        );
 
         /* Custom Triggers */
 
@@ -180,7 +192,10 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return Autonomous.getAutonomousCommand(swerve);
+        return new ParallelCommandGroup(
+            Autonomous.getAutonomousCommand(swerve), 
+            new ResetHangCommand(hang)
+        );
     }
 
     public void teleopInit() {

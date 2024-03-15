@@ -6,16 +6,16 @@ import frc.robot.subsystems.Flywheel;
 
 public class DormantFlywheel extends Command {
 
-    private Flywheel flywheels;
+    // private Flywheel flywheels;
 
     public DormantFlywheel(Flywheel flywheels) {
-        this.flywheels = flywheels;
+        // this.flywheels = flywheels;
         addRequirements(flywheels);
     }
 
     @Override
     public void execute() {
-        flywheels.stop();
+        // flywheels.stop();
     }
     
 }

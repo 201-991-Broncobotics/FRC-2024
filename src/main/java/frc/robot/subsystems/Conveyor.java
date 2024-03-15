@@ -29,11 +29,6 @@ public class Conveyor extends SubsystemBase {
         log("Conveyor State", "Retracting");
     }
 
-    public void amp() {
-        conveyor_motor.set(conveyor_amp_speed);
-        log("Conveyor State", "Amping");
-    }
-
     public void stop() {
         conveyor_motor.set(0);
         log("Conveyor State", "Off");
@@ -50,5 +45,6 @@ public class Conveyor extends SubsystemBase {
     @Override
     public void periodic() {
         log("Conveyor Motor Current", getCurrent());
+        log("Conveyor Power", conveyor_motor.getSpeed());
     }
 }
