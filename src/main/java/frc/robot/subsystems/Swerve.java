@@ -32,6 +32,7 @@ import static frc.robot.Constants.GeneralConstants.*;
 import static frc.robot.Constants.TeleopSwerveConstants.*;
 
 public class Swerve extends SubsystemBase {
+
     public static SwerveDrivePoseEstimator poseEstimator;
     public SwerveModule[] swerveModules;
     public Pigeon2 gyro;
@@ -315,7 +316,7 @@ public class Swerve extends SubsystemBase {
     }
     
     public void overrideOdometry() {
-        resetOdometry(Limelight.getRobotPosition());
+        resetOdometry(Limelight.getVisionEstimate());
     }
 
     public void targetSpeaker() {
@@ -326,19 +327,7 @@ public class Swerve extends SubsystemBase {
     public void periodic() {
         poseEstimator.updateWithTime(Timer.getFPGATimestamp(), getGyroYaw(), getModulePositions());
 
-        Pose2d vision_estimate = Limelight.getRobotPosition();
-
-        if (vision_estimate.getTranslation().getNorm() > 0.1 && (Math.abs(normalizeAngle(getGyroYaw().getDegrees() - vision_estimate.getRotation().getDegrees())) < vision_tolerance)) {
-            poseEstimator.addVisionMeasurement(vision_estimate, Timer.getFPGATimestamp() - Limelight.getLatency());
-            log("Vision Pose", "(" + Math.round(vision_estimate.getTranslation().getX() * 100) / 100.0 + ", " + Math.round(vision_estimate.getTranslation().getY() * 100) / 100.0 + ")");
-            log("Vision Heading", "" + Math.round(vision_estimate.getRotation().getDegrees() * 100) / 100.0 + " degrees");
-        } else if (vision_estimate.getTranslation().getNorm() > 0.1) {
-            log("Vision Pose", "Vision estimate did not make sense");
-            log("Vision Heading", "Vision estimate did not make sense");
-        } else {
-            log("Vision Pose", "No vision estimate");
-            log("Vision Heading", "No vision estimate");
-        }
+        Limelight.updateSDPE();
 
         velocity = addPoseToCache(poseEstimator.getEstimatedPosition());
 
@@ -366,7 +355,7 @@ public class Swerve extends SubsystemBase {
         posePublisher.set(getPose());
         statePublisher.set(getModuleStates());
         canStatePublisher.set(getCanModuleStates());
-        visionPublisher.set(vision_estimate);
+        visionPublisher.set(Limelight.getVisionEstimate());
     }
 
     public void teleopInit() {
