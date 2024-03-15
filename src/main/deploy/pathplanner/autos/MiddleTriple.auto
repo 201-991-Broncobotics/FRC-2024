@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.4290704132623546,
-      "y": 5.532100196144837
+      "x": 1.283341416577039,
+      "y": 5.536332668364102
     },
     "rotation": 0
   },
@@ -18,9 +18,28 @@
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "AutonomousIntake"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "MiddleFirstIntake"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonomousIntake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "MiddleFirstShoot"
           }
         },
         {
@@ -30,45 +49,28 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "MiddleFirstNote"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutonomousIntake"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "MiddleFirstNoteBack"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutonomousOuttake"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "MiddleSecondIntake"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonomousIntake"
+                }
+              }
+            ]
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "MiddleSecondNote"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutonomousIntake"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "MiddleSecondNoteBack"
+            "pathName": "MiddleSecondShoot"
           }
         },
         {

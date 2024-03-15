@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.2482851585046557,
-      "y": 6.992834571294697
+      "x": 1.283341416577039,
+      "y": 5.536332668364102
     },
-    "rotation": -0.3515034398733367
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
@@ -18,28 +18,28 @@
           }
         },
         {
-          "type": "sequential",
+          "type": "parallel",
           "data": {
             "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "MiddleFirstIntake"
+                }
+              },
               {
                 "type": "named",
                 "data": {
                   "name": "AutonomousIntake"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "AutoToNote"
                 }
               }
             ]
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "AutonomousOuttake"
+            "pathName": "MiddleFirstShoot"
           }
         }
       ]

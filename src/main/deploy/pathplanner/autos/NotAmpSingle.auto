@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.283341416577039,
-      "y": 5.536332668364102
+      "x": 1.2746697035534487,
+      "y": 4.080020078593101
     },
     "rotation": 0
   },
@@ -24,7 +24,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "MiddleFirstIntake"
+                  "pathName": "NotAmpFirstIntake"
                 }
               },
               {
@@ -39,13 +39,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "MiddleFirstShoot"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutonomousOuttake"
+            "pathName": "NotAmpFirstShoot"
           }
         }
       ]

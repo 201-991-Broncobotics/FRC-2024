@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.303206069230426,
-        "y": 5.754194522386441
+        "x": 4.500847034894289,
+        "y": 6.547858753843612
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.6505893844397646,
-        "y": 6.5533120038317625
+        "x": 5.745989948081087,
+        "y": 6.943754809387526
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Amp Shoot"
     },
     {
       "anchor": {
-        "x": 4.322010081086135,
-        "y": 6.366688244950565
+        "x": 7.9272474557958335,
+        "y": 5.960484934987611
       },
       "prevControl": {
-        "x": 6.041301026467794,
-        "y": 6.886240312555858
+        "x": 6.990700946937377,
+        "y": 6.763044106968516
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Amp Third Note"
     }
   ],
   "rotationTargets": [],
@@ -39,11 +39,14 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 20.920732991226416,
+    "rotation": -25.0,
     "rotateFast": false
   },
   "reversed": false,
   "folder": null,
-  "previewStartingState": null,
+  "previewStartingState": {
+    "rotation": 13.0,
+    "velocity": 0
+  },
   "useDefaultConstraints": false
 }

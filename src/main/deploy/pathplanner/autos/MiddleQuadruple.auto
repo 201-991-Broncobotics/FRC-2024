@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.2953910752428905,
-      "y": 6.992834571294697
+      "x": 1.283341416577039,
+      "y": 5.536332668364102
     },
     "rotation": 0
   },
@@ -24,7 +24,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "AmpFirstIntake"
+                  "pathName": "MiddleFirstIntake"
                 }
               },
               {
@@ -39,7 +39,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "AmpFirstShoot"
+            "pathName": "MiddleFirstShoot"
           }
         },
         {
@@ -55,7 +55,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "AmpSecondIntake"
+                  "pathName": "MiddleSecondIntake"
                 }
               },
               {
@@ -70,7 +70,38 @@
         {
           "type": "path",
           "data": {
-            "pathName": "AmpSecondShoot"
+            "pathName": "MiddleSecondShoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutonomousOuttake"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "MiddleThirdIntake"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonomousIntake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "MiddleThirdShoot"
           }
         },
         {

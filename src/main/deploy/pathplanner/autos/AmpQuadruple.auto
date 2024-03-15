@@ -78,6 +78,37 @@
           "data": {
             "name": "AutonomousOuttake"
           }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "AmpThirdIntake"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonomousIntake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "AmpThirdShoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutonomousOuttake"
+          }
         }
       ]
     }
