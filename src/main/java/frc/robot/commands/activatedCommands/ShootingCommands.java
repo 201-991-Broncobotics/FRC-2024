@@ -4,6 +4,8 @@ import static frc.robot.Constants.TuningConstants.*;
 
 import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.Variables;
+import frc.robot.autonomous.ShootingMath;
+import frc.robot.commands.defaultCommands.TeleopPivot;
 import frc.robot.commands.defaultCommands.TeleopSwerveRelativeDirecting;
 import frc.robot.commands.subcommands.*;
 import frc.robot.subsystems.*;
@@ -19,7 +21,7 @@ public class ShootingCommands {
 
             new InstantCommand(() -> {}, flywheel, conveyor), 
             new InstantCommand(() -> { Variables.bypass_rotation = true; swerve.targetSpeaker(); }), 
-            new InstantCommand(() -> Variables.bypass_angling = true),
+            new InstantCommand(() -> { Variables.bypass_angling = true; pivot.setTarget(ShootingMath.pivotAngle().getDegrees()); }),
 
             new ParallelCommandGroup(
                 new SequentialCommandGroup(
@@ -30,7 +32,7 @@ public class ShootingCommands {
                 ), 
                 new SequentialCommandGroup(
                     new ParallelRaceGroup(
-                        new RunCommand(() -> pivot.pidPower()), 
+                        new TeleopPivot(pivot, () -> 0), 
                         Commands.waitUntil(pivot::pidCloseEnough)
                     )
                 ), 
