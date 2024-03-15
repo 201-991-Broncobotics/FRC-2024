@@ -22,10 +22,10 @@ public final class Constants {
 
         /* For these, align all the wheels so their gears are facing away from the intake */
 
-        public static final double CANCoder0_zero = 149.06, // Front Left
-                                   CANCoder1_zero = -153.54, // Front Right
-                                   CANCoder2_zero = -129.11, // Back Left
-                                   CANCoder3_zero = -38.58; // Back Right
+        public static final double CANCoder0_zero = 151.87, // Front Left
+                                   CANCoder1_zero = 85.78, // Front Right
+                                   CANCoder2_zero = -129.19, // Back Left
+                                   CANCoder3_zero = -52.29; // Back Right
         
         public static final boolean useCANCoders = true;
         

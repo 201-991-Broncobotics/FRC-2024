@@ -9,7 +9,7 @@ public class AutonomousOuttake extends ParallelRaceGroup {
     public AutonomousOuttake(Swerve swerve, Pivot pivot, Conveyor conveyor, Flywheel flywheel) {
 
         addCommands( // angle towards outtake
-            new WaitCommand(8), 
+            new WaitCommand(6), 
             ShootingCommands.autonomousSpeaker(swerve, pivot, flywheel, conveyor)
         );
     }

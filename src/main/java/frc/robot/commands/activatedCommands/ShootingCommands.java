@@ -28,13 +28,15 @@ public class ShootingCommands {
                     new ParallelRaceGroup(
                         new TeleopSwerveRelativeDirecting(swerve, () -> 0, () -> 0, () -> 0, () -> false, () -> -1, () -> 0.5, () -> true), 
                         Commands.waitUntil(swerve::pidCloseEnough)
-                    )
+                    ), 
+                    new InstantCommand(() -> swerve.brake())
                 ), 
                 new SequentialCommandGroup(
                     new ParallelRaceGroup(
                         new TeleopPivot(pivot, () -> 0), 
                         Commands.waitUntil(pivot::pidCloseEnough)
-                    )
+                    ), 
+                    new InstantCommand(() -> pivot.brake())
                 ), 
                 FlywheelCommands.outtake(flywheel)
             ), 
