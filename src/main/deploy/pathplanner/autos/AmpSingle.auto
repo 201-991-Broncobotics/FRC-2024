@@ -16,31 +16,6 @@
           "data": {
             "name": "AutonomousOuttake"
           }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "AmpFirstIntake"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutonomousIntake"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "AmpFirstShoot"
-          }
         }
       ]
     }

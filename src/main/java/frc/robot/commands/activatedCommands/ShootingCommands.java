@@ -61,7 +61,7 @@ public class ShootingCommands {
             new InstantCommand(() -> conveyor.outtake()), 
 
             new ParallelDeadlineGroup(
-                new WaitCommand(3), 
+                new WaitCommand(1.3), 
                 new RunCommand(() -> pivot.pidPower())
             ), 
 

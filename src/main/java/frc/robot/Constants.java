@@ -22,10 +22,10 @@ public final class Constants {
 
         /* For these, align all the wheels so their gears are facing away from the intake */
 
-        public static final double CANCoder0_zero = 139.83, // Front Left
-                                   CANCoder1_zero = -155.70, // Front Right
-                                   CANCoder2_zero = -131.57, // Back Left
-                                   CANCoder3_zero = -169.01; // Back Right
+        public static final double CANCoder0_zero = 143.28, // Front Left
+                                   CANCoder1_zero = -8, // Front Right
+                                   CANCoder2_zero = -129.22, // Back Left
+                                   CANCoder3_zero = 42.18; // Back Right
         
         public static final boolean useCANCoders = true;
         
@@ -67,7 +67,7 @@ public final class Constants {
                                    pivot_e = 1.1, 
                                    pivot_zero = 115;
         
-        public static final double starting_angle = -7, // thanks to certain people, it's not -9.255644, // all in degrees
+        public static final double starting_angle = -9.255644, // thanks to certain people, it's not -9.255644, // all in degrees
                                    intake_angle = 59.006106, 
                                    amp_angle = 125.388397, 
 
@@ -90,7 +90,7 @@ public final class Constants {
         
         /* Outtaking Constants */
 
-        public static final double max_flywheel_acceleration_time = 2, 
+        public static final double max_flywheel_acceleration_time = 4, 
                                    min_outtake_time = 1, 
                                    min_amp_time = 2;
 

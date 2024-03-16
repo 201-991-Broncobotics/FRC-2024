@@ -152,7 +152,6 @@ public class RobotContainer {
         // intake
         operator.leftBumper().toggleOnTrue(new IntakeCommand(pivot, intake, conveyor).handleInterrupt(() -> new RetractConveyor(conveyor).schedule()));
         operator.rightBumper().toggleOnTrue(new SequentialCommandGroup(
-                new InstantCommand(flywheel::outtake), 
                 new ParallelRaceGroup(
                     new WaitCommand(max_flywheel_acceleration_time), 
                     Commands.waitUntil(flywheel::isAtSpeed)
