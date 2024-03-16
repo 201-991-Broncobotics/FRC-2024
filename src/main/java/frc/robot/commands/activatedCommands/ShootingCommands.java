@@ -23,6 +23,7 @@ public class ShootingCommands {
             new InstantCommand(() -> { Variables.bypass_rotation = true; swerve.targetSpeaker(); }), 
             new InstantCommand(() -> { Variables.bypass_angling = true; pivot.setTarget(ShootingMath.pivotAngle().getDegrees()); }),
 
+            /* Old command that requires pivot to be brake mode :(
             new ParallelCommandGroup(
                 new SequentialCommandGroup(
                     new ParallelRaceGroup(
@@ -39,6 +40,22 @@ public class ShootingCommands {
                     new InstantCommand(() -> pivot.brake())
                 ), 
                 FlywheelCommands.outtake(flywheel)
+            ), */
+                        
+            new ParallelDeadlineGroup(
+                new ParallelCommandGroup(
+                    FlywheelCommands.outtake(flywheel), 
+                    Commands.waitUntil(swerve::pidCloseEnough), 
+                    Commands.waitUntil(pivot::pidCloseEnough)
+                ), 
+                new SequentialCommandGroup(
+                    new ParallelRaceGroup(
+                        new TeleopSwerveRelativeDirecting(swerve, () -> 0, () -> 0, () -> 0, () -> false, () -> -1, () -> 0.5, () -> true), 
+                        Commands.waitUntil(swerve::pidCloseEnough)
+                    ), 
+                    new InstantCommand(() -> swerve.brake())
+                ), 
+                new TeleopPivot(pivot, () -> 0)
             ), 
 
             new InstantCommand(() -> conveyor.outtake()), 

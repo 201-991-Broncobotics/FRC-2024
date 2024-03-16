@@ -432,7 +432,7 @@ public final class Constants {
         /* Motor Parameters */
 
         public static final boolean pivot_motor_clockwise_positive = false, 
-                                    pivot_motor_brake = true, 
+                                    pivot_motor_brake = false, 
                                     pivot_motor_invert_sensor = false;
                 
         public static final double pivot_motor_max_continuous_current = 15, 
