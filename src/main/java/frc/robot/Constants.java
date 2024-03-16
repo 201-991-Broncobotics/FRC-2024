@@ -90,7 +90,7 @@ public final class Constants {
         
         /* Outtaking Constants */
 
-        public static final double max_flywheel_acceleration_time = 1.5, 
+        public static final double max_flywheel_acceleration_time = 2, 
                                    min_outtake_time = 1, 
                                    min_amp_time = 2;
 
