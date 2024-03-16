@@ -42,7 +42,11 @@ public class ShootingCommands {
             ), 
 
             new InstantCommand(() -> conveyor.outtake()), 
-            new WaitCommand(3), 
+
+            new ParallelDeadlineGroup(
+                new WaitCommand(3), 
+                new RunCommand(() -> pivot.pidPower())
+            ), 
 
             new InstantCommand(() -> {
                 Variables.bypass_rotation = false;

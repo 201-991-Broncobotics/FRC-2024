@@ -7,7 +7,7 @@ public class ResetHangCommand extends SequentialCommandGroup { // basically, run
 
     public ResetHangCommand(Hang hang) {
         super(
-            new InstantCommand(() -> hang.move(0.32), hang), 
+            new InstantCommand(() -> hang.move(0.35), hang), 
             new ParallelCommandGroup(
                 new SequentialCommandGroup(
                     new WaitCommand(0.5), 
@@ -15,7 +15,7 @@ public class ResetHangCommand extends SequentialCommandGroup { // basically, run
                     new InstantCommand(() -> hang.moveLeft(0)), 
                     new WaitCommand(0.2), 
                     new InstantCommand(() -> hang.moveLeft(-0.3)), 
-                    new WaitCommand(0.2), 
+                    new WaitCommand(0.4), 
                     new InstantCommand(() -> hang.moveLeft(0))
                 ), new SequentialCommandGroup(
                     new WaitCommand(0.5), 
@@ -23,7 +23,7 @@ public class ResetHangCommand extends SequentialCommandGroup { // basically, run
                     new InstantCommand(() -> hang.moveRight(0)), 
                     new WaitCommand(0.2), 
                     new InstantCommand(() -> hang.moveRight(-0.3)), 
-                    new WaitCommand(0.2), 
+                    new WaitCommand(0.4), 
                     new InstantCommand(() -> hang.moveRight(0))
                 )
             ), 

@@ -271,10 +271,14 @@ public class Swerve extends SubsystemBase {
     }
 
     public void resetOdometry(Pose2d pose) {
-        gyro.setYaw(pose.getRotation().getDegrees());
-        brake();
-        poseEstimator.resetPosition(getGyroYaw(), getModulePositions(), pose);
+        poseEstimator.resetPosition(pose.getRotation(), getModulePositions(), pose);
         fillCacheWithPose(poseEstimator.getEstimatedPosition());
+
+        gyro.setYaw(pose.getRotation().getDegrees());
+        
+        brake();
+        pie.resetTarget(pose.getRotation().getDegrees());
+        last_manual_time = Timer.getFPGATimestamp();
     }
 
     public Rotation2d getHeading() {
@@ -298,6 +302,7 @@ public class Swerve extends SubsystemBase {
         poseEstimator.resetPosition(Rotation2d.fromDegrees(yaw + (Variables.isBlueAlliance ? 0 : 180)), getModulePositions(), new Pose2d(getPose().getTranslation(), Rotation2d.fromDegrees(yaw + (Variables.isBlueAlliance ? 0 : 180))));
         fillCacheWithPose(poseEstimator.getEstimatedPosition());
         gyro.setYaw(yaw + (Variables.isBlueAlliance ? 0 : 180));
+
         brake();
         pie.resetTarget(yaw + (Variables.isBlueAlliance ? 0 : 180));
         last_manual_time = Timer.getFPGATimestamp();
@@ -327,7 +332,19 @@ public class Swerve extends SubsystemBase {
     public void periodic() {
         poseEstimator.updateWithTime(Timer.getFPGATimestamp(), getGyroYaw(), getModulePositions());
 
-        Limelight.updateSDPE();
+        Pose2d vision_estimate = Limelight.getVisionEstimate();
+
+        if (vision_estimate.getTranslation().getNorm() > 0.1 && (Math.abs(normalizeAngle(getGyroYaw().getDegrees() - vision_estimate.getRotation().getDegrees())) < vision_tolerance)) {
+            poseEstimator.addVisionMeasurement(vision_estimate, Timer.getFPGATimestamp() - Limelight.getLatency());
+            log("Vision Pose", "(" + Math.round(vision_estimate.getTranslation().getX() * 100) / 100.0 + ", " + Math.round(vision_estimate.getTranslation().getY() * 100) / 100.0 + ")");
+            log("Vision Heading", "" + Math.round(vision_estimate.getRotation().getDegrees() * 100) / 100.0 + " degrees");
+        } else if (vision_estimate.getTranslation().getNorm() > 0.1) {
+            log("Vision Pose", "Vision estimate did not make sense");
+            log("Vision Heading", "Vision estimate did not make sense");
+        } else {
+            log("Vision Pose", "No vision estimate");
+            log("Vision Heading", "No vision estimate");
+        }
 
         velocity = addPoseToCache(poseEstimator.getEstimatedPosition());
 

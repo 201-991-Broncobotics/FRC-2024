@@ -22,10 +22,10 @@ public final class Constants {
 
         /* For these, align all the wheels so their gears are facing away from the intake */
 
-        public static final double CANCoder0_zero = 151.87, // Front Left
-                                   CANCoder1_zero = 85.78, // Front Right
-                                   CANCoder2_zero = -129.19, // Back Left
-                                   CANCoder3_zero = -52.29; // Back Right
+        public static final double CANCoder0_zero = 139.83, // Front Left
+                                   CANCoder1_zero = -155.70, // Front Right
+                                   CANCoder2_zero = -131.57, // Back Left
+                                   CANCoder3_zero = -169.01; // Back Right
         
         public static final boolean useCANCoders = true;
         
@@ -86,7 +86,7 @@ public final class Constants {
                                    min_intake_time = 8, 
                                    add_intake_time = 0.8, 
                                    add_conveyor_time = 0.2, 
-                                   retract_conveyor_time = 0.1; // how much we intake after the note has passed through
+                                   retract_conveyor_time = 0.15; // how much we intake after the note has passed through
         
         /* Outtaking Constants */
 
@@ -432,7 +432,7 @@ public final class Constants {
         /* Motor Parameters */
 
         public static final boolean pivot_motor_clockwise_positive = false, 
-                                    pivot_motor_brake = false, 
+                                    pivot_motor_brake = true, 
                                     pivot_motor_invert_sensor = false;
                 
         public static final double pivot_motor_max_continuous_current = 15, 
@@ -522,7 +522,7 @@ public final class Constants {
         
         public static final boolean hang_motors_opposite = true; // they should turn in opposite directions
 
-        public static final double hanging_position = 48000;
+        public static final double hanging_position = 64000;
 
     }
 
