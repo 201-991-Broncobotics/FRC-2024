@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.2746697035534487,
-      "y": 4.080020078593101
+      "x": 1.2890174723438874,
+      "y": 2.142426138510814
     },
     "rotation": 0
   },
@@ -12,34 +12,15 @@
     "data": {
       "commands": [
         {
+          "type": "path",
+          "data": {
+            "pathName": "OtherNotAmpShoot"
+          }
+        },
+        {
           "type": "named",
           "data": {
             "name": "AutonomousOuttake"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "NotAmpFirstIntake"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutonomousIntake"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "NotAmpFirstShoot"
           }
         }
       ]
