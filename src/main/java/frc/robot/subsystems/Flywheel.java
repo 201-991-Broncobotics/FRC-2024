@@ -77,6 +77,12 @@ public class Flywheel extends SubsystemBase {
         log("Flywheel State", "Off");
     }
 
+    // add backpressure while intaking to make sure we dont send the note too far forwards
+    public void intake() {
+      targetRPS = flywheel_intake_rpm / 60;
+      log("Flywheel State", "Intaking");
+    }
+
     public double getAverageCurrent() {
         return (topCurrent.getAsDouble() + bottomCurrent.getAsDouble()) / 2.0;
     }
