@@ -36,33 +36,33 @@ public class Hang extends SubsystemBase {
         right_hang_motor.power(power);
     }
 
-    public void moveVoltage(double voltage) {
-        moveRightVoltage(voltage);
-        moveLeftVoltage(voltage);
+    public void moveVoltagePercent(double voltage) {
+        moveRightVoltagePercent(voltage);
+        moveLeftVoltagePercent(voltage);
     }
 
-    public void moveRightVoltage(double voltage) {
+    public void moveRightVoltagePercent(double voltage) {
         if (voltage == 0) {
             right_hang_motor.brake();
         } else {
-            right_hang_motor.setVoltage(voltage);
+            right_hang_motor.setVoltagePercent(voltage);
         }
     }
 
-    public void moveLeftVoltage(double voltage) {
+    public void moveLeftVoltagePercent(double voltage) {
         if (voltage == 0) {
             left_hang_motor.brake();
         } else {
-            left_hang_motor.setVoltage(voltage);
+            left_hang_motor.setVoltagePercent(voltage);
         }
     }
 
     public boolean isLeftStuck() {
-        return Math.abs(left_hang_motor.getVelocity()) < 1000;
+        return Math.abs(left_hang_motor.getVelocity()) < 1.5;
     }
 
     public boolean isRightStuck() {
-        return Math.abs(right_hang_motor.getVelocity()) < 1000; // should tune this but you get the point
+        return Math.abs(right_hang_motor.getVelocity()) < 1.5; // should tune this but you get the point
     }
 
     public void setCoastModes() {
@@ -108,5 +108,8 @@ public class Hang extends SubsystemBase {
         
         log("Left Hang Motor Current", left_hang_motor.getCurrent());
         log("Right Hang Motor Current", right_hang_motor.getCurrent());
+
+        log("Left Hang Motor Velocity", left_hang_motor.getVelocity());
+        log("Right Hang Motor Velocity", right_hang_motor.getVelocity());
     }
 }
