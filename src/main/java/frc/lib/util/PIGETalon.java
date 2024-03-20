@@ -7,6 +7,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.Timer;
 
 public class PIGETalon {
@@ -101,6 +102,38 @@ public class PIGETalon {
         motor.set(power);
     }
 
+    /** Should be as a percent of maximum voltage, which is 12 by default */
+    public void setVoltage(double voltage) {
+
+        double currentPosition = positionSup.getAsDouble();
+        
+        if (currentPosition < minPosition || lmtPosition <= minPosition) {
+            previousTime = -1000;
+            voltage = Math.max(0, voltage);
+            motor.setVoltage(0);
+            pigeCalculator.resetTarget(minPosition);
+            lmtPosition = minPosition;
+        } else if (currentPosition > maxPosition || lmtPosition >= maxPosition) {
+            previousTime = -1000;
+            voltage = Math.min(0, voltage);
+            motor.setVoltage(0);
+            pigeCalculator.resetTarget(maxPosition);
+            lmtPosition = maxPosition;
+        }
+
+        if (voltage != 0) {
+            pigeCalculator.resetTarget(currentPosition);
+            lmtPosition = currentPosition;
+            previousTime = time;
+        } else if (time - previousTime < calibrationTime) {
+            pigeCalculator.resetTarget(currentPosition);
+        } else {
+            voltage = pigeCalculator.update(currentPosition);
+        }
+
+        motor.setVoltage(voltage * RobotController.getBatteryVoltage());
+    }
+
     public void resetSensorPosition(double angle) {
         motor.setPosition(angle * multiplier);
         previousTime = -1000;
@@ -185,5 +218,13 @@ public class PIGETalon {
 
     public double get() {
         return motor.get();
+    }
+
+    public double getVelocity() {
+        return motor.getVelocity().getValueAsDouble();
+    }
+
+    public void setBrake(boolean brake) {
+        motor.setNeutralMode(brake ? NeutralModeValue.Brake : NeutralModeValue.Coast);
     }
 }
