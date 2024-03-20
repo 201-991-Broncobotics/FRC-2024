@@ -7,27 +7,27 @@ public class ResetHangCommand extends SequentialCommandGroup { // basically, run
 
     public ResetHangCommand(Hang hang) {
         super(
-            new InstantCommand(() -> hang.move(0.35), hang), 
+            new InstantCommand(() -> { hang.moveVoltage(0.15); hang.setCoastModes(); }, hang), 
             new ParallelCommandGroup(
                 new SequentialCommandGroup(
-                    new WaitCommand(0.5), 
-                    Commands.waitUntil(() -> hang.isLeftBusy()), 
-                    new InstantCommand(() -> hang.moveLeft(0)), 
-                    new WaitCommand(0.2), 
-                    new InstantCommand(() -> hang.moveLeft(-0.3)), 
+                    new WaitCommand(0.1), 
+                    Commands.waitUntil(() -> hang.isLeftStuck()), 
+                    new InstantCommand(() -> hang.moveLeftVoltage(0)), 
+                    new WaitCommand(0.05), 
+                    new InstantCommand(() -> hang.moveLeftVoltage(-0.3)), 
                     new WaitCommand(0.4), 
-                    new InstantCommand(() -> hang.moveLeft(0))
+                    new InstantCommand(() -> hang.moveLeftVoltage(0))
                 ), new SequentialCommandGroup(
-                    new WaitCommand(0.5), 
-                    Commands.waitUntil(() -> hang.isRightBusy()), 
-                    new InstantCommand(() -> hang.moveRight(0)), 
-                    new WaitCommand(0.2), 
-                    new InstantCommand(() -> hang.moveRight(-0.3)), 
+                    new WaitCommand(0.1), 
+                    Commands.waitUntil(() -> hang.isRightStuck()), 
+                    new InstantCommand(() -> hang.moveRightVoltage(0)), 
+                    new WaitCommand(0.05), 
+                    new InstantCommand(() -> hang.moveRightVoltage(-0.3)), 
                     new WaitCommand(0.4), 
-                    new InstantCommand(() -> hang.moveRight(0))
+                    new InstantCommand(() -> hang.moveRightVoltage(0))
                 )
             ), 
-            new InstantCommand(() -> { hang.resetEncoders(); hang.enableLimiting(); })
+            new InstantCommand(() -> { hang.setBrakeModes(); hang.resetEncoders(); hang.enableLimiting(); })
         );
     }
 

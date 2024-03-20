@@ -36,20 +36,43 @@ public class Hang extends SubsystemBase {
         right_hang_motor.power(power);
     }
 
-    public void moveRight(double power) {
-        right_hang_motor.power(power);
+    public void moveVoltage(double voltage) {
+        moveRightVoltage(voltage);
+        moveLeftVoltage(voltage);
     }
 
-    public void moveLeft(double power) {
-        left_hang_motor.power(power);
+    public void moveRightVoltage(double voltage) {
+        if (voltage == 0) {
+            right_hang_motor.brake();
+        } else {
+            right_hang_motor.setVoltage(voltage);
+        }
     }
 
-    public boolean isLeftBusy() {
-        return left_hang_motor.getCurrent() > hang_motors_free_current;
+    public void moveLeftVoltage(double voltage) {
+        if (voltage == 0) {
+            left_hang_motor.brake();
+        } else {
+            left_hang_motor.setVoltage(voltage);
+        }
     }
 
-    public boolean isRightBusy() {
-        return right_hang_motor.getCurrent() > hang_motors_free_current;
+    public boolean isLeftStuck() {
+        return Math.abs(left_hang_motor.getVelocity()) < 1000;
+    }
+
+    public boolean isRightStuck() {
+        return Math.abs(right_hang_motor.getVelocity()) < 1000; // should tune this but you get the point
+    }
+
+    public void setCoastModes() {
+        right_hang_motor.setBrake(false);
+        left_hang_motor.setBrake(false);
+    }
+
+    public void setBrakeModes() {
+        right_hang_motor.setBrake(true);
+        left_hang_motor.setBrake(true);
     }
 
     public void relax() {
