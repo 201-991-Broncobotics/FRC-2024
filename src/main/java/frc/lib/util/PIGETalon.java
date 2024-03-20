@@ -17,7 +17,7 @@ public class PIGETalon {
 
     private final DoubleSupplier positionSup;
     private final double calibrationTime, maxPercentOutputPerSecond, multiplier;
-    private double minPosition, maxPosition, previousTime, time, lmtPosition, prevPower;
+    private double minPosition, maxPosition, previousTime, time, lmtPosition, prevPower, gear_ratio;
 
     /** Assumptions: 360 is a full rotation; zeroPosition is the reading at the unstable equilibrium */
     public PIGETalon(int CANID, double continuousCurrentLimit, double peakCurrentLimit, boolean brake, boolean clockwise_positive, 
@@ -53,6 +53,7 @@ public class PIGETalon {
 
         this.minPosition = minPosition;
         this.maxPosition = maxPosition;
+        this.gear_ratio = gear_ratio;
 
         this.calibrationTime = calibrationTime;
         this.maxPercentOutputPerSecond = maxPercentOutputPerSecond;
@@ -103,7 +104,7 @@ public class PIGETalon {
     }
 
     /** Should be as a percent of maximum voltage, which is 12 by default */
-    public void setVoltage(double voltage) {
+    public void setVoltagePercent(double voltage) {
 
         double currentPosition = positionSup.getAsDouble();
         
@@ -220,8 +221,10 @@ public class PIGETalon {
         return motor.get();
     }
 
+    /** returns velocity of THE MECHANISM in rotations per second. 
+     * i.e. if the mechanism is a winch on a 25:1 planetary, the velocity this returns when the motor spins at 25rps is 1rps, not 25rps */
     public double getVelocity() {
-        return motor.getVelocity().getValueAsDouble();
+        return motor.getVelocity().getValueAsDouble() / gear_ratio;
     }
 
     public void setBrake(boolean brake) {
