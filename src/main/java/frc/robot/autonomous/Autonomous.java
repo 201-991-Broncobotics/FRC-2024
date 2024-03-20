@@ -15,9 +15,6 @@ public class Autonomous {
         // SmartDashboard.putString("Autonomous", (Variables.isBlueAlliance ? "Blue" : "Red") + " " + selectedAuto);
         
         var selectedAuto = "Center 3C0F";
-
-
-        
         return new PathPlannerAuto(selectedAuto);
     }
 }
