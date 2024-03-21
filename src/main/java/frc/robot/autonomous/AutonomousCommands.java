@@ -1,6 +1,10 @@
 package frc.robot.autonomous;
 
+import static frc.robot.Constants.GeneralConstants.log;
+
 import com.pathplanner.lib.auto.NamedCommands;
+
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
@@ -24,15 +28,15 @@ public class AutonomousCommands {
 
   static Command afterShoot(Flywheel flywheel, Conveyor conveyor) {
     // we want to get rid of a note if we still have one
-    var throwAwayNote = Commands.waitSeconds(0.5).deadlineWith(
+    var throwAwayNote = Commands.waitSeconds(0.25).deadlineWith(
       Commands.run(() -> {conveyor.outtake(); flywheel.outtake();}, conveyor, flywheel)
     );
 
-    var cleanup = Commands.run(() -> {
-      conveyor.stop(); 
-      flywheel.stop(); 
-      Variables.bypass_angling = false; 
-    }, conveyor, flywheel);
+    var cleanup = Commands.runOnce(() -> {
+        conveyor.stop(); 
+        flywheel.stop(); 
+        Variables.bypass_angling = false; 
+      }, conveyor, flywheel);
 
     return throwAwayNote.andThen(cleanup);
   }
@@ -55,23 +59,21 @@ public class AutonomousCommands {
       Commands.run(flywheel::stop, flywheel)
     )
     .andThen(
-      Commands.waitSeconds(.25).deadlineWith(Commands.startEnd(conveyor::retract, conveyor::stop, conveyor))
+      Commands.waitSeconds(.125).deadlineWith(Commands.startEnd(conveyor::retract, conveyor::stop, conveyor))
     );
   }
 
   static Command shootWhenReady(Conveyor conveyor, Swerve swerve, Flywheel flywheel, Pivot pivot) {
-    var prepare = Commands.runOnce(() -> {Variables.bypass_angling = true; flywheel.outtake();}, flywheel);    
+    var prepare = Commands.runOnce(() -> {Variables.bypass_angling = true; pivot.setTarget(ShootingMath.pivotAngle().getDegrees()); flywheel.outtake();}, flywheel);    
 
     var whileWaiting = Commands.parallel(
-      Commands.run(conveyor::outtake, conveyor),
       Commands.run(pivot::pidPower, pivot)
     );
 
     // maybe wait until ChassisSpeeds = 0???
     var isReady = Commands.waitUntil(
         () -> Math.abs(swerve.getHeading().minus(ShootingMath.drivetrainAngle()).getDegrees()) < 2 && pivot.pidCloseEnough() && flywheel.isAtSpeed()
-      );
-    
+    ).andThen(() -> {log("SHOOTING RN", Timer.getFPGATimestamp());});
 
     var shoot = Commands.waitSeconds(0.5).deadlineWith(Commands.run(conveyor::outtake, conveyor));
 

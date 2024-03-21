@@ -67,5 +67,6 @@ public class Pivot extends SubsystemBase {
         log("Possibly kG", pivot_motor.get() / Math.sin((pivot_zero - pivot_motor.getEncoderPosition()) * Math.PI / 180));
         log("Current Pivot Angle", pivot_motor.getEncoderPosition());
         log("Target Pivot Angle", pivot_motor.getTarget());
+        log("Pivot at Speed", pidCloseEnough() ? "yes" : "no");
     }
 }

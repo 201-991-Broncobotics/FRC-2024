@@ -451,7 +451,7 @@ public final class Constants {
 
         /* Subsystem Variables */
 
-        public static final double pivot_angle_tolerance = 5;
+        public static final double pivot_angle_tolerance = 2.5;
 
     }
 
