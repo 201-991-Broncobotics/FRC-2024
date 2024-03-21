@@ -20,12 +20,12 @@ public final class Constants {
 
     public static final class TuningConstants { // Basically stuff you have to tune
 
-        /* For these, align all the wheels so their gears are facing away from the intake */
+        /* For these, align all the wheels so their gears are facing toward RSL Side */
 
-        public static final double CANCoder0_zero = 143.28, // Front Left
-                                   CANCoder1_zero = -8, // Front Right
-                                   CANCoder2_zero = -129.22, // Back Left
-                                   CANCoder3_zero = 42.18; // Back Right
+        public static final double CANCoder0_zero = 43.62, // Front Left
+                                   CANCoder1_zero = 53.66, // Front Right
+                                   CANCoder2_zero = -39.33, // Back Left
+                                   CANCoder3_zero = 133.07; // Back Right
         
         public static final boolean useCANCoders = true;
         
@@ -36,7 +36,7 @@ public final class Constants {
                                    drive_equilibrium_voltage = 1.51, 
                                    drive_acceleration_voltage = 0.27, // SYSID values: KS, KV, KA; they are automatically divided by 12 later
                                    max_linear_speed = 10, // feet per second; theoretical max is 13.5
-                                   max_angular_speed = 225; // degrees per second; theoretical max is theoretical maximum is max_linear_speed * 46.6436741705 which is roughly 629.6896013018
+                                   max_angular_speed = 360; // degrees per second; theoretical max is theoretical maximum is max_linear_speed * 46.6436741705 which is roughly 629.6896013018
 
         /* PathPlanner PID Constants */
 
@@ -56,7 +56,7 @@ public final class Constants {
                                    teleop_translation_i = 0,
                                    teleop_translation_tolerance = 1;
         
-        public static final double turn_slow_ratio = 2; // because slowing down rotation and translation by the same factor is insane
+        public static final double turn_slow_ratio = 1; // because slowing down rotation and translation by the same factor is insane
                                     // ex. it its 4, then 0.6 translation ratio goes to a 0.9 turning ratio
         
         /* Pivot Constants */
@@ -253,13 +253,13 @@ public final class Constants {
         public static final SensorDirectionValue cancoderInvert = chosenModule.cancoderInvert;
 
         /* Swerve Current Limiting */
-        public static final int angleCurrentLimit = 10;
-        public static final int angleCurrentThreshold = 20;
+        public static final int angleCurrentLimit = 30;
+        public static final int angleCurrentThreshold = 30;
         public static final double angleCurrentThresholdTime = 0.1;
         public static final boolean angleEnableCurrentLimit = true;
 
-        public static final int driveCurrentLimit = 15;
-        public static final int driveCurrentThreshold = 20;
+        public static final int driveCurrentLimit = 40;
+        public static final int driveCurrentThreshold = 40;
         public static final double driveCurrentThresholdTime = 0.1;
         public static final boolean driveEnableCurrentLimit = true;
 
@@ -300,7 +300,7 @@ public final class Constants {
             public static final int driveMotorID = 1;
             public static final int angleMotorID = 2;
             public static final int canCoderID = 3;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(TuningConstants.CANCoder0_zero + 90);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(TuningConstants.CANCoder0_zero);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -310,7 +310,7 @@ public final class Constants {
             public static final int driveMotorID = 4;
             public static final int angleMotorID = 5;
             public static final int canCoderID = 6;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(TuningConstants.CANCoder1_zero + 90);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(TuningConstants.CANCoder1_zero);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -320,7 +320,7 @@ public final class Constants {
             public static final int driveMotorID = 7;
             public static final int angleMotorID = 8;
             public static final int canCoderID = 9;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(TuningConstants.CANCoder2_zero + 90);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(TuningConstants.CANCoder2_zero);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -330,7 +330,7 @@ public final class Constants {
             public static final int driveMotorID = 11; // bc they were messed up from the can id thing
             public static final int angleMotorID = 10;
             public static final int canCoderID = 12;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(TuningConstants.CANCoder3_zero + 90);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(TuningConstants.CANCoder3_zero);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -358,7 +358,7 @@ public final class Constants {
                                    swerve_min_manual_translation = 0.05, 
                                    swerve_min_manual_rotation = 0.02,
 
-                                   teleop_swerve_slow_factor = 0.5, 
+                                   teleop_swerve_slow_factor = 0.2, 
                                    
                                    vision_tolerance = 15, 
                                    
@@ -513,7 +513,7 @@ public final class Constants {
                                    
                                    hang_motors_max_percent_output_per_second = 3, 
                                    
-                                   hang_motors_gear_ratio = 1.0, // doesn't really matter because its a linear relationship
+                                   hang_motors_gear_ratio = 25.0, // doesn't really matter because its a linear relationship
                                    
                                    hang_motors_calibration_time = 0.25, 
                                    
