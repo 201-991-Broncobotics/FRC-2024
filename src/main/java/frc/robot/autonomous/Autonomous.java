@@ -10,10 +10,11 @@ public class Autonomous {
 
     public static Command getAutonomousCommand(Swerve swerve) { // RIP Legacy Code </3
 
-        String selectedAuto = SmartDashboard.getString("Auto Selector String", "NotAmpTriple");
-
-        SmartDashboard.putString("Autonomous", (Variables.isBlueAlliance ? "Blue" : "Red") + " " + selectedAuto);
-
+        // String selectedAuto = SmartDashboard.getString("Auto Selector String", "NotAmpTriple");
+        //
+        // SmartDashboard.putString("Autonomous", (Variables.isBlueAlliance ? "Blue" : "Red") + " " + selectedAuto);
+        
+        var selectedAuto = "Center 3C0F";
         return new PathPlannerAuto(selectedAuto);
     }
 }

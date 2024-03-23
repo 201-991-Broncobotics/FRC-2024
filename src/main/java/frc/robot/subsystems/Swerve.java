@@ -369,6 +369,7 @@ public class Swerve extends SubsystemBase {
         log("Average Angle Motor Current", angle_current);
         log("Average Drive Motor Current", drive_current);
         log("Side", Variables.isBlueAlliance ? "Blue" : "Red");
+        log("Swerve Close Enough", pidCloseEnough() ? "yes" : "no");
 
         posePublisher.set(getPose());
         statePublisher.set(getModuleStates());

@@ -2,24 +2,24 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.2953910752428905,
-      "y": 6.992834571294697
+      "x": 1.3711202144622805,
+      "y": 2.0684826374053955
     },
-    "rotation": 0
+    "rotation": 5.008723855591311e-24
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "AutonomousOuttake"
+            "pathName": "Far 0C3F"
           }
         }
       ]
     }
   },
   "folder": null,
-  "choreoAuto": false
+  "choreoAuto": true
 }

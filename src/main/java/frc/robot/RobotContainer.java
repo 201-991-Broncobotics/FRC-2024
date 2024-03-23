@@ -175,17 +175,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("AutonomousOuttake", new AutonomousOuttake(swerve, pivot, conveyor, flywheel));
         NamedCommands.registerCommand("AutonomousIntake", new AutonomousIntake(pivot, intake, conveyor));
 
-        Field2d field = new Field2d();
-
-        SmartDashboard.putData("Field", field);
-
-        PathPlannerLogging.setLogTargetPoseCallback((pose) -> {
-            field.getObject("target pose").setPose(pose);
-        });
-
-        PathPlannerLogging.setLogCurrentPoseCallback((pose) -> {
-            field.setRobotPose(pose);
-        });
+        AutonomousCommands.configureNamedCommands(swerve, pivot, intake, conveyor, flywheel);
     }
 
     /**

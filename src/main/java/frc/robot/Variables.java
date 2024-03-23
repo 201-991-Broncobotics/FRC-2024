@@ -9,7 +9,8 @@ public class Variables {
     public static boolean isBlueAlliance = true;
 
     public static boolean invert_rotation = false;
+    /** auto aim pivot */
     public static boolean bypass_angling = false;
-
+    /** auto aim drivetrain */
     public static boolean bypass_rotation = false;
 }
