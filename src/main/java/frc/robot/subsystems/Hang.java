@@ -58,11 +58,11 @@ public class Hang extends SubsystemBase {
     }
 
     public boolean isLeftStuck() {
-        return Math.abs(left_hang_motor.getVelocity()) < 1.5;
+        return Math.abs(left_hang_motor.getVelocity()) < 0.5;
     }
 
     public boolean isRightStuck() {
-        return Math.abs(right_hang_motor.getVelocity()) < 1.5; // should tune this but you get the point
+        return Math.abs(right_hang_motor.getVelocity()) < 0.5;
     }
 
     public void setCoastModes() {
