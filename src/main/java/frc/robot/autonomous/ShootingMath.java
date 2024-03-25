@@ -20,7 +20,7 @@ public class ShootingMath {
     public static final double outtakeVerticalOffset = 0.5852089896; // how far up outtake pivot is from center of robot
     
     public static final double z = speaker_height - outtakeVerticalOffset;
-    public static final double max_distance = 5; // 6.8?
+    public static final double max_distance = 6.8;
 
     // assuming no robot velocity; everything else is negligible 
     public static Rotation2d drivetrainAngle() {
