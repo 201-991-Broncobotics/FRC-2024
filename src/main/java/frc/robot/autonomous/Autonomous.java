@@ -1,9 +1,7 @@
 package frc.robot.autonomous;
 
 import com.pathplanner.lib.commands.PathPlannerAuto;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Variables;
 import frc.robot.subsystems.Swerve;
 
 public class Autonomous {

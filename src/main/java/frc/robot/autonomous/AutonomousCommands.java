@@ -1,10 +1,7 @@
 package frc.robot.autonomous;
 
-import static frc.robot.Constants.GeneralConstants.log;
-
 import com.pathplanner.lib.auto.NamedCommands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
@@ -30,18 +27,11 @@ public class AutonomousCommands {
   }
 
   static Command afterShoot(Flywheel flywheel, Conveyor conveyor) {
-    // we want to get rid of a note if we still have one
-    var throwAwayNote = Commands.waitSeconds(0.25).deadlineWith(
-      Commands.run(() -> {conveyor.outtake(); flywheel.outtake();}, conveyor, flywheel)
-    );
-
-    var cleanup = Commands.runOnce(() -> {
+    return Commands.runOnce(() -> {
         conveyor.stop(); 
         flywheel.stop(); 
         Variables.bypass_angling = false; 
       }, conveyor, flywheel);
-
-    return throwAwayNote.andThen(cleanup);
   }
 
 
@@ -61,8 +51,9 @@ public class AutonomousCommands {
       Commands.runOnce(flywheel::stop, flywheel),
       Commands.runOnce(pivot::brake, pivot)
     )
-    .andThen(
-      Commands.waitSeconds(0.35).deadlineWith(Commands.startEnd(conveyor::retract, conveyor::stop, conveyor).alongWith(Commands.startEnd(flywheel::intake, flywheel::stop, flywheel)))
+    .andThen( Commands.waitSeconds(0.35).deadlineWith(
+      Commands.startEnd(conveyor::retract, conveyor::stop, conveyor), 
+      Commands.startEnd(flywheel::intake, flywheel::stop, flywheel))
     );
   }
 
@@ -71,8 +62,8 @@ public class AutonomousCommands {
 
     var whileWaiting = Commands.parallel(
         Commands.run(() -> {
+          pivot.setTarget(ShootingMath.pivotAngle().getDegrees());
           pivot.pidPower();
-          // pivot.setTarget(ShootingMath.pivotAngle().getDegrees());
         }, pivot)
     );
 
@@ -84,15 +75,19 @@ public class AutonomousCommands {
   }
 
   public static Command shoot(Swerve swerve, Conveyor conveyor, Pivot pivot, Flywheel flywheel) {
+    var autoAimSwerve = Commands.runOnce(() -> { Variables.bypass_rotation = true; swerve.targetSpeaker(); })
+          .andThen( 
+              new ParallelDeadlineGroup(
+                  Commands.waitUntil(swerve::pidCloseEnough), 
+                  new ParallelRaceGroup(
+                      new TeleopSwerveRelativeDirecting(swerve, () -> 0, () -> 0, () -> 0, () -> false, () -> -1, () -> 0.5, () -> true), 
+                      Commands.waitUntil(swerve::pidCloseEnough)
+              ).andThen(swerve::brake)
+          ));
+
     return new SequentialCommandGroup(
-            Commands.runOnce(() -> { Variables.bypass_rotation = true; swerve.targetSpeaker(); }), 
-            new ParallelDeadlineGroup(
-                Commands.waitUntil(swerve::pidCloseEnough), 
-                new ParallelRaceGroup(
-                    new TeleopSwerveRelativeDirecting(swerve, () -> 0, () -> 0, () -> 0, () -> false, () -> -1, () -> 0.5, () -> true), 
-                    Commands.waitUntil(swerve::pidCloseEnough)
-                ).andThen(swerve::brake)
-            ),
+            autoAimSwerve.onlyIf(() -> 
+                Math.abs(ShootingMath.drivetrainAngle().minus(swerve.getGyroYaw()).getDegrees()) < 1.5),
             Commands.waitUntil(() -> pivot.pidCloseEnough() && flywheel.isAtSpeed()),
             Commands.waitSeconds(0.25).deadlineWith(Commands.run(conveyor::outtake, conveyor))
     ).raceWith(Commands.run(() -> {
