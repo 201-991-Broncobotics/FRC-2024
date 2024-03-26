@@ -5,7 +5,7 @@
       "x": 1.3038057088851929,
       "y": 7.325462818145752
     },
-    "rotation": 9.608454270824035e-24
+    "rotation": -3.1297628784715206e-26
   },
   "command": {
     "type": "sequential",
@@ -14,7 +14,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "as to s5"
+            "pathName": "as to s7"
           }
         },
         {
@@ -26,7 +26,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "s5 to f1 to s5"
+            "pathName": "s7 to f1 to s7"
           }
         },
         {
@@ -38,7 +38,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "s5 to f2 to s5"
+            "pathName": "s7 to f2 to s7"
           }
         },
         {
@@ -50,7 +50,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "s5 to f3 to s5"
+            "pathName": "s7 to f3 to s7"
           }
         },
         {

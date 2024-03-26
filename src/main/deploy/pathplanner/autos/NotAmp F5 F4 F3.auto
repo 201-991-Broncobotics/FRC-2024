@@ -38,7 +38,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "s6 to f3 to s6"
+            "pathName": "s6 to f4 to s6"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "s6 to f3 to s7 around stage"
           }
         },
         {
