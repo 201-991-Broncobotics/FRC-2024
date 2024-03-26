@@ -5,11 +5,13 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.lib.util.CTREConfigs;
 
 import frc.robot.subsystems.Limelight;
+import static frc.robot.Constants.GeneralConstants.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -23,6 +25,8 @@ public class Robot extends TimedRobot {
     private Command autonomousCommand;
 
     private RobotContainer robotContainer;
+
+    private double end_time = -1;
 
     /**
      * This function is run when the robot is first started up and should be used for any
@@ -58,6 +62,7 @@ public class Robot extends TimedRobot {
     public void disabledInit() {
         Variables.in_auto = false;
         Variables.in_teleop = false;
+        log("TeleOp Time Left", 200);
     }
 
     /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
@@ -66,6 +71,7 @@ public class Robot extends TimedRobot {
         Variables.in_auto = true;
         Variables.in_teleop = false;
         Limelight.setSide();
+        log("TeleOp Time Left", 200);
 
         autonomousCommand = robotContainer.getAutonomousCommand();
 
@@ -87,8 +93,15 @@ public class Robot extends TimedRobot {
         Variables.in_teleop = true;
         Limelight.setSide();
 
+        end_time = Timer.getFPGATimestamp() + 135;
+
         if (autonomousCommand != null) autonomousCommand.cancel();
         robotContainer.teleopInit();
+    }
+
+    @Override
+    public void teleopPeriodic() {
+        log("TeleOp Time Left", end_time - Timer.getFPGATimestamp());
     }
 
     @Override
