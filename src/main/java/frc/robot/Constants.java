@@ -22,10 +22,10 @@ public final class Constants {
 
         /* For these, align all the wheels so their gears are facing toward RSL Side */
 
-        public static final double CANCoder0_zero = -46.93, // Front Left
-                                   CANCoder1_zero = -8.61, // Front Right
-                                   CANCoder2_zero = -128.67, // Back Left
-                                   CANCoder3_zero = 65.39; // Back Right
+        public static final double CANCoder0_zero = -45.35, // Front Left
+                                   CANCoder1_zero = -51.24, // Front Right
+                                   CANCoder2_zero = -127.52, // Back Left
+                                   CANCoder3_zero = 77.60; // Back Right
         
         public static final boolean useCANCoders = true;
         
@@ -521,9 +521,9 @@ public final class Constants {
 
         /* Subsystem Variables */
         
-        public static final boolean hang_motors_opposite = true; // they should turn in opposite directions
+        public static final boolean hang_motors_opposite = false; // they should turn in opposite directions
 
-        public static final double hanging_position = 64000;
+        public static final double hanging_position = 1850;
 
     }
 

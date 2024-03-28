@@ -49,8 +49,12 @@ public class ShootingMath {
             d = max_distance; // lol
         }
 
+        double discriminant = v * v * v * v * d * d - g * d * d * (g * d * d + 2 * v * v * z);
+
+        if (discriminant < 0) discriminant = 0;
+
         double angle_radians = Math.atan(
-            (v * v * d - Math.sqrt(v * v * v * v * d * d - g * d * d * (g * d * d + 2 * v * v * z))) / (g * d * d)
+            (v * v * d - Math.sqrt(discriminant)) / (g * d * d)
         );
 
         Rotation2d angle = Rotation2d.fromRadians(angle_radians);
