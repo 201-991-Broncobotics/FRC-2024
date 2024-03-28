@@ -223,10 +223,10 @@ public class Swerve extends SubsystemBase {
 
     /* Used by PathPlanner */
     public void driveRobotRelative(ChassisSpeeds chassisSpeeds) {
-        drive(new Translation2d(chassisSpeeds.vxMetersPerSecond, chassisSpeeds.vyMetersPerSecond), chassisSpeeds.omegaRadiansPerSecond, false, true, false);
+        drive(new Translation2d(chassisSpeeds.vxMetersPerSecond * (Variables.isBlueAlliance ? 1 : -1), chassisSpeeds.vyMetersPerSecond * (Variables.isBlueAlliance ? 1 : -1)), chassisSpeeds.omegaRadiansPerSecond, false, true, false);
     }
 
-    /* Used by PathPlanner */
+    /** Used by PathPlanner */
     public ChassisSpeeds getRobotRelativeSpeeds() {
         return Constants.BaseFalconSwerveConstants.swerveKinematics.toChassisSpeeds(getModuleStates());
     }
