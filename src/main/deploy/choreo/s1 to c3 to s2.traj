@@ -373,7 +373,7 @@
       }
     },
     {
-      "timestamp": 1.8924886660717082,
+      "timestamp": 1.7924886660717083,
       "command": {
         "type": "sequential",
         "data": {
@@ -382,12 +382,6 @@
               "type": "named",
               "data": {
                 "name": "stopIntaking"
-              }
-            },
-            {
-              "type": "wait",
-              "data": {
-                "waitTime": 0.2
               }
             },
             {

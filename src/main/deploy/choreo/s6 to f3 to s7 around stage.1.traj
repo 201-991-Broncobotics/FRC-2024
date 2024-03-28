@@ -829,7 +829,7 @@
       }
     },
     {
-      "timestamp": 1.7956389281256961,
+      "timestamp": 1.5956389281256962,
       "command": {
         "type": "named",
         "data": {
@@ -838,7 +838,7 @@
       }
     },
     {
-      "timestamp": 3.318701146352151,
+      "timestamp": 3.011230549569406,
       "command": {
         "type": "sequential",
         "data": {

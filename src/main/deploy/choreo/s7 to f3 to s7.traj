@@ -616,19 +616,13 @@
               "data": {
                 "name": "afterShoot"
               }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "pivotUnderStage"
-              }
             }
           ]
         }
       }
     },
     {
-      "timestamp": 1.7160258273350397,
+      "timestamp": 1.41602582733504,
       "command": {
         "type": "named",
         "data": {
@@ -637,7 +631,7 @@
       }
     },
     {
-      "timestamp": 3.269543987841347,
+      "timestamp": 3.169543987841347,
       "command": {
         "type": "sequential",
         "data": {

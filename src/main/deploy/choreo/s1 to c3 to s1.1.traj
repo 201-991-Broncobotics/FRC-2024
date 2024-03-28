@@ -367,7 +367,7 @@
       }
     },
     {
-      "timestamp": 1.9224020634876688,
+      "timestamp": 1.772402063487669,
       "command": {
         "type": "sequential",
         "data": {
@@ -381,7 +381,7 @@
             {
               "type": "wait",
               "data": {
-                "waitTime": 0.2
+                "waitTime": 0.15
               }
             },
             {

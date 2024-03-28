@@ -51,7 +51,7 @@ public class AutonomousCommands {
       Commands.runOnce(flywheel::stop, flywheel),
       Commands.runOnce(pivot::brake, pivot)
     )
-    .andThen( Commands.waitSeconds(0.35).deadlineWith(
+    .andThen(Commands.waitSeconds(0.35).deadlineWith(
       Commands.startEnd(conveyor::retract, conveyor::stop, conveyor), 
       Commands.startEnd(flywheel::intake, flywheel::stop, flywheel))
     );

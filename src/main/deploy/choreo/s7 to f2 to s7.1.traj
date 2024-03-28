@@ -391,12 +391,6 @@
               "data": {
                 "name": "afterShoot"
               }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "pivotUnderStage"
-              }
             }
           ]
         }
