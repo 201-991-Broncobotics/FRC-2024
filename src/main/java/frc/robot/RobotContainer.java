@@ -185,12 +185,12 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         
-        return new WheelCharacterization(swerve);
+        // return new WheelCharacterization(swerve);
 
-        // return new ParallelCommandGroup(
-        //     Autonomous.getAutonomousCommand(swerve), 
-        //     new ResetHangCommand(hang)
-        // );
+        return new ParallelCommandGroup(
+            Autonomous.getAutonomousCommand(swerve), 
+            new ResetHangCommand(hang)
+        );
     }
 
     public void teleopInit() {

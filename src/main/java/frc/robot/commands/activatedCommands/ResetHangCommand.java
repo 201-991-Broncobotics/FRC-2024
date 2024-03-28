@@ -7,7 +7,7 @@ public class ResetHangCommand extends SequentialCommandGroup { // basically, run
 
     public ResetHangCommand(Hang hang) {
         super(
-            new InstantCommand(() -> { hang.moveVoltagePercent(0.15); hang.setCoastModes(); }, hang), 
+            new InstantCommand(() -> { hang.moveVoltagePercent(0.15); hang.setCoastModes(); hang.disableLimiting(); }, hang), 
             new WaitCommand(0.1), 
             new ParallelCommandGroup(
                 new SequentialCommandGroup(

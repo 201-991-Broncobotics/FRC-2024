@@ -65,6 +65,11 @@ public class Hang extends SubsystemBase {
         return Math.abs(right_hang_motor.getVelocity()) < 0.5;
     }
 
+    public void disableLimiting() {
+        right_hang_motor.disableLimiting();
+        left_hang_motor.disableLimiting();
+    }
+
     public void setCoastModes() {
         right_hang_motor.setBrake(false);
         left_hang_motor.setBrake(false);
