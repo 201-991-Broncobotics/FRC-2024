@@ -29,6 +29,9 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static frc.robot.Constants.TuningConstants.*;
+
+import java.util.Arrays;
+
 import static frc.robot.Constants.GeneralConstants.*;
 import static frc.robot.Constants.TeleopSwerveConstants.*;
 
@@ -380,4 +383,9 @@ public class Swerve extends SubsystemBase {
     public void teleopInit() {
         changeHeading(0);
     }
+
+  /** Get the position of all drive wheels in radians. */
+  public double[] getWheelRadiusCharacterizationPosition() {
+    return Arrays.stream(swerveModules).mapToDouble(SwerveModule::getPositionRads).toArray();
+  }
 }

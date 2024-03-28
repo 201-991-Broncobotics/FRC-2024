@@ -184,10 +184,13 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return new ParallelCommandGroup(
-            Autonomous.getAutonomousCommand(swerve), 
-            new ResetHangCommand(hang)
-        );
+        
+        return new WheelCharacterization(swerve);
+
+        // return new ParallelCommandGroup(
+        //     Autonomous.getAutonomousCommand(swerve), 
+        //     new ResetHangCommand(hang)
+        // );
     }
 
     public void teleopInit() {
