@@ -93,6 +93,7 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousExit() {
         Variables.in_auto = false;
+        Variables.bypass_rotation = false;
         if (autonomousCommand != null) autonomousCommand.cancel();
     }
 

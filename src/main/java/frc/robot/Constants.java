@@ -22,10 +22,10 @@ public final class Constants {
 
         /* For these, align all the wheels so their gears are facing toward RSL Side */
 
-        public static final double CANCoder0_zero = -46.75, // Front Left
-                                   CANCoder1_zero = 15.205, // Front Right
-                                   CANCoder2_zero = -116.54, // Back Left
-                                   CANCoder3_zero = 123.04; // Back Right
+        public static final double CANCoder0_zero = -47.46, // Front Left
+                                   CANCoder1_zero = 24.69, // Front Right
+                                   CANCoder2_zero = -128.75, // Back Left
+                                   CANCoder3_zero = 128.4; // Back Right
         
         public static final boolean useCANCoders = true;
         
@@ -360,7 +360,7 @@ public final class Constants {
 
                                    teleop_swerve_slow_factor = 0.2, 
                                    
-                                   vision_tolerance = 15, 
+                                   vision_tolerance = 5, 
                                    
                                    teleop_rotation_percent = 0.75, 
                                    swerve_bumper_turn_sensitivity = 0.35; // ratio of teleop swerve rotation speed vs maximum swerve rotation speed

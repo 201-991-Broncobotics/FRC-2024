@@ -32,16 +32,16 @@
     },
     {
       "anchor": {
-        "x": 8.290550504799429,
-        "y": 0.7767783389367227
+        "x": 8.090052472787873,
+        "y": 0.7471369973780683
       },
       "prevControl": {
-        "x": 8.254929215440454,
-        "y": 0.7836581708552168
+        "x": 8.054431183428898,
+        "y": 0.7540168292965624
       },
       "nextControl": {
-        "x": 8.599189658811303,
-        "y": 0.7171683264616144
+        "x": 8.398691626799748,
+        "y": 0.68752698490296
       },
       "isLocked": false,
       "linkedName": "F5"
@@ -67,7 +67,19 @@
       "rotateFast": false
     }
   ],
-  "constraintZones": [],
+  "constraintZones": [
+    {
+      "name": "New Constraints Zone",
+      "minWaypointRelativePos": 1.7,
+      "maxWaypointRelativePos": 2.1999999999999997,
+      "constraints": {
+        "maxVelocity": 1.0,
+        "maxAcceleration": 1.0,
+        "maxAngularVelocity": 200.0,
+        "maxAngularAcceleration": 200.0
+      }
+    }
+  ],
   "eventMarkers": [
     {
       "name": "New Event Marker",

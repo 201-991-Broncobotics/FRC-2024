@@ -28,6 +28,8 @@ import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.util.datalog.DataLog;
 import edu.wpi.first.util.datalog.DoubleLogEntry;
+import edu.wpi.first.util.datalog.StringLogEntry;
+import edu.wpi.first.util.datalog.StructLogEntry;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -47,10 +49,15 @@ public class Swerve extends SubsystemBase {
 
     private double last_manual_time;
     private PIECalculator pie;
+
     StructPublisher<Pose2d> posePublisher;
     StructArrayPublisher<SwerveModuleState> statePublisher;
     StructArrayPublisher<SwerveModuleState> canStatePublisher;
     StructPublisher<Pose2d> visionPublisher;
+
+    StructLogEntry<Pose2d> poseLogPublisher; 
+    StructLogEntry<Pose2d> visionLogPublisher;
+    StringLogEntry visionStatePublisher;
 
     public static final int cache_size = 10;
 
@@ -119,6 +126,9 @@ public class Swerve extends SubsystemBase {
         positionLog = new DoubleLogEntry(log, "/Swerve/position");
         velocityLog = new DoubleLogEntry(log, "/Swerve/velocity");
         voltageLog = new DoubleLogEntry(log, "/Swerve/voltage");
+        visionLogPublisher = StructLogEntry.create(log, "/Swerve/Vision", Pose2d.struct);
+        poseLogPublisher = StructLogEntry.create(log, "/Swerve/Pose", Pose2d.struct);
+        visionStatePublisher = new StringLogEntry(log, "/Swerve/VisionState");
     }
 
     public static void fillCacheWithPose(Pose2d newPose) {
@@ -353,16 +363,23 @@ public class Swerve extends SubsystemBase {
 
         Pose2d vision_estimate = Limelight.getVisionEstimate();
 
-        if (vision_estimate.getTranslation().getNorm() > 0.1 && (Math.abs(normalizeAngle(getGyroYaw().getDegrees() - vision_estimate.getRotation().getDegrees())) < vision_tolerance)) {
-            poseEstimator.addVisionMeasurement(vision_estimate, Timer.getFPGATimestamp() - Limelight.getLatency(), VecBuilder.fill(0.8, 0.8, 6 * Math.PI / 180.0));
+        if (
+            vision_estimate.getTranslation().getNorm() > 0.1 
+            && (Math.abs(normalizeAngle(getGyroYaw().getDegrees() - vision_estimate.getRotation().getDegrees())) < vision_tolerance)
+            && getPose().getTranslation().getDistance(vision_estimate.getTranslation()) < 2
+            ) {
+            poseEstimator.addVisionMeasurement(vision_estimate, Timer.getFPGATimestamp() - Limelight.getLatency(), VecBuilder.fill(1.2, 1.2, 30 * Math.PI / 180.0));
             log("Vision Pose", "(" + Math.round(vision_estimate.getTranslation().getX() * 100) / 100.0 + ", " + Math.round(vision_estimate.getTranslation().getY() * 100) / 100.0 + ")");
             log("Vision Heading", "" + Math.round(vision_estimate.getRotation().getDegrees() * 100) / 100.0 + " degrees");
+            visionStatePublisher.append("used");
         } else if (vision_estimate.getTranslation().getNorm() > 0.1) {
             log("Vision Pose", "Vision estimate did not make sense");
             log("Vision Heading", "Vision estimate did not make sense");
+            visionStatePublisher.append("unused");
         } else {
             log("Vision Pose", "No vision estimate");
             log("Vision Heading", "No vision estimate");
+            visionStatePublisher.append("none");
         }
 
         velocity = addPoseToCache(poseEstimator.getEstimatedPosition());
@@ -393,6 +410,8 @@ public class Swerve extends SubsystemBase {
         statePublisher.set(getModuleStates());
         canStatePublisher.set(getCanModuleStates());
         visionPublisher.set(Limelight.getVisionEstimate());
+        visionLogPublisher.append(Limelight.getVisionEstimate());
+        poseLogPublisher.append(getPose());
     }
 
     public void teleopInit() {
@@ -411,8 +430,8 @@ public class Swerve extends SubsystemBase {
   }
 
   public void logSysID() {
-    velocityLog.append(Arrays.stream(swerveModules).mapToDouble(SwerveModule::getVelocity).average().orElse(0));
-    positionLog.append(Arrays.stream(swerveModules).mapToDouble(SwerveModule::getDrivePosition).average().orElse(0));
-    voltageLog.append(Arrays.stream(swerveModules).mapToDouble(SwerveModule::getVoltage).average().orElse(0));
+    // velocityLog.append(Arrays.stream(swerveModules).mapToDouble(SwerveModule::getVelocity).average().orElse(0));
+    // positionLog.append(Arrays.stream(swerveModules).mapToDouble(SwerveModule::getDrivePosition).average().orElse(0));
+    // voltageLog.append(Arrays.stream(swerveModules).mapToDouble(SwerveModule::getVoltage).average().orElse(0));
   }
 }

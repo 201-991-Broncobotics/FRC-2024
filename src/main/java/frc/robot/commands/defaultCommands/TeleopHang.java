@@ -32,8 +32,8 @@ public class TeleopHang extends Command { // lol
         double motorVal = signedPower(motorSup.getAsDouble());
 
         // Move Arm
-        hang.moveLeft(motorVal * 0.4 + (leftSup.getAsBoolean() ? 0.4 : 0));
-        hang.moveRight(motorVal * 0.4 + (rightSup.getAsBoolean() ? 0.4 : 0));
+        hang.moveLeft(motorVal * 0.55 + (leftSup.getAsBoolean() ? 0.8 : 0));
+        hang.moveRight(motorVal * 0.55 + (rightSup.getAsBoolean() ? 0.8 : 0));
     }
 
 }

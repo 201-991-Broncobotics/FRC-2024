@@ -48,7 +48,7 @@
     {
       "waypointRelativePos": 1.0,
       "rotationDegrees": 32.769912177674755,
-      "rotateFast": false
+      "rotateFast": true
     },
     {
       "waypointRelativePos": 0.5,
@@ -56,7 +56,19 @@
       "rotateFast": true
     }
   ],
-  "constraintZones": [],
+  "constraintZones": [
+    {
+      "name": "New Constraints Zone",
+      "minWaypointRelativePos": 0.85,
+      "maxWaypointRelativePos": 1.25,
+      "constraints": {
+        "maxVelocity": 1.0,
+        "maxAcceleration": 2.0,
+        "maxAngularVelocity": 200.0,
+        "maxAngularAcceleration": 300.0
+      }
+    }
+  ],
   "eventMarkers": [
     {
       "name": "New Event Marker",

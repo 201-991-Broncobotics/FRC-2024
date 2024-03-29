@@ -201,7 +201,7 @@ public class RobotContainer {
         return new ParallelCommandGroup(
             Autonomous.getAutonomousCommand(),
             new ResetHangCommand(hang)
-        );
+        ).handleInterrupt(() -> Variables.bypass_rotation = false);
     }
 
     public void teleopInit() {
