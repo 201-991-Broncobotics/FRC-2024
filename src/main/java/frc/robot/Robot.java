@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.lib.util.CTREConfigs;
-
+import frc.robot.autonomous.Autonomous;
 import frc.robot.subsystems.Limelight;
 import static frc.robot.Constants.GeneralConstants.*;
 
@@ -60,6 +60,7 @@ public class Robot extends TimedRobot {
     @Override
     public void disabledPeriodic() {
         Limelight.setSide();
+        Autonomous.disabledPeriodic();
     }
 
     /** This function is called once each time the robot enters Disabled mode. */
