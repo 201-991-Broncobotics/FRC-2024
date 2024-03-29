@@ -21,7 +21,7 @@ public class Autonomous {
         }
     }
 
-    public static Command getAutonomousCommand(Swerve swerve) {
+    public static Command getAutonomousCommand() {
         return auto;
     }
 }

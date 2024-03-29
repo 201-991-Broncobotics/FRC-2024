@@ -31,8 +31,11 @@ public class Hang extends SubsystemBase {
 
     }
 
-    public void move(double power) {
+    public void moveLeft(double power) {
         left_hang_motor.power(power);
+    }
+
+    public void moveRight(double power) {
         right_hang_motor.power(power);
     }
 

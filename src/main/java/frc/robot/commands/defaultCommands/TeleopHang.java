@@ -1,5 +1,6 @@
 package frc.robot.commands.defaultCommands;
 
+import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -13,11 +14,16 @@ public class TeleopHang extends Command { // lol
 
     private DoubleSupplier motorSup;
 
-    public TeleopHang(Hang hang, DoubleSupplier motorSup) {
+    private BooleanSupplier leftSup, rightSup;
+
+    public TeleopHang(Hang hang, DoubleSupplier motorSup, BooleanSupplier leftSup, BooleanSupplier rightSup) {
         this.hang = hang;
         addRequirements(hang);
 
         this.motorSup = motorSup;
+
+        this.leftSup = leftSup;
+        this.rightSup = rightSup;
     }
 
     @Override
@@ -26,9 +32,8 @@ public class TeleopHang extends Command { // lol
         double motorVal = signedPower(motorSup.getAsDouble());
 
         // Move Arm
-        hang.move(
-            motorVal * 0.4
-        );
+        hang.moveLeft(motorVal * 0.4 + (leftSup.getAsBoolean() ? 0.4 : 0));
+        hang.moveRight(motorVal * 0.4 + (rightSup.getAsBoolean() ? 0.4 : 0));
     }
 
 }

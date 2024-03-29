@@ -337,7 +337,10 @@ public class Swerve extends SubsystemBase {
     }
     
     public void overrideOdometry() {
-        resetOdometry(Limelight.getVisionEstimate());
+        var estimate = Limelight.getVisionEstimate();
+        if (estimate.getTranslation().getNorm() > 0.5) {
+            resetOdometry(estimate);
+        }
     }
 
     public void targetSpeaker() {

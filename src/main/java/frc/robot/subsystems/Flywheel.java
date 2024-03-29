@@ -42,11 +42,12 @@ public class Flywheel extends SubsystemBase {
 
         var slot0 = new Slot0Configs();
         // add this much for static friction
-        slot0.kS = .05;
+        slot0.kS = .3;
         // each rps = this many more volts
-        slot0.kV = 0.12;
+        slot0.kV = 0.115;
         // each rps of error = this many more volts
         slot0.kP = 0.13;
+        slot0.kD = 0.005;
 
         config.Slot0 = slot0;
 

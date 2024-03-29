@@ -112,7 +112,9 @@ public class RobotContainer {
         hang.setDefaultCommand(
             new TeleopHang(
                 hang, 
-                () -> operator.getRightY() // no negative sign intentionally
+                operator::getRightY, // no negative sign intentionally
+                operator.povLeft(),
+                operator.povRight()
             )
         );
 
@@ -162,6 +164,17 @@ public class RobotContainer {
                 new InstantCommand(conveyor::stop, conveyor)
             ).handleInterrupt(() -> { conveyor.stop(); })
         );
+        new JoystickButton(driver_TFlightHotasOne, 5).toggleOnTrue(new SequentialCommandGroup(
+            new InstantCommand(() -> intake.retract()), 
+            new WaitCommand(3.0), 
+            new InstantCommand(() -> intake.stop())
+        ).handleInterrupt(intake::stop));
+        new JoystickButton(driver_TFlightHotasOne, 6).toggleOnTrue(new SequentialCommandGroup(
+            new InstantCommand(() -> intake.intake()), 
+            new WaitCommand(3.0), 
+            new InstantCommand(() -> intake.stop())
+        ).handleInterrupt(intake::stop));
+        new JoystickButton(driver_TFlightHotasOne, 8).toggleOnTrue(new InstantCommand(() -> intake.stop()));
 
         // right bumper auto pivots, hotas 2 auto directs
 
@@ -185,11 +198,8 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        
-        // return new WheelCharacterization(swerve);
-
         return new ParallelCommandGroup(
-            new PathPlannerAuto("NotAmp F5 F4 F3 PP"),
+            Autonomous.getAutonomousCommand(),
             new ResetHangCommand(hang)
         );
     }
