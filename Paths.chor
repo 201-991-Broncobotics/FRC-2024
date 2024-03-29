@@ -387,7 +387,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "s1 to c3 to s1": {
             "waypoints": [
@@ -948,7 +948,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "s1 to c1 to s1": {
             "waypoints": [
@@ -1496,7 +1496,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "s1 to c3 to s2": {
             "waypoints": [
@@ -2077,7 +2077,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "s2 to c2 to s3": {
             "waypoints": [
@@ -2410,7 +2410,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "s3 to f2 to s4": {
             "waypoints": [
@@ -3223,7 +3223,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "s4 to c1": {
             "waypoints": [
@@ -3960,7 +3960,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "s3 to f1 to s4": {
             "waypoints": [
@@ -4611,7 +4611,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "as to s5": {
             "waypoints": [
@@ -5025,7 +5025,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "s5 to f1 to s5": {
             "waypoints": [
@@ -5669,7 +5669,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "s5 to f2 to s5": {
             "waypoints": [
@@ -6319,7 +6319,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "s5 to f3 to s5": {
             "waypoints": [
@@ -7221,7 +7221,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "nas to s6": {
             "waypoints": [
@@ -7482,7 +7482,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "s6 to f5 to s6": {
             "waypoints": [
@@ -8173,7 +8173,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "s6 to f4 to s6": {
             "waypoints": [
@@ -9036,7 +9036,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "s6 to f3 to s7 around stage": {
             "waypoints": [
@@ -10167,7 +10167,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "s7 to f2 to s7": {
             "waypoints": [
@@ -10745,7 +10745,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "s7 to f1 to s7": {
             "waypoints": [
@@ -11350,7 +11350,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "as to s7": {
             "waypoints": [
@@ -11800,7 +11800,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "s7 to f3 to s7": {
             "waypoints": [
@@ -12699,7 +12699,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "s6 to f3 to s6": {
             "waypoints": [
@@ -13697,7 +13697,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "s6 to f3 to s6 US": {
             "waypoints": [
@@ -14616,6 +14616,173 @@
                     }
                 }
             ],
+            "isTrajectoryStale": true
+        },
+        "move 4ft": {
+            "waypoints": [
+                {
+                    "x": 4,
+                    "y": 6,
+                    "heading": 0,
+                    "isInitialGuess": false,
+                    "translationConstrained": true,
+                    "headingConstrained": true,
+                    "controlIntervalCount": 10
+                },
+                {
+                    "x": 5.2192,
+                    "y": 6,
+                    "heading": 0,
+                    "isInitialGuess": false,
+                    "translationConstrained": true,
+                    "headingConstrained": true,
+                    "controlIntervalCount": 40
+                }
+            ],
+            "trajectory": [
+                {
+                    "x": 4,
+                    "y": 6,
+                    "heading": 0,
+                    "angularVelocity": 0,
+                    "velocityX": -1.8347000074143203e-19,
+                    "velocityY": 0,
+                    "timestamp": 0
+                },
+                {
+                    "x": 4.048768004393666,
+                    "y": 6,
+                    "heading": 0,
+                    "angularVelocity": 0,
+                    "velocityX": 0.49312311843789086,
+                    "velocityY": 0,
+                    "timestamp": 0.09889620374755971
+                },
+                {
+                    "x": 4.146304011611953,
+                    "y": 6,
+                    "heading": 0,
+                    "angularVelocity": 0,
+                    "velocityX": 0.9862462210089757,
+                    "velocityY": 0,
+                    "timestamp": 0.19779240749511942
+                },
+                {
+                    "x": 4.292608018829613,
+                    "y": 6,
+                    "heading": 0,
+                    "angularVelocity": 0,
+                    "velocityX": 1.4793692950198127,
+                    "velocityY": 0,
+                    "timestamp": 0.29668861124267915
+                },
+                {
+                    "x": 4.487680019457685,
+                    "y": 6,
+                    "heading": 0,
+                    "angularVelocity": 0,
+                    "velocityX": 1.9724923023900758,
+                    "velocityY": 0,
+                    "timestamp": 0.39558481499023884
+                },
+                {
+                    "x": 4.7315199805425445,
+                    "y": 6,
+                    "heading": 0,
+                    "angularVelocity": 0,
+                    "velocityX": 2.46561497655772,
+                    "velocityY": 0,
+                    "timestamp": 0.49448101873779854
+                },
+                {
+                    "x": 4.926591981169762,
+                    "y": 6,
+                    "heading": 0,
+                    "angularVelocity": 0,
+                    "velocityX": 1.9724923023900751,
+                    "velocityY": 0,
+                    "timestamp": 0.5933772224853583
+                },
+                {
+                    "x": 5.07289598838822,
+                    "y": 6,
+                    "heading": 0,
+                    "angularVelocity": 0,
+                    "velocityX": 1.4793692950198118,
+                    "velocityY": 0,
+                    "timestamp": 0.692273426232918
+                },
+                {
+                    "x": 5.17043199560637,
+                    "y": 6,
+                    "heading": 0,
+                    "angularVelocity": 0,
+                    "velocityX": 0.9862462210089747,
+                    "velocityY": 0,
+                    "timestamp": 0.7911696299804777
+                },
+                {
+                    "x": 5.2192,
+                    "y": 6,
+                    "heading": 0,
+                    "angularVelocity": 0,
+                    "velocityX": 0.49312311843788975,
+                    "velocityY": 0,
+                    "timestamp": 0.8900658337280374
+                },
+                {
+                    "x": 5.2192,
+                    "y": 6,
+                    "heading": 0,
+                    "angularVelocity": 0,
+                    "velocityX": -3.038087165995598e-19,
+                    "velocityY": 0,
+                    "timestamp": 0.9889620374755971
+                }
+            ],
+            "trajectoryWaypoints": [
+                {
+                    "timestamp": 0,
+                    "isStopPoint": true,
+                    "x": 4,
+                    "y": 6,
+                    "heading": 0,
+                    "isInitialGuess": false,
+                    "translationConstrained": true,
+                    "headingConstrained": true,
+                    "controlIntervalCount": 10
+                },
+                {
+                    "timestamp": 0.9889620374755971,
+                    "isStopPoint": true,
+                    "x": 5.2192,
+                    "y": 6,
+                    "heading": 0,
+                    "isInitialGuess": false,
+                    "translationConstrained": true,
+                    "headingConstrained": true,
+                    "controlIntervalCount": 40
+                }
+            ],
+            "constraints": [
+                {
+                    "scope": [
+                        "first"
+                    ],
+                    "type": "StopPoint"
+                },
+                {
+                    "scope": [
+                        "last"
+                    ],
+                    "type": "StopPoint"
+                }
+            ],
+            "usesControlIntervalGuessing": true,
+            "defaultControlIntervalCount": 40,
+            "usesDefaultFieldObstacles": true,
+            "circleObstacles": [],
+            "eventMarkers": [],
             "isTrajectoryStale": false
         }
     },
