@@ -1,5 +1,5 @@
 {
-    "version": "v0.3",
+    "version": "v0.3.1",
     "robotConfiguration": {
         "mass": 74.46878920488783,
         "rotationalInertia": 8.46629,
@@ -333,6 +333,7 @@
                 {
                     "name": "Marker",
                     "target": 0,
+                    "trajTargetIndex": 0,
                     "targetTimestamp": 0,
                     "offset": 0.2,
                     "command": {
@@ -358,6 +359,7 @@
                 {
                     "name": "Marker",
                     "target": 1,
+                    "trajTargetIndex": 1,
                     "targetTimestamp": 1.134818334058607,
                     "offset": 0.25,
                     "command": {
@@ -387,7 +389,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": true
+            "isTrajectoryStale": false
         },
         "s1 to c3 to s1": {
             "waypoints": [
@@ -894,6 +896,7 @@
                 {
                     "name": "Marker",
                     "target": 0,
+                    "trajTargetIndex": 0,
                     "targetTimestamp": 0,
                     "offset": 0.25,
                     "command": {
@@ -919,6 +922,7 @@
                 {
                     "name": "Marker",
                     "target": 3,
+                    "trajTargetIndex": 3,
                     "targetTimestamp": 1.6384265471116568,
                     "offset": 0.25,
                     "command": {
@@ -948,7 +952,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": true
+            "isTrajectoryStale": false
         },
         "s1 to c1 to s1": {
             "waypoints": [
@@ -1442,6 +1446,7 @@
                 {
                     "name": "Marker",
                     "target": 0,
+                    "trajTargetIndex": 0,
                     "targetTimestamp": 0,
                     "offset": 0.2,
                     "command": {
@@ -1467,6 +1472,7 @@
                 {
                     "name": "Marker",
                     "target": 2,
+                    "trajTargetIndex": 2,
                     "targetTimestamp": 1.413516430666804,
                     "offset": 0.4,
                     "command": {
@@ -1496,7 +1502,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": true
+            "isTrajectoryStale": false
         },
         "s1 to c3 to s2": {
             "waypoints": [
@@ -2023,6 +2029,7 @@
                 {
                     "name": "Marker",
                     "target": 0,
+                    "trajTargetIndex": 0,
                     "targetTimestamp": 0,
                     "offset": 0.25,
                     "command": {
@@ -2054,6 +2061,7 @@
                 {
                     "name": "Marker",
                     "target": 3,
+                    "trajTargetIndex": 3,
                     "targetTimestamp": 1.5775723155032135,
                     "offset": 0.3,
                     "command": {
@@ -2077,7 +2085,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": true
+            "isTrajectoryStale": false
         },
         "s2 to c2 to s3": {
             "waypoints": [
@@ -2362,6 +2370,7 @@
                 {
                     "name": "Marker",
                     "target": 0,
+                    "trajTargetIndex": 0,
                     "targetTimestamp": 0,
                     "offset": 0.2,
                     "command": {
@@ -2393,6 +2402,7 @@
                 {
                     "name": "Marker",
                     "target": 2,
+                    "trajTargetIndex": 2,
                     "targetTimestamp": 1.5803133191497643,
                     "offset": -0.1,
                     "command": {
@@ -2410,7 +2420,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": true
+            "isTrajectoryStale": false
         },
         "s3 to f2 to s4": {
             "waypoints": [
@@ -3163,6 +3173,7 @@
                 {
                     "name": "Marker",
                     "target": 2,
+                    "trajTargetIndex": 2,
                     "targetTimestamp": 1.9041642300387283,
                     "offset": -0.4,
                     "command": {
@@ -3194,6 +3205,7 @@
                 {
                     "name": "Marker",
                     "target": 3,
+                    "trajTargetIndex": 3,
                     "targetTimestamp": 2.4023998325620304,
                     "offset": 0.2,
                     "command": {
@@ -3223,7 +3235,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": true
+            "isTrajectoryStale": false
         },
         "s4 to c1": {
             "waypoints": [
@@ -3931,6 +3943,7 @@
                 {
                     "name": "Marker",
                     "target": 0,
+                    "trajTargetIndex": 0,
                     "targetTimestamp": 0,
                     "offset": 0.4,
                     "command": {
@@ -3960,7 +3973,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": true
+            "isTrajectoryStale": false
         },
         "s3 to f1 to s4": {
             "waypoints": [
@@ -4551,6 +4564,7 @@
                 {
                     "name": "Marker",
                     "target": 0,
+                    "trajTargetIndex": 0,
                     "targetTimestamp": 0,
                     "offset": 1.5,
                     "command": {
@@ -4582,6 +4596,7 @@
                 {
                     "name": "Marker",
                     "target": 2,
+                    "trajTargetIndex": 2,
                     "targetTimestamp": 2.3260168474883662,
                     "offset": 0.4,
                     "command": {
@@ -4611,7 +4626,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": true
+            "isTrajectoryStale": false
         },
         "as to s5": {
             "waypoints": [
@@ -5015,6 +5030,7 @@
                 {
                     "name": "Marker",
                     "target": 2,
+                    "trajTargetIndex": 2,
                     "targetTimestamp": 1.137140582505997,
                     "offset": 0.1,
                     "command": {
@@ -5025,7 +5041,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": true
+            "isTrajectoryStale": false
         },
         "s5 to f1 to s5": {
             "waypoints": [
@@ -5609,6 +5625,7 @@
                 {
                     "name": "Marker",
                     "target": 1,
+                    "trajTargetIndex": 1,
                     "targetTimestamp": 1.419030066888249,
                     "offset": -0.4,
                     "command": {
@@ -5640,6 +5657,7 @@
                 {
                     "name": "Marker",
                     "target": 2,
+                    "trajTargetIndex": 2,
                     "targetTimestamp": 1.9073986310504178,
                     "offset": 0.75,
                     "command": {
@@ -5669,7 +5687,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": true
+            "isTrajectoryStale": false
         },
         "s5 to f2 to s5": {
             "waypoints": [
@@ -6259,6 +6277,7 @@
                 {
                     "name": "Marker",
                     "target": 1,
+                    "trajTargetIndex": 1,
                     "targetTimestamp": 1.5495842443977872,
                     "offset": -0.4,
                     "command": {
@@ -6290,6 +6309,7 @@
                 {
                     "name": "Marker",
                     "target": 2,
+                    "trajTargetIndex": 2,
                     "targetTimestamp": 2.016800620501121,
                     "offset": 0.8,
                     "command": {
@@ -6319,7 +6339,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": true
+            "isTrajectoryStale": false
         },
         "s5 to f3 to s5": {
             "waypoints": [
@@ -7161,6 +7181,7 @@
                 {
                     "name": "Marker",
                     "target": 2,
+                    "trajTargetIndex": 2,
                     "targetTimestamp": 2.269106682869829,
                     "offset": -0.4,
                     "command": {
@@ -7192,6 +7213,7 @@
                 {
                     "name": "Marker",
                     "target": 3,
+                    "trajTargetIndex": 3,
                     "targetTimestamp": 2.885360840705925,
                     "offset": 0.4,
                     "command": {
@@ -7211,6 +7233,7 @@
                 {
                     "name": "Marker",
                     "target": 5,
+                    "trajTargetIndex": 5,
                     "targetTimestamp": 5.350310011666698,
                     "offset": -1,
                     "command": {
@@ -7221,7 +7244,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": true
+            "isTrajectoryStale": false
         },
         "nas to s6": {
             "waypoints": [
@@ -7472,6 +7495,7 @@
                 {
                     "name": "Marker",
                     "target": 1,
+                    "trajTargetIndex": 1,
                     "targetTimestamp": 1.502209061739692,
                     "offset": -0.7,
                     "command": {
@@ -7482,7 +7506,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": true
+            "isTrajectoryStale": false
         },
         "s6 to f5 to s6": {
             "waypoints": [
@@ -8120,6 +8144,7 @@
                 {
                     "name": "Marker",
                     "target": 0,
+                    "trajTargetIndex": 0,
                     "targetTimestamp": 0,
                     "offset": 0.5,
                     "command": {
@@ -8132,6 +8157,7 @@
                 {
                     "name": "Marker",
                     "target": 1,
+                    "trajTargetIndex": 1,
                     "targetTimestamp": 1.585537866555338,
                     "offset": -0.25,
                     "command": {
@@ -8144,6 +8170,7 @@
                 {
                     "name": "Marker",
                     "target": 2,
+                    "trajTargetIndex": 2,
                     "targetTimestamp": 2.034623092526429,
                     "offset": 0.5,
                     "command": {
@@ -8173,7 +8200,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": true
+            "isTrajectoryStale": false
         },
         "s6 to f4 to s6": {
             "waypoints": [
@@ -8983,6 +9010,7 @@
                 {
                     "name": "Marker",
                     "target": 0,
+                    "trajTargetIndex": 0,
                     "targetTimestamp": 0,
                     "offset": 0.5,
                     "command": {
@@ -8995,6 +9023,7 @@
                 {
                     "name": "Marker",
                     "target": 2,
+                    "trajTargetIndex": 2,
                     "targetTimestamp": 1.4983603845168094,
                     "offset": -0.25,
                     "command": {
@@ -9007,6 +9036,7 @@
                 {
                     "name": "Marker",
                     "target": 3,
+                    "trajTargetIndex": 3,
                     "targetTimestamp": 2.0808124703148585,
                     "offset": 0.75,
                     "command": {
@@ -9036,7 +9066,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": true
+            "isTrajectoryStale": false
         },
         "s6 to f3 to s7 around stage": {
             "waypoints": [
@@ -10107,6 +10137,7 @@
                 {
                     "name": "Marker",
                     "target": 0,
+                    "trajTargetIndex": 0,
                     "targetTimestamp": 0,
                     "offset": 0.2,
                     "command": {
@@ -10126,6 +10157,7 @@
                 {
                     "name": "Marker",
                     "target": 2,
+                    "trajTargetIndex": 2,
                     "targetTimestamp": 1.9581758608558937,
                     "offset": -0.3,
                     "command": {
@@ -10138,6 +10170,7 @@
                 {
                     "name": "Marker",
                     "target": 4,
+                    "trajTargetIndex": 4,
                     "targetTimestamp": 3.140615034235975,
                     "offset": 0,
                     "command": {
@@ -10167,7 +10200,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": true
+            "isTrajectoryStale": false
         },
         "s7 to f2 to s7": {
             "waypoints": [
@@ -10685,6 +10718,7 @@
                 {
                     "name": "Marker",
                     "target": 0,
+                    "trajTargetIndex": 0,
                     "targetTimestamp": 0,
                     "offset": 0.2,
                     "command": {
@@ -10704,6 +10738,7 @@
                 {
                     "name": "Marker",
                     "target": 1,
+                    "trajTargetIndex": 1,
                     "targetTimestamp": 1.1827385386649278,
                     "offset": -0.1,
                     "command": {
@@ -10716,6 +10751,7 @@
                 {
                     "name": "Marker",
                     "target": 3,
+                    "trajTargetIndex": 3,
                     "targetTimestamp": 3.4830274354820356,
                     "offset": -1,
                     "command": {
@@ -10745,7 +10781,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": true
+            "isTrajectoryStale": false
         },
         "s7 to f1 to s7": {
             "waypoints": [
@@ -11290,6 +11326,7 @@
                 {
                     "name": "Marker",
                     "target": 0,
+                    "trajTargetIndex": 0,
                     "targetTimestamp": 0,
                     "offset": 0.2,
                     "command": {
@@ -11309,6 +11346,7 @@
                 {
                     "name": "Marker",
                     "target": 1,
+                    "trajTargetIndex": 1,
                     "targetTimestamp": 1.2078106102031063,
                     "offset": -0.1,
                     "command": {
@@ -11321,6 +11359,7 @@
                 {
                     "name": "Marker",
                     "target": 3,
+                    "trajTargetIndex": 3,
                     "targetTimestamp": 3.58536514504824,
                     "offset": -1,
                     "command": {
@@ -11350,7 +11389,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": true
+            "isTrajectoryStale": false
         },
         "as to s7": {
             "waypoints": [
@@ -11790,6 +11829,7 @@
                 {
                     "name": "Marker",
                     "target": 2,
+                    "trajTargetIndex": 2,
                     "targetTimestamp": 1.0425519570775008,
                     "offset": 0.1,
                     "command": {
@@ -11800,7 +11840,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": true
+            "isTrajectoryStale": false
         },
         "s7 to f3 to s7": {
             "waypoints": [
@@ -12639,6 +12679,7 @@
                 {
                     "name": "Marker",
                     "target": 0,
+                    "trajTargetIndex": 0,
                     "targetTimestamp": 0,
                     "offset": 0.2,
                     "command": {
@@ -12658,6 +12699,7 @@
                 {
                     "name": "Marker",
                     "target": 2,
+                    "trajTargetIndex": 2,
                     "targetTimestamp": 1.9384558525643876,
                     "offset": -0.4,
                     "command": {
@@ -12670,6 +12712,7 @@
                 {
                     "name": "Marker",
                     "target": 6,
+                    "trajTargetIndex": 6,
                     "targetTimestamp": 4.511201319329741,
                     "offset": -1.1,
                     "command": {
@@ -12699,7 +12742,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": true
+            "isTrajectoryStale": false
         },
         "s6 to f3 to s6": {
             "waypoints": [
@@ -13637,6 +13680,7 @@
                 {
                     "name": "Marker",
                     "target": 0,
+                    "trajTargetIndex": 0,
                     "targetTimestamp": 0,
                     "offset": 0.2,
                     "command": {
@@ -13656,6 +13700,7 @@
                 {
                     "name": "Marker",
                     "target": 3,
+                    "trajTargetIndex": 3,
                     "targetTimestamp": 2.284705942972903,
                     "offset": -0.5,
                     "command": {
@@ -13668,6 +13713,7 @@
                 {
                     "name": "Marker",
                     "target": 5,
+                    "trajTargetIndex": 5,
                     "targetTimestamp": 4.364990596364015,
                     "offset": -0.2,
                     "command": {
@@ -13697,7 +13743,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": true
+            "isTrajectoryStale": false
         },
         "s6 to f3 to s6 US": {
             "waypoints": [
@@ -14544,6 +14590,7 @@
                 {
                     "name": "Marker",
                     "target": 0,
+                    "trajTargetIndex": 0,
                     "targetTimestamp": 0,
                     "offset": 0.2,
                     "command": {
@@ -14569,6 +14616,7 @@
                 {
                     "name": "Marker",
                     "target": 2,
+                    "trajTargetIndex": 2,
                     "targetTimestamp": 1.7444866144013242,
                     "offset": -0.4,
                     "command": {
@@ -14581,6 +14629,7 @@
                 {
                     "name": "Marker",
                     "target": 3,
+                    "trajTargetIndex": 3,
                     "targetTimestamp": 2.2806331332085805,
                     "offset": 0.2,
                     "command": {
@@ -14606,6 +14655,7 @@
                 {
                     "name": "Marker",
                     "target": 5,
+                    "trajTargetIndex": 5,
                     "targetTimestamp": 4.650354103240287,
                     "offset": -0.5,
                     "command": {
@@ -14616,7 +14666,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": true
+            "isTrajectoryStale": false
         },
         "move 4ft": {
             "waypoints": [
@@ -14627,12 +14677,12 @@
                     "isInitialGuess": false,
                     "translationConstrained": true,
                     "headingConstrained": true,
-                    "controlIntervalCount": 10
+                    "controlIntervalCount": 26
                 },
                 {
                     "x": 5.2192,
                     "y": 6,
-                    "heading": 0,
+                    "heading": -3.141592653579586,
                     "isInitialGuess": false,
                     "translationConstrained": true,
                     "headingConstrained": true,
@@ -14643,101 +14693,245 @@
                 {
                     "x": 4,
                     "y": 6,
-                    "heading": 0,
-                    "angularVelocity": 0,
-                    "velocityX": -1.8347000074143203e-19,
-                    "velocityY": 0,
+                    "heading": 8.146964501212419e-22,
+                    "angularVelocity": 2.567334220478601e-22,
+                    "velocityX": -2.5022706969081614e-22,
+                    "velocityY": 1.452899357558063e-21,
                     "timestamp": 0
                 },
                 {
-                    "x": 4.048768004393666,
-                    "y": 6,
-                    "heading": 0,
-                    "angularVelocity": 0,
-                    "velocityX": 0.49312311843789086,
-                    "velocityY": 0,
-                    "timestamp": 0.09889620374755971
+                    "x": 4.00702102292398,
+                    "y": 6.000074470111759,
+                    "heading": -0.021031756286930978,
+                    "angularVelocity": -0.4585305582080942,
+                    "velocityX": 0.15307107578669146,
+                    "velocityY": 0.001623583948434018,
+                    "timestamp": 0.04586773097331098
                 },
                 {
-                    "x": 4.146304011611953,
-                    "y": 6,
-                    "heading": 0,
-                    "angularVelocity": 0,
-                    "velocityX": 0.9862462210089757,
-                    "velocityY": 0,
-                    "timestamp": 0.19779240749511942
+                    "x": 4.02105060491409,
+                    "y": 6.000091677279921,
+                    "heading": -0.0631175757023261,
+                    "angularVelocity": -0.9175474461530168,
+                    "velocityX": 0.3058704167920133,
+                    "velocityY": 0.00037514757754548327,
+                    "timestamp": 0.09173546194662197
                 },
                 {
-                    "x": 4.292608018829613,
-                    "y": 6,
-                    "heading": 0,
-                    "angularVelocity": 0,
-                    "velocityX": 1.4793692950198127,
-                    "velocityY": 0,
-                    "timestamp": 0.29668861124267915
+                    "x": 4.042079711244744,
+                    "y": 5.9998529415622075,
+                    "heading": -0.12622074206392553,
+                    "angularVelocity": -1.3757638545128206,
+                    "velocityX": 0.4584727843391656,
+                    "velocityY": -0.005204873071432488,
+                    "timestamp": 0.13760319291993295
                 },
                 {
-                    "x": 4.487680019457685,
-                    "y": 6,
-                    "heading": 0,
-                    "angularVelocity": 0,
-                    "velocityX": 1.9724923023900758,
-                    "velocityY": 0,
-                    "timestamp": 0.39558481499023884
+                    "x": 4.070108977393282,
+                    "y": 5.99909567446506,
+                    "heading": -0.21018017220787347,
+                    "angularVelocity": -1.8304683567800935,
+                    "velocityX": 0.6110890064487583,
+                    "velocityY": -0.016509800703522728,
+                    "timestamp": 0.18347092389324393
                 },
                 {
-                    "x": 4.7315199805425445,
-                    "y": 6,
-                    "heading": 0,
-                    "angularVelocity": 0,
-                    "velocityX": 2.46561497655772,
-                    "velocityY": 0,
-                    "timestamp": 0.49448101873779854
+                    "x": 4.105173374650558,
+                    "y": 5.9975033591820655,
+                    "heading": -0.31456920946271955,
+                    "angularVelocity": -2.2758709672293764,
+                    "velocityX": 0.7644676663356171,
+                    "velocityY": -0.03471537067945279,
+                    "timestamp": 0.22933865486655491
                 },
                 {
-                    "x": 4.926591981169762,
-                    "y": 6,
-                    "heading": 0,
-                    "angularVelocity": 0,
-                    "velocityX": 1.9724923023900751,
-                    "velocityY": 0,
-                    "timestamp": 0.5933772224853583
+                    "x": 4.1474593434002625,
+                    "y": 5.994751498117824,
+                    "heading": -0.4382276817141161,
+                    "angularVelocity": -2.6959797144391024,
+                    "velocityX": 0.9219110658495,
+                    "velocityY": -0.0599955787206593,
+                    "timestamp": 0.2752063858398659
                 },
                 {
-                    "x": 5.07289598838822,
-                    "y": 6,
-                    "heading": 0,
-                    "angularVelocity": 0,
-                    "velocityX": 1.4793692950198118,
-                    "velocityY": 0,
-                    "timestamp": 0.692273426232918
+                    "x": 4.1981676084366555,
+                    "y": 5.991254681535971,
+                    "heading": -0.5761645865159205,
+                    "angularVelocity": -3.007275526275012,
+                    "velocityX": 1.1055324508181954,
+                    "velocityY": -0.07623696458592585,
+                    "timestamp": 0.3210741168131769
                 },
                 {
-                    "x": 5.17043199560637,
-                    "y": 6,
-                    "heading": 0,
-                    "angularVelocity": 0,
-                    "velocityX": 0.9862462210089747,
-                    "velocityY": 0,
-                    "timestamp": 0.7911696299804777
+                    "x": 4.2569400373572215,
+                    "y": 5.990299800742633,
+                    "heading": -0.7294011070562861,
+                    "angularVelocity": -3.3408349898434944,
+                    "velocityX": 1.2813458977240868,
+                    "velocityY": -0.020818138875483862,
+                    "timestamp": 0.36694184778648786
+                },
+                {
+                    "x": 4.3236505138658785,
+                    "y": 5.991654907149125,
+                    "heading": -0.8996132466107216,
+                    "angularVelocity": -3.7109343746146237,
+                    "velocityX": 1.4544097798836662,
+                    "velocityY": 0.02954378552721568,
+                    "timestamp": 0.41280957875979885
+                },
+                {
+                    "x": 4.398875672130585,
+                    "y": 5.994974243333021,
+                    "heading": -1.0854468901905532,
+                    "angularVelocity": -4.051511588571113,
+                    "velocityX": 1.6400453361967553,
+                    "velocityY": 0.07236756895175327,
+                    "timestamp": 0.45867730973310983
+                },
+                {
+                    "x": 4.4833414474375735,
+                    "y": 6.00305361444266,
+                    "heading": -1.2676854930156616,
+                    "angularVelocity": -3.973133158279564,
+                    "velocityX": 1.8415076027226145,
+                    "velocityY": 0.17614499209326412,
+                    "timestamp": 0.5045450407064208
+                },
+                {
+                    "x": 4.576945710621274,
+                    "y": 6.009961681341463,
+                    "heading": -1.4366489925091048,
+                    "angularVelocity": -3.683711749154494,
+                    "velocityX": 2.040743267596321,
+                    "velocityY": 0.15060842889309875,
+                    "timestamp": 0.5504127716797318
+                },
+                {
+                    "x": 4.673178736464749,
+                    "y": 6.006731297568755,
+                    "heading": -1.6043541393585203,
+                    "angularVelocity": -3.6562773717103623,
+                    "velocityX": 2.098055077096944,
+                    "velocityY": -0.0704282445222902,
+                    "timestamp": 0.5962805026530428
+                },
+                {
+                    "x": 4.762583435498757,
+                    "y": 5.996631235568032,
+                    "heading": -1.7810548008685572,
+                    "angularVelocity": -3.852395960307119,
+                    "velocityX": 1.9491851272527736,
+                    "velocityY": -0.22019973053811193,
+                    "timestamp": 0.6421482336263538
+                },
+                {
+                    "x": 4.842967401013847,
+                    "y": 5.990386700406672,
+                    "heading": -1.9675685039225583,
+                    "angularVelocity": -4.066338122601438,
+                    "velocityX": 1.752516721654795,
+                    "velocityY": -0.1361422295983681,
+                    "timestamp": 0.6880159645996647
+                },
+                {
+                    "x": 4.915414837871023,
+                    "y": 5.9900980326884055,
+                    "heading": -2.1630133005446415,
+                    "angularVelocity": -4.261052214154792,
+                    "velocityX": 1.5794859549370432,
+                    "velocityY": -0.006293481543505991,
+                    "timestamp": 0.7338836955729757
+                },
+                {
+                    "x": 4.978929910501008,
+                    "y": 5.992166251974587,
+                    "heading": -2.3462079538991856,
+                    "angularVelocity": -3.9939767995312336,
+                    "velocityX": 1.3847441607029298,
+                    "velocityY": 0.04509094394449791,
+                    "timestamp": 0.7797514265462867
+                },
+                {
+                    "x": 5.033338057559738,
+                    "y": 5.995548125637621,
+                    "heading": -2.5180867534537765,
+                    "angularVelocity": -3.7472705954127474,
+                    "velocityX": 1.1861966115216713,
+                    "velocityY": 0.07373099979646833,
+                    "timestamp": 0.8256191575195977
+                },
+                {
+                    "x": 5.080121065957816,
+                    "y": 5.997820439742933,
+                    "heading": -2.6722726975507185,
+                    "angularVelocity": -3.3615341510278287,
+                    "velocityX": 1.019954713375685,
+                    "velocityY": 0.04954058238919251,
+                    "timestamp": 0.8714868884929087
+                },
+                {
+                    "x": 5.1199878709592435,
+                    "y": 5.999118655033091,
+                    "heading": -2.805691542388133,
+                    "angularVelocity": -2.9087735976093305,
+                    "velocityX": 0.8691688940232503,
+                    "velocityY": 0.028303455667751474,
+                    "timestamp": 0.9173546194662197
+                },
+                {
+                    "x": 5.153118037489623,
+                    "y": 5.999748533133052,
+                    "heading": -2.917388872493994,
+                    "angularVelocity": -2.4352050501659672,
+                    "velocityX": 0.7222979168002884,
+                    "velocityY": 0.013732488759652328,
+                    "timestamp": 0.9632223504395306
+                },
+                {
+                    "x": 5.179577650705217,
+                    "y": 5.999979340753984,
+                    "heading": -3.006967242780835,
+                    "angularVelocity": -1.9529714765913295,
+                    "velocityX": 0.5768677162380318,
+                    "velocityY": 0.00503202613198056,
+                    "timestamp": 1.0090900814128416
+                },
+                {
+                    "x": 5.199399338648939,
+                    "y": 6.000018340053663,
+                    "heading": -3.074244305737832,
+                    "angularVelocity": -1.4667623954658575,
+                    "velocityX": 0.4321488663840138,
+                    "velocityY": 0.0008502556988852202,
+                    "timestamp": 1.0549578123861525
+                },
+                {
+                    "x": 5.21260260522872,
+                    "y": 6.000003387492207,
+                    "heading": -3.1191340150456615,
+                    "angularVelocity": -0.9786773480020039,
+                    "velocityX": 0.28785523721379047,
+                    "velocityY": -0.00032599304798183905,
+                    "timestamp": 1.1008255433594636
                 },
                 {
                     "x": 5.2192,
                     "y": 6,
-                    "heading": 0,
-                    "angularVelocity": 0,
-                    "velocityX": 0.49312311843788975,
-                    "velocityY": 0,
-                    "timestamp": 0.8900658337280374
+                    "heading": -3.141592653579586,
+                    "angularVelocity": -0.48963918766752895,
+                    "velocityX": 0.14383521118841702,
+                    "velocityY": -0.0000738534942761318,
+                    "timestamp": 1.1466932743327747
                 },
                 {
                     "x": 5.2192,
                     "y": 6,
-                    "heading": 0,
-                    "angularVelocity": 0,
-                    "velocityX": -3.038087165995598e-19,
-                    "velocityY": 0,
-                    "timestamp": 0.9889620374755971
+                    "heading": -3.141592653579586,
+                    "angularVelocity": -3.2067126924438575e-22,
+                    "velocityX": 3.3914742796445376e-23,
+                    "velocityY": 1.6153413078960114e-21,
+                    "timestamp": 1.1925610053060858
                 }
             ],
             "trajectoryWaypoints": [
@@ -14750,14 +14944,14 @@
                     "isInitialGuess": false,
                     "translationConstrained": true,
                     "headingConstrained": true,
-                    "controlIntervalCount": 10
+                    "controlIntervalCount": 26
                 },
                 {
-                    "timestamp": 0.9889620374755971,
+                    "timestamp": 1.1925610053060858,
                     "isStopPoint": true,
                     "x": 5.2192,
                     "y": 6,
-                    "heading": 0,
+                    "heading": -3.141592653579586,
                     "isInitialGuess": false,
                     "translationConstrained": true,
                     "headingConstrained": true,
