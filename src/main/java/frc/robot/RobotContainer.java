@@ -15,6 +15,7 @@ import frc.robot.commands.subcommands.SetArmPosition;
 import frc.robot.subsystems.*;
 
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.util.PathPlannerLogging;
 
 import static frc.robot.Constants.TuningConstants.*;
@@ -188,7 +189,7 @@ public class RobotContainer {
         // return new WheelCharacterization(swerve);
 
         return new ParallelCommandGroup(
-            Autonomous.getAutonomousCommand(swerve), 
+            new PathPlannerAuto("NotAmp F5 F4 F3 PP"),
             new ResetHangCommand(hang)
         );
     }

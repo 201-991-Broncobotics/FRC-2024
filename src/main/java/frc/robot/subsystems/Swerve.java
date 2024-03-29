@@ -21,10 +21,13 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.networktables.StructPublisher;
+import edu.wpi.first.util.datalog.DataLog;
+import edu.wpi.first.util.datalog.DoubleLogEntry;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -54,6 +57,8 @@ public class Swerve extends SubsystemBase {
     public static double[] lastRecordedTimes = new double[cache_size];
 
     public static Translation2d velocity = new Translation2d();
+
+    private DoubleLogEntry positionLog, velocityLog, voltageLog; 
 
     public Swerve() {
         pie = new PIECalculator(teleop_angle_p, teleop_angle_i, teleop_angle_e, swerve_min_pid_rotation * Constants.BaseFalconSwerveConstants.maxAngularVelocity, swerve_max_pid_rotation * Constants.BaseFalconSwerveConstants.maxAngularVelocity, starting_yaw);
@@ -107,6 +112,12 @@ public class Swerve extends SubsystemBase {
         statePublisher = NetworkTableInstance.getDefault().getStructArrayTopic("/Swerve/States", SwerveModuleState.struct).publish();
         canStatePublisher = NetworkTableInstance.getDefault().getStructArrayTopic("/Swerve/canStates", SwerveModuleState.struct).publish();
         visionPublisher = NetworkTableInstance.getDefault().getStructTopic("/Swerve/Vision", Pose2d.struct).publish();
+    
+        DataLog log = DataLogManager.getLog();
+
+        positionLog = new DoubleLogEntry(log, "/Swerve/position");
+        velocityLog = new DoubleLogEntry(log, "/Swerve/velocity");
+        voltageLog = new DoubleLogEntry(log, "/Swerve/voltage");
     }
 
     public static void fillCacheWithPose(Pose2d newPose) {
@@ -387,5 +398,17 @@ public class Swerve extends SubsystemBase {
   /** Get the position of all drive wheels in radians. */
   public double[] getWheelRadiusCharacterizationPosition() {
     return Arrays.stream(swerveModules).mapToDouble(SwerveModule::getPositionRads).toArray();
+  }
+
+  public void driveVoltage(double volts) {
+    for (var module : swerveModules) {
+        module.driveVoltage(volts);
+    }
+  }
+
+  public void logSysID() {
+    velocityLog.append(Arrays.stream(swerveModules).mapToDouble(SwerveModule::getVelocity).average().orElse(0));
+    positionLog.append(Arrays.stream(swerveModules).mapToDouble(SwerveModule::getDrivePosition).average().orElse(0));
+    voltageLog.append(Arrays.stream(swerveModules).mapToDouble(SwerveModule::getVoltage).average().orElse(0));
   }
 }
