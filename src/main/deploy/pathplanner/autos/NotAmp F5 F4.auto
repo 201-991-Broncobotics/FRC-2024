@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.3038057088851929,
-      "y": 7.325462818145752
+      "x": 1.29477118428419,
+      "y": 2.111157006272811
     },
-    "rotation": 9.608454270824035e-24
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
@@ -14,7 +14,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "as to s5"
+            "pathName": "nas to s1"
           }
         },
         {
@@ -26,7 +26,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "s5 to f1 to s5"
+            "pathName": "s1 to f5 to s1"
           }
         },
         {
@@ -38,7 +38,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "s5 to f3 to s5"
+            "pathName": "s1 to f4 to s1"
           }
         },
         {
@@ -51,5 +51,5 @@
     }
   },
   "folder": null,
-  "choreoAuto": true
+  "choreoAuto": false
 }

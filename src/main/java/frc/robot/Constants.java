@@ -40,10 +40,10 @@ public final class Constants {
 
         /* PathPlanner PID Constants */
 
-        public static final double autonomous_max_linear_speed = 8,
-                                   autonomous_ramp_up_time_linear = 2.5, // in seconds to reach max 
-                                   autonomous_max_angular_speed = 180, 
-                                   autonomous_ramp_up_time_angular = 1.5,
+        public static final double autonomous_max_linear_speed = 10,
+                                   autonomous_ramp_up_time_linear = 0.75, // in seconds to reach max 
+                                   autonomous_max_angular_speed = 400, 
+                                   autonomous_ramp_up_time_angular = 0.66,
                                    autonomous_translation_p_controller = 2, 
                                    autonomous_angle_p_controller = 4;
         

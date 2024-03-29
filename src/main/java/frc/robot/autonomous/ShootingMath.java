@@ -9,9 +9,9 @@ import frc.robot.Variables;
 
 public class ShootingMath {
     // all in meters and seconds
-    public static final Translation2d redSpeaker = new Translation2d(16.3322, 5.55);
-    public static final Translation2d blueSpeaker = new Translation2d(0.2286, 5.55);
-    public static final double speaker_height = 2.04311 + 0.0508; // speaker height
+    public static final Translation2d redSpeaker = new Translation2d(16.633, 5.55);
+    public static final Translation2d blueSpeaker = new Translation2d(0, 5.55);
+    public static final double speaker_height = 2.1375; // speaker height
 
     public static final double g = 9.81;
     public static final double v = 12; // exit velocity, in m/s

@@ -37,6 +37,7 @@ import java.util.Arrays;
 
 import static frc.robot.Constants.GeneralConstants.*;
 import static frc.robot.Constants.TeleopSwerveConstants.*;
+import static frc.robot.Constants.AutoConstants.*;
 
 public class Swerve extends SubsystemBase {
 
@@ -93,7 +94,7 @@ public class Swerve extends SubsystemBase {
             new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
                 new PIDConstants(autonomous_translation_p_controller, 0.0, 0.0), // Translation PID constants
                 new PIDConstants(autonomous_angle_p_controller, 0.0, 0.0), // Rotation PID constants
-                autonomous_max_linear_speed, // Max module speed, in m/s
+                kMaxSpeedMetersPerSecond, // Max module speed, in m/s
                 0.5 * Math.sqrt(Constants.BaseFalconSwerveConstants.wheelBase * Constants.BaseFalconSwerveConstants.wheelBase +   // Drive base radius in meters. 
                                 Constants.BaseFalconSwerveConstants.trackWidth * Constants.BaseFalconSwerveConstants.trackWidth), // Distance from robot center to furthest module.
                 new ReplanningConfig() // Default path replanning config. See the API for the options here

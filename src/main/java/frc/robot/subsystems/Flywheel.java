@@ -92,7 +92,7 @@ public class Flywheel extends SubsystemBase {
     }
 
     public boolean isAtSpeed() {
-        double tolerance = Math.sqrt(flywheel_shooting_rpm / 60);
+        double tolerance = Math.sqrt(flywheel_shooting_rpm / 60) * 0.4;
         double topError = Math.abs(targetRPS - topRPS.getAsDouble());
         double bottomError = Math.abs(targetRPS - bottomRPS.getAsDouble());
 
