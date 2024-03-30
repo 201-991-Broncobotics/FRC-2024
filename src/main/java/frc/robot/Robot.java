@@ -39,8 +39,6 @@ public class Robot extends TimedRobot {
         // autonomous chooser on the dashboard.
         robotContainer = new RobotContainer();
 
-        Limelight.init();
-
         DataLogManager.start();
     }
 

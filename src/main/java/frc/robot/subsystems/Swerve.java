@@ -15,7 +15,7 @@ import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 
-import edu.wpi.first.math.VecBuilder;
+// import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -68,6 +68,8 @@ public class Swerve extends SubsystemBase {
 
     private DoubleLogEntry positionLog, velocityLog, voltageLog; 
 
+    private Limelight limelight;
+
     public Swerve() {
         pie = new PIECalculator(teleop_angle_p, teleop_angle_i, teleop_angle_e, swerve_min_pid_rotation * Constants.BaseFalconSwerveConstants.maxAngularVelocity, swerve_max_pid_rotation * Constants.BaseFalconSwerveConstants.maxAngularVelocity, starting_yaw);
 
@@ -119,16 +121,19 @@ public class Swerve extends SubsystemBase {
         posePublisher = NetworkTableInstance.getDefault().getStructTopic("/Swerve/Pose", Pose2d.struct).publish();
         statePublisher = NetworkTableInstance.getDefault().getStructArrayTopic("/Swerve/States", SwerveModuleState.struct).publish();
         canStatePublisher = NetworkTableInstance.getDefault().getStructArrayTopic("/Swerve/canStates", SwerveModuleState.struct).publish();
-        visionPublisher = NetworkTableInstance.getDefault().getStructTopic("/Swerve/Vision", Pose2d.struct).publish();
     
         DataLog log = DataLogManager.getLog();
 
         positionLog = new DoubleLogEntry(log, "/Swerve/position");
         velocityLog = new DoubleLogEntry(log, "/Swerve/velocity");
         voltageLog = new DoubleLogEntry(log, "/Swerve/voltage");
-        visionLogPublisher = StructLogEntry.create(log, "/Swerve/Vision", Pose2d.struct);
         poseLogPublisher = StructLogEntry.create(log, "/Swerve/Pose", Pose2d.struct);
-        visionStatePublisher = new StringLogEntry(log, "/Swerve/VisionState");
+
+        limelight = new Limelight(this);
+    }
+
+    public void overrideOdometry() {
+        limelight.overrideOdometry();
     }
 
     public static void fillCacheWithPose(Pose2d newPose) {
@@ -346,12 +351,6 @@ public class Swerve extends SubsystemBase {
         return Math.abs(getYawError()) < 15; // TODO: make this in constants
     }
     
-    public void overrideOdometry() {
-        var estimate = Limelight.getVisionEstimate();
-        if (estimate.getTranslation().getNorm() > 0.5) {
-            resetOdometry(estimate);
-        }
-    }
 
     public void targetSpeaker() {
         setTargetHeading(ShootingMath.drivetrainAngle().getDegrees());
@@ -361,34 +360,12 @@ public class Swerve extends SubsystemBase {
     public void periodic() {
         poseEstimator.updateWithTime(Timer.getFPGATimestamp(), getGyroYaw(), getModulePositions());
 
-        Pose2d vision_estimate = Limelight.getVisionEstimate();
-
-        if (
-            vision_estimate.getTranslation().getNorm() > 0.1 
-            && (Math.abs(normalizeAngle(getGyroYaw().getDegrees() - vision_estimate.getRotation().getDegrees())) < vision_tolerance)
-            && getPose().getTranslation().getDistance(vision_estimate.getTranslation()) < 2
-            ) {
-            poseEstimator.addVisionMeasurement(vision_estimate, Timer.getFPGATimestamp() - Limelight.getLatency(), VecBuilder.fill(1.2, 1.2, 30 * Math.PI / 180.0));
-            log("Vision Pose", "(" + Math.round(vision_estimate.getTranslation().getX() * 100) / 100.0 + ", " + Math.round(vision_estimate.getTranslation().getY() * 100) / 100.0 + ")");
-            log("Vision Heading", "" + Math.round(vision_estimate.getRotation().getDegrees() * 100) / 100.0 + " degrees");
-            visionStatePublisher.append("used");
-        } else if (vision_estimate.getTranslation().getNorm() > 0.1) {
-            log("Vision Pose", "Vision estimate did not make sense");
-            log("Vision Heading", "Vision estimate did not make sense");
-            visionStatePublisher.append("unused");
-        } else {
-            log("Vision Pose", "No vision estimate");
-            log("Vision Heading", "No vision estimate");
-            visionStatePublisher.append("none");
-        }
+        limelight.periodic();
 
         velocity = addPoseToCache(poseEstimator.getEstimatedPosition());
 
         log("Pigeon Yaw", getGyroYaw().getDegrees());
         log("Pose Estimator Yaw ", getHeading().getDegrees());
-
-        log("Odometry Pose", "(" + Math.round(poseEstimator.getEstimatedPosition().getTranslation().getX() * 100) / 100.0 + ", " + Math.round(poseEstimator.getEstimatedPosition().getTranslation().getY() * 100) / 100.0 + ")");
-        log("Odometry Heading", "" + Math.round(poseEstimator.getEstimatedPosition().getRotation().getDegrees() * 100) / 100.0 + " degrees");
         
         double angle_current = 0;
         double drive_current = 0;
@@ -409,8 +386,6 @@ public class Swerve extends SubsystemBase {
         posePublisher.set(getPose());
         statePublisher.set(getModuleStates());
         canStatePublisher.set(getCanModuleStates());
-        visionPublisher.set(Limelight.getVisionEstimate());
-        visionLogPublisher.append(Limelight.getVisionEstimate());
         poseLogPublisher.append(getPose());
     }
 
