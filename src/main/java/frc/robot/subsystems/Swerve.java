@@ -27,7 +27,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.util.datalog.DataLog;
-import edu.wpi.first.util.datalog.DoubleLogEntry;
+// import edu.wpi.first.util.datalog.DoubleLogEntry;
 import edu.wpi.first.util.datalog.StringLogEntry;
 import edu.wpi.first.util.datalog.StructLogEntry;
 import edu.wpi.first.wpilibj.Timer;
@@ -66,7 +66,7 @@ public class Swerve extends SubsystemBase {
 
     public static Translation2d velocity = new Translation2d();
 
-    private DoubleLogEntry positionLog, velocityLog, voltageLog; 
+    // private DoubleLogEntry positionLog, velocityLog, voltageLog; 
 
     private Limelight limelight;
 
@@ -124,9 +124,9 @@ public class Swerve extends SubsystemBase {
     
         DataLog log = DataLogManager.getLog();
 
-        positionLog = new DoubleLogEntry(log, "/Swerve/position");
+        /* positionLog = new DoubleLogEntry(log, "/Swerve/position");
         velocityLog = new DoubleLogEntry(log, "/Swerve/velocity");
-        voltageLog = new DoubleLogEntry(log, "/Swerve/voltage");
+        voltageLog = new DoubleLogEntry(log, "/Swerve/voltage"); */
         poseLogPublisher = StructLogEntry.create(log, "/Swerve/Pose", Pose2d.struct);
 
         limelight = new Limelight(this);

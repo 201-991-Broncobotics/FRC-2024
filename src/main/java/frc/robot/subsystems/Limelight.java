@@ -18,7 +18,6 @@ import edu.wpi.first.util.datalog.StructLogEntry;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Variables;
 
 import static frc.robot.Constants.GeneralConstants.*;
