@@ -36,10 +36,10 @@ public class RobotContainer {
     private final Joystick driver_TFlightHotasOne = new Joystick(joystick_usb_port);
 
     /* Driver Buttons */
-    private final Trigger zeroGyro = new JoystickButton(driver_XBox, xBoxZeroGyroButton).or(new JoystickButton(driver_TFlightHotasOne, joystickZeroGyroButton));
+    private final Trigger zeroGyro = new JoystickButton(driver_XBox, XboxController.Button.kStart.value).or(new JoystickButton(driver_TFlightHotasOne, joystickZeroGyroButton));
     // private final Trigger makeX = new JoystickButton(driver_XBox, xBoxMakeXButton).or(new JoystickButton(driver_TFlightHotasOne, joystickMakeXButton));
 
-    private final Trigger robotCentric = new JoystickButton(driver_XBox, xBoxRobotCentricButton);
+    private final Trigger robotCentric = new JoystickButton(driver_XBox, XboxController.Button.kY.value);
 
     /* Custom Triggers */
 
@@ -58,19 +58,19 @@ public class RobotContainer {
             swerve.setDefaultCommand(
                 new TeleopSwerveRelativeDirecting(
                     swerve, 
-                    () -> -driver_TFlightHotasOne.getRawAxis(joystickTranslationAxis), 
-                    () -> -driver_TFlightHotasOne.getRawAxis(joystickStrafeAxis), 
-                    () -> -driver_TFlightHotasOne.getRawAxis(joystickRotationAxis), 
+                    () -> -driver_TFlightHotasOne.getRawAxis(joystickTranslationAxis)-driver_XBox.getRawAxis(xBoxTranslationAxis), 
+                    () -> -driver_TFlightHotasOne.getRawAxis(joystickStrafeAxis)-driver_XBox.getRawAxis(xBoxStrafeAxis), 
+                    () -> -driver_TFlightHotasOne.getRawAxis(joystickRotationAxis)-driver_XBox.getRawAxis(xBoxRotationAxis), 
                     () -> false, 
-                    () -> -driver_TFlightHotasOne.getPOV(), 
+                    () -> -driver_TFlightHotasOne.getPOV()-driver_XBox.getPOV() + 1, 
                     () -> {
                         if (driver_TFlightHotasOne.getRawButton(joystickSlowButton)) {
                             return teleop_swerve_slow_factor; // also sets direct angle I guess?
                         } else {
-                            return 1.0;
+                            return 1 - 0.75 * driver_XBox.getRawAxis(XboxController.Axis.kLeftTrigger.value);
                         }
                     }, // what we multiply translation speed by; rotation speed is NOT affected
-                    () -> (Variables.bypass_rotation || driver_TFlightHotasOne.getRawButton(joystickDirectAngleButton))
+                    () -> (Variables.bypass_rotation || driver_TFlightHotasOne.getRawButton(joystickDirectAngleButton) || driver_XBox.getRawAxis(XboxController.Axis.kRightTrigger.value) > 0.2)
                 )
             );
         } else if (fancy_drive) {
@@ -82,9 +82,9 @@ public class RobotContainer {
                     () -> driver_XBox.getRawAxis(xBoxDirectionXAxis), 
                     () -> -driver_XBox.getRawAxis(xBoxDirectionYAxis), 
                     () -> -driver_XBox.getPOV(), 
-                    () -> driver_XBox.getRawAxis(xBoxTurnLeftAxis) - driver_XBox.getRawAxis(xBoxTurnRightAxis), 
+                    () -> (driver_XBox.getRawButton(XboxController.Button.kRightBumper.value) ? 0.2 : 0) - (driver_XBox.getRawButton(XboxController.Button.kLeftBumper.value) ? 0.2 : 0), 
                     () -> (driver_XBox.getRawButton(xBoxSlowButtonOne) || driver_XBox.getRawButton(xBoxSlowButtonTwo)), 
-                    () -> (Variables.bypass_rotation || driver_XBox.getRawButton(1))
+                    () -> (Variables.bypass_rotation || driver_XBox.getRawAxis(XboxController.Axis.kRightTrigger.value) > 0.2)
                 )
             );
         } else {
@@ -94,10 +94,10 @@ public class RobotContainer {
                     () -> -driver_XBox.getRawAxis(xBoxTranslationAxis), 
                     () -> -driver_XBox.getRawAxis(xBoxStrafeAxis), 
                     () -> -driver_XBox.getRawAxis(xBoxRotationAxis), 
-                    () -> robotCentric.getAsBoolean(), 
+                    () -> false, 
                     () -> -driver_XBox.getPOV(), 
-                    () -> 1 - 0.75 * driver_XBox.getRawAxis(xBoxSlowAxis), // what we multiply translation speed by; rotation speed is NOT affected
-                    () -> (Variables.bypass_rotation || driver_XBox.getRawButton(1))
+                    () -> 1 - 0.75 * driver_XBox.getRawAxis(XboxController.Axis.kLeftTrigger.value), // what we multiply translation speed by; rotation speed is NOT affected
+                    () -> (Variables.bypass_rotation || driver_XBox.getRawAxis(XboxController.Axis.kRightTrigger.value) > 0.2)
                 )
             );
         }
@@ -164,6 +164,7 @@ public class RobotContainer {
                 new InstantCommand(conveyor::stop, conveyor)
             ).handleInterrupt(() -> { conveyor.stop(); })
         );
+
         new JoystickButton(driver_TFlightHotasOne, 5).toggleOnTrue(new SequentialCommandGroup(
             new InstantCommand(() -> intake.retract()), 
             new WaitCommand(3.0), 
@@ -180,9 +181,9 @@ public class RobotContainer {
 
         /* Custom Triggers */
 
-        new JoystickButton(driver_TFlightHotasOne, 13).toggleOnTrue(new InstantCommand(() -> swerve.overrideOdometry()));
-        new JoystickButton(driver_TFlightHotasOne, 14).toggleOnTrue(new InstantCommand(() -> Variables.bypass_angling = !Variables.bypass_angling));
-        new JoystickButton(driver_TFlightHotasOne, 15).toggleOnTrue(new InstantCommand(() -> Variables.bypass_rotation = !Variables.bypass_rotation));        
+        new JoystickButton(driver_TFlightHotasOne, 13).or(new JoystickButton(driver_XBox, XboxController.Button.kBack.value)).toggleOnTrue(new InstantCommand(() -> swerve.overrideOdometry()));
+        // new JoystickButton(driver_TFlightHotasOne, 14).or(new JoystickButton(driver_XBox, XboxController.Button.kBack.value)).toggleOnTrue(new InstantCommand(() -> Variables.bypass_angling = !Variables.bypass_angling));
+        new JoystickButton(driver_TFlightHotasOne, 15).or(new JoystickButton(driver_XBox, XboxController.Button.kY.value)).toggleOnTrue(new InstantCommand(() -> Variables.bypass_rotation = !Variables.bypass_rotation));        
     }
 
     public void configureNamedCommands() {
