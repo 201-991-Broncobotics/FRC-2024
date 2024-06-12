@@ -20,7 +20,7 @@ public class ShootingMath {
     public static final double outtakeVerticalOffset = 0.5852089896; // how far up outtake pivot is from center of robot
     
     public static final double z = speaker_height - outtakeVerticalOffset;
-    public static final double max_distance = 6.8;
+    public static final double max_distance = 5; // 6.8?
 
     // assuming no robot velocity; everything else is negligible 
     public static Rotation2d drivetrainAngle() {
@@ -49,12 +49,8 @@ public class ShootingMath {
             d = max_distance; // lol
         }
 
-        double discriminant = v * v * v * v * d * d - g * d * d * (g * d * d + 2 * v * v * z);
-
-        if (discriminant < 0) discriminant = 0;
-
         double angle_radians = Math.atan(
-            (v * v * d - Math.sqrt(discriminant)) / (g * d * d)
+            (v * v * d - Math.sqrt(v * v * v * v * d * d - g * d * d * (g * d * d + 2 * v * v * z))) / (g * d * d)
         );
 
         Rotation2d angle = Rotation2d.fromRadians(angle_radians);
