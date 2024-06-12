@@ -22,10 +22,10 @@ public final class Constants {
 
         /* For these, align all the wheels so their gears are facing toward RSL Side */
 
-        public static final double CANCoder0_zero = -55.37, // Front Left
-                                   CANCoder1_zero = 9.31, // Front Right
-                                   CANCoder2_zero = -128.75, // Back Left
-                                   CANCoder3_zero = 112.85; // Back Right
+        public static final double CANCoder0_zero = -47.81, // Front Left
+                                   CANCoder1_zero = -47.15, // Front Right
+                                   CANCoder2_zero = -128.5, // Back Left
+                                   CANCoder3_zero = -88; // Back Right
         
         public static final boolean useCANCoders = true;
         
@@ -451,7 +451,7 @@ public final class Constants {
 
         /* Subsystem Variables */
 
-        public static final double pivot_angle_tolerance = 0.8;
+        public static final double pivot_angle_tolerance = 1.5;
 
     }
 

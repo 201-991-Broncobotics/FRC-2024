@@ -1,5 +1,6 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -118,6 +119,9 @@ public class RobotContainer {
             )
         );
 
+        operator.povUp().whileTrue(Commands.run(() -> ShootingMath.v += 0.01));
+        operator.povDown().whileTrue(Commands.run(() -> ShootingMath.v -= 0.01));
+
         conveyor.setDefaultCommand(new DormantConveyor(conveyor));
         flywheel.setDefaultCommand(new DormantFlywheel(flywheel));
         intake.setDefaultCommand(new DormantIntake(intake));
@@ -180,6 +184,8 @@ public class RobotContainer {
         // right bumper auto pivots, hotas 2 auto directs
 
         /* Custom Triggers */
+
+        new JoystickButton(driver_TFlightHotasOne, 14).and(() -> !DriverStation.isFMSAttached()).toggleOnTrue(new InstantCommand(() -> flywheel.cleaning()));
 
         new JoystickButton(driver_TFlightHotasOne, 13).or(new JoystickButton(driver_XBox, XboxController.Button.kBack.value)).toggleOnTrue(new InstantCommand(() -> swerve.overrideOdometry()));
         // new JoystickButton(driver_TFlightHotasOne, 14).or(new JoystickButton(driver_XBox, XboxController.Button.kBack.value)).toggleOnTrue(new InstantCommand(() -> Variables.bypass_angling = !Variables.bypass_angling));

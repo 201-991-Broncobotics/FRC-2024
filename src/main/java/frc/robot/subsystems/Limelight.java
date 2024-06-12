@@ -116,7 +116,7 @@ public class Limelight { // Not technically a subsystem; everything should be st
       visionPoseLog.append(pose, (long) (Timer.getFPGATimestamp() - latency / 1000));
       visionPoseNT.set(pose);
 
-      Swerve.poseEstimator.addVisionMeasurement(pose, Timer.getFPGATimestamp() - latency / 1000, VecBuilder.fill(xyStds, xyStds, Units.degreesToRadians(degStds)));
+      Swerve.poseEstimator.addVisionMeasurement(pose, Timer.getFPGATimestamp() - latency / 1000, VecBuilder.fill(xyStds, xyStds, Units.degreesToRadians(degStds) * 3));
     }
 
 

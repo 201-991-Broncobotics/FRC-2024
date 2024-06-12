@@ -78,6 +78,11 @@ public class Flywheel extends SubsystemBase {
         log("Flywheel State", "Off");
     }
 
+    public void cleaning() {
+        targetRPS = 1200 / 60;
+        log("Flywheel State", "Cleaning");
+    }
+
     // add backpressure while intaking to make sure we dont send the note too far forwards
     public void intake() {
       targetRPS = flywheel_intake_rpm / 60;
