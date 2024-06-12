@@ -42,11 +42,12 @@ public class Flywheel extends SubsystemBase {
 
         var slot0 = new Slot0Configs();
         // add this much for static friction
-        slot0.kS = .05;
+        slot0.kS = .3;
         // each rps = this many more volts
-        slot0.kV = 0.12;
+        slot0.kV = 0.115;
         // each rps of error = this many more volts
         slot0.kP = 0.13;
+        slot0.kD = 0.005;
 
         config.Slot0 = slot0;
 
@@ -77,6 +78,12 @@ public class Flywheel extends SubsystemBase {
         log("Flywheel State", "Off");
     }
 
+    // add backpressure while intaking to make sure we dont send the note too far forwards
+    public void intake() {
+      targetRPS = flywheel_intake_rpm / 60;
+      log("Flywheel State", "Intaking");
+    }
+
     public double getAverageCurrent() {
         return (topCurrent.getAsDouble() + bottomCurrent.getAsDouble()) / 2.0;
     }
@@ -86,7 +93,7 @@ public class Flywheel extends SubsystemBase {
     }
 
     public boolean isAtSpeed() {
-        double tolerance = Math.sqrt(flywheel_shooting_rpm / 60);
+        double tolerance = Math.sqrt(flywheel_shooting_rpm / 60) * 0.4;
         double topError = Math.abs(targetRPS - topRPS.getAsDouble());
         double bottomError = Math.abs(targetRPS - bottomRPS.getAsDouble());
 

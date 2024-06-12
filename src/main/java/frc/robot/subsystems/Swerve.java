@@ -15,22 +15,31 @@ import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 
-import edu.wpi.first.math.VecBuilder;
+// import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.networktables.StructPublisher;
+import edu.wpi.first.util.datalog.DataLog;
+// import edu.wpi.first.util.datalog.DoubleLogEntry;
+import edu.wpi.first.util.datalog.StringLogEntry;
+import edu.wpi.first.util.datalog.StructLogEntry;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static frc.robot.Constants.TuningConstants.*;
+
+import java.util.Arrays;
+
 import static frc.robot.Constants.GeneralConstants.*;
 import static frc.robot.Constants.TeleopSwerveConstants.*;
+import static frc.robot.Constants.AutoConstants.*;
 
 public class Swerve extends SubsystemBase {
 
@@ -40,10 +49,15 @@ public class Swerve extends SubsystemBase {
 
     private double last_manual_time;
     private PIECalculator pie;
+
     StructPublisher<Pose2d> posePublisher;
     StructArrayPublisher<SwerveModuleState> statePublisher;
     StructArrayPublisher<SwerveModuleState> canStatePublisher;
     StructPublisher<Pose2d> visionPublisher;
+
+    StructLogEntry<Pose2d> poseLogPublisher; 
+    StructLogEntry<Pose2d> visionLogPublisher;
+    StringLogEntry visionStatePublisher;
 
     public static final int cache_size = 10;
 
@@ -51,6 +65,10 @@ public class Swerve extends SubsystemBase {
     public static double[] lastRecordedTimes = new double[cache_size];
 
     public static Translation2d velocity = new Translation2d();
+
+    // private DoubleLogEntry positionLog, velocityLog, voltageLog; 
+
+    private Limelight limelight;
 
     public Swerve() {
         pie = new PIECalculator(teleop_angle_p, teleop_angle_i, teleop_angle_e, swerve_min_pid_rotation * Constants.BaseFalconSwerveConstants.maxAngularVelocity, swerve_max_pid_rotation * Constants.BaseFalconSwerveConstants.maxAngularVelocity, starting_yaw);
@@ -85,7 +103,7 @@ public class Swerve extends SubsystemBase {
             new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
                 new PIDConstants(autonomous_translation_p_controller, 0.0, 0.0), // Translation PID constants
                 new PIDConstants(autonomous_angle_p_controller, 0.0, 0.0), // Rotation PID constants
-                autonomous_max_linear_speed, // Max module speed, in m/s
+                kMaxSpeedMetersPerSecond, // Max module speed, in m/s
                 0.5 * Math.sqrt(Constants.BaseFalconSwerveConstants.wheelBase * Constants.BaseFalconSwerveConstants.wheelBase +   // Drive base radius in meters. 
                                 Constants.BaseFalconSwerveConstants.trackWidth * Constants.BaseFalconSwerveConstants.trackWidth), // Distance from robot center to furthest module.
                 new ReplanningConfig() // Default path replanning config. See the API for the options here
@@ -103,7 +121,19 @@ public class Swerve extends SubsystemBase {
         posePublisher = NetworkTableInstance.getDefault().getStructTopic("/Swerve/Pose", Pose2d.struct).publish();
         statePublisher = NetworkTableInstance.getDefault().getStructArrayTopic("/Swerve/States", SwerveModuleState.struct).publish();
         canStatePublisher = NetworkTableInstance.getDefault().getStructArrayTopic("/Swerve/canStates", SwerveModuleState.struct).publish();
-        visionPublisher = NetworkTableInstance.getDefault().getStructTopic("/Swerve/Vision", Pose2d.struct).publish();
+    
+        DataLog log = DataLogManager.getLog();
+
+        /* positionLog = new DoubleLogEntry(log, "/Swerve/position");
+        velocityLog = new DoubleLogEntry(log, "/Swerve/velocity");
+        voltageLog = new DoubleLogEntry(log, "/Swerve/voltage"); */
+        poseLogPublisher = StructLogEntry.create(log, "/Swerve/Pose", Pose2d.struct);
+
+        limelight = new Limelight(this);
+    }
+
+    public void overrideOdometry() {
+        limelight.overrideOdometry();
     }
 
     public static void fillCacheWithPose(Pose2d newPose) {
@@ -220,10 +250,10 @@ public class Swerve extends SubsystemBase {
 
     /* Used by PathPlanner */
     public void driveRobotRelative(ChassisSpeeds chassisSpeeds) {
-        drive(new Translation2d(chassisSpeeds.vxMetersPerSecond, chassisSpeeds.vyMetersPerSecond), chassisSpeeds.omegaRadiansPerSecond, false, true, false);
+        drive(new Translation2d(chassisSpeeds.vxMetersPerSecond * (Variables.isBlueAlliance ? 1 : -1), chassisSpeeds.vyMetersPerSecond * (Variables.isBlueAlliance ? 1 : -1)), chassisSpeeds.omegaRadiansPerSecond, false, true, false);
     }
 
-    /* Used by PathPlanner */
+    /** Used by PathPlanner */
     public ChassisSpeeds getRobotRelativeSpeeds() {
         return Constants.BaseFalconSwerveConstants.swerveKinematics.toChassisSpeeds(getModuleStates());
     }
@@ -321,9 +351,6 @@ public class Swerve extends SubsystemBase {
         return Math.abs(getYawError()) < 15; // TODO: make this in constants
     }
     
-    public void overrideOdometry() {
-        resetOdometry(Limelight.getVisionEstimate());
-    }
 
     public void targetSpeaker() {
         setTargetHeading(ShootingMath.drivetrainAngle().getDegrees());
@@ -333,27 +360,12 @@ public class Swerve extends SubsystemBase {
     public void periodic() {
         poseEstimator.updateWithTime(Timer.getFPGATimestamp(), getGyroYaw(), getModulePositions());
 
-        Pose2d vision_estimate = Limelight.getVisionEstimate();
-
-        if (vision_estimate.getTranslation().getNorm() > 0.1 && (Math.abs(normalizeAngle(getGyroYaw().getDegrees() - vision_estimate.getRotation().getDegrees())) < vision_tolerance)) {
-            poseEstimator.addVisionMeasurement(vision_estimate, Timer.getFPGATimestamp() - Limelight.getLatency(), VecBuilder.fill(0.8, 0.8, 6 * Math.PI / 180.0));
-            log("Vision Pose", "(" + Math.round(vision_estimate.getTranslation().getX() * 100) / 100.0 + ", " + Math.round(vision_estimate.getTranslation().getY() * 100) / 100.0 + ")");
-            log("Vision Heading", "" + Math.round(vision_estimate.getRotation().getDegrees() * 100) / 100.0 + " degrees");
-        } else if (vision_estimate.getTranslation().getNorm() > 0.1) {
-            log("Vision Pose", "Vision estimate did not make sense");
-            log("Vision Heading", "Vision estimate did not make sense");
-        } else {
-            log("Vision Pose", "No vision estimate");
-            log("Vision Heading", "No vision estimate");
-        }
+        limelight.periodic();
 
         velocity = addPoseToCache(poseEstimator.getEstimatedPosition());
 
         log("Pigeon Yaw", getGyroYaw().getDegrees());
         log("Pose Estimator Yaw ", getHeading().getDegrees());
-
-        log("Odometry Pose", "(" + Math.round(poseEstimator.getEstimatedPosition().getTranslation().getX() * 100) / 100.0 + ", " + Math.round(poseEstimator.getEstimatedPosition().getTranslation().getY() * 100) / 100.0 + ")");
-        log("Odometry Heading", "" + Math.round(poseEstimator.getEstimatedPosition().getRotation().getDegrees() * 100) / 100.0 + " degrees");
         
         double angle_current = 0;
         double drive_current = 0;
@@ -369,14 +381,32 @@ public class Swerve extends SubsystemBase {
         log("Average Angle Motor Current", angle_current);
         log("Average Drive Motor Current", drive_current);
         log("Side", Variables.isBlueAlliance ? "Blue" : "Red");
+        log("Swerve Close Enough", pidCloseEnough() ? "yes" : "no");
 
         posePublisher.set(getPose());
         statePublisher.set(getModuleStates());
         canStatePublisher.set(getCanModuleStates());
-        visionPublisher.set(Limelight.getVisionEstimate());
+        poseLogPublisher.append(getPose());
     }
 
     public void teleopInit() {
         changeHeading(0);
     }
+
+  /** Get the position of all drive wheels in radians. */
+  public double[] getWheelRadiusCharacterizationPosition() {
+    return Arrays.stream(swerveModules).mapToDouble(SwerveModule::getPositionRads).toArray();
+  }
+
+  public void driveVoltage(double volts) {
+    for (var module : swerveModules) {
+        module.driveVoltage(volts);
+    }
+  }
+
+  public void logSysID() {
+    // velocityLog.append(Arrays.stream(swerveModules).mapToDouble(SwerveModule::getVelocity).average().orElse(0));
+    // positionLog.append(Arrays.stream(swerveModules).mapToDouble(SwerveModule::getDrivePosition).average().orElse(0));
+    // voltageLog.append(Arrays.stream(swerveModules).mapToDouble(SwerveModule::getVoltage).average().orElse(0));
+  }
 }

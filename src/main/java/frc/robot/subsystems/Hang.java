@@ -31,25 +31,56 @@ public class Hang extends SubsystemBase {
 
     }
 
-    public void move(double power) {
+    public void moveLeft(double power) {
         left_hang_motor.power(power);
-        right_hang_motor.power(power);
     }
 
     public void moveRight(double power) {
         right_hang_motor.power(power);
     }
 
-    public void moveLeft(double power) {
-        left_hang_motor.power(power);
+    public void moveVoltagePercent(double voltage) {
+        moveRightVoltagePercent(voltage);
+        moveLeftVoltagePercent(voltage);
     }
 
-    public boolean isLeftBusy() {
-        return left_hang_motor.getCurrent() > hang_motors_free_current;
+    public void moveRightVoltagePercent(double voltage) {
+        if (voltage == 0) {
+            right_hang_motor.brake();
+        } else {
+            right_hang_motor.setVoltagePercent(voltage);
+        }
     }
 
-    public boolean isRightBusy() {
-        return right_hang_motor.getCurrent() > hang_motors_free_current;
+    public void moveLeftVoltagePercent(double voltage) {
+        if (voltage == 0) {
+            left_hang_motor.brake();
+        } else {
+            left_hang_motor.setVoltagePercent(voltage);
+        }
+    }
+
+    public boolean isLeftStuck() {
+        return Math.abs(left_hang_motor.getVelocity()) < 0.5;
+    }
+
+    public boolean isRightStuck() {
+        return Math.abs(right_hang_motor.getVelocity()) < 0.5;
+    }
+
+    public void disableLimiting() {
+        right_hang_motor.disableLimiting();
+        left_hang_motor.disableLimiting();
+    }
+
+    public void setCoastModes() {
+        right_hang_motor.setBrake(false);
+        left_hang_motor.setBrake(false);
+    }
+
+    public void setBrakeModes() {
+        right_hang_motor.setBrake(true);
+        left_hang_motor.setBrake(true);
     }
 
     public void relax() {
@@ -85,5 +116,8 @@ public class Hang extends SubsystemBase {
         
         log("Left Hang Motor Current", left_hang_motor.getCurrent());
         log("Right Hang Motor Current", right_hang_motor.getCurrent());
+
+        log("Left Hang Motor Velocity", left_hang_motor.getVelocity());
+        log("Right Hang Motor Velocity", right_hang_motor.getVelocity());
     }
 }

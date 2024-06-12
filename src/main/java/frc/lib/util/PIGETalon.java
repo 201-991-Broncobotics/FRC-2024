@@ -7,6 +7,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.Timer;
 
 public class PIGETalon {
@@ -16,7 +17,7 @@ public class PIGETalon {
 
     private final DoubleSupplier positionSup;
     private final double calibrationTime, maxPercentOutputPerSecond, multiplier;
-    private double minPosition, maxPosition, previousTime, time, lmtPosition, prevPower;
+    private double minPosition, maxPosition, previousTime, time, lmtPosition, prevPower, gear_ratio;
 
     /** Assumptions: 360 is a full rotation; zeroPosition is the reading at the unstable equilibrium */
     public PIGETalon(int CANID, double continuousCurrentLimit, double peakCurrentLimit, boolean brake, boolean clockwise_positive, 
@@ -52,6 +53,7 @@ public class PIGETalon {
 
         this.minPosition = minPosition;
         this.maxPosition = maxPosition;
+        this.gear_ratio = gear_ratio;
 
         this.calibrationTime = calibrationTime;
         this.maxPercentOutputPerSecond = maxPercentOutputPerSecond;
@@ -99,6 +101,38 @@ public class PIGETalon {
         prevPower = power;
 
         motor.set(power);
+    }
+
+    /** Should be as a percent of maximum voltage, which is 12 by default */
+    public void setVoltagePercent(double voltage) {
+
+        double currentPosition = positionSup.getAsDouble();
+        
+        if (currentPosition < minPosition || lmtPosition <= minPosition) {
+            previousTime = -1000;
+            voltage = Math.max(0, voltage);
+            motor.setVoltage(0);
+            pigeCalculator.resetTarget(minPosition);
+            lmtPosition = minPosition;
+        } else if (currentPosition > maxPosition || lmtPosition >= maxPosition) {
+            previousTime = -1000;
+            voltage = Math.min(0, voltage);
+            motor.setVoltage(0);
+            pigeCalculator.resetTarget(maxPosition);
+            lmtPosition = maxPosition;
+        }
+
+        if (voltage != 0) {
+            pigeCalculator.resetTarget(currentPosition);
+            lmtPosition = currentPosition;
+            previousTime = time;
+        } else if (time - previousTime < calibrationTime) {
+            pigeCalculator.resetTarget(currentPosition);
+        } else {
+            voltage = pigeCalculator.update(currentPosition);
+        }
+
+        motor.setVoltage(voltage * RobotController.getBatteryVoltage());
     }
 
     public void resetSensorPosition(double angle) {
@@ -185,5 +219,15 @@ public class PIGETalon {
 
     public double get() {
         return motor.get();
+    }
+
+    /** returns velocity of THE MECHANISM in rotations per second. 
+     * i.e. if the mechanism is a winch on a 25:1 planetary, the velocity this returns when the motor spins at 25rps is 1rps, not 25rps */
+    public double getVelocity() {
+        return motor.getVelocity().getValueAsDouble() / gear_ratio;
+    }
+
+    public void setBrake(boolean brake) {
+        motor.setNeutralMode(brake ? NeutralModeValue.Brake : NeutralModeValue.Coast);
     }
 }

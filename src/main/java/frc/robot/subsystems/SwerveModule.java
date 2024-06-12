@@ -12,6 +12,7 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Timer;
 import frc.lib.math.Conversions;
 import frc.lib.util.SwerveModuleConstants;
@@ -35,6 +36,7 @@ public class SwerveModule {
     /* angle motor control requests */
     private final PositionVoltage anglePosition = new PositionVoltage(0);
 
+
     public SwerveModule(int moduleNumber, SwerveModuleConstants moduleConstants) {
         this.moduleNumber = moduleNumber;
         this.angleOffset = moduleConstants.angleOffset;
@@ -55,6 +57,8 @@ public class SwerveModule {
         mDriveMotor = new TalonFX(moduleConstants.driveMotorID);
         mDriveMotor.getConfigurator().apply(Robot.ctreConfigs.swerveDriveFXConfig);
         mDriveMotor.getConfigurator().setPosition(0.0);
+
+        
     }
 
     public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop) {
@@ -109,5 +113,25 @@ public class SwerveModule {
             mAngleMotor.getStatorCurrent().getValueAsDouble(), // stator instead of torque because we
             mDriveMotor.getStatorCurrent().getValueAsDouble()  // only care about absolute value
         };
+    }
+
+    public double getPositionRads() {
+      return Units.rotationsToRadians(mDriveMotor.getPosition().getValue());
+    }
+
+    public void driveVoltage(double volts) {
+        mDriveMotor.setVoltage(volts);
+    }
+
+    public double getVelocity() {
+        return mDriveMotor.getVelocity().getValueAsDouble();
+    }
+
+    public double getVoltage() {
+        return mDriveMotor.getMotorVoltage().getValueAsDouble();
+    }
+
+    public double getDrivePosition() {
+        return mDriveMotor.getPosition().getValueAsDouble();
     }
 }

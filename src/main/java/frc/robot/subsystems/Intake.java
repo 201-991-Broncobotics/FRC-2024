@@ -21,6 +21,11 @@ public class Intake extends SubsystemBase {
         log("Intake State", "Intaking");
     }
 
+    public void retract() {
+        intake_motor.set(-intake_motor_speed);
+        log("Intake State", "Retracting");
+    }
+
     public void stop() {
         intake_motor.set(0);
         log("Intake State", "Off");

@@ -20,12 +20,19 @@ public final class Constants {
 
     public static final class TuningConstants { // Basically stuff you have to tune
 
-        /* For these, align all the wheels so their gears are facing away from the intake */
+        /* For these, align all the wheels so their gears are facing toward RSL Side */
 
+<<<<<<< HEAD
         public static final double CANCoder0_zero = 130.605469, // Front Left
                                    CANCoder1_zero = 36.914063, // Front Right
                                    CANCoder2_zero = 51.240234, // Back Left
                                    CANCoder3_zero = 103.095703; // Back Right
+=======
+        public static final double CANCoder0_zero = -55.37, // Front Left
+                                   CANCoder1_zero = 9.31, // Front Right
+                                   CANCoder2_zero = -128.75, // Back Left
+                                   CANCoder3_zero = 112.85; // Back Right
+>>>>>>> 964d75733046eb8529b40547a96cf90d85d088a9
         
         public static final boolean useCANCoders = true;
         
@@ -36,14 +43,14 @@ public final class Constants {
                                    drive_equilibrium_voltage = 1.51, 
                                    drive_acceleration_voltage = 0.27, // SYSID values: KS, KV, KA; they are automatically divided by 12 later
                                    max_linear_speed = 10, // feet per second; theoretical max is 13.5
-                                   max_angular_speed = 225; // degrees per second; theoretical max is theoretical maximum is max_linear_speed * 46.6436741705 which is roughly 629.6896013018
+                                   max_angular_speed = 360; // degrees per second; theoretical max is theoretical maximum is max_linear_speed * 46.6436741705 which is roughly 629.6896013018
 
         /* PathPlanner PID Constants */
 
-        public static final double autonomous_max_linear_speed = 8,
-                                   autonomous_ramp_up_time_linear = 2.5, // in seconds to reach max 
-                                   autonomous_max_angular_speed = 180, 
-                                   autonomous_ramp_up_time_angular = 1.5,
+        public static final double autonomous_max_linear_speed = 10,
+                                   autonomous_ramp_up_time_linear = 0.75, // in seconds to reach max 
+                                   autonomous_max_angular_speed = 400, 
+                                   autonomous_ramp_up_time_angular = 0.66,
                                    autonomous_translation_p_controller = 2, 
                                    autonomous_angle_p_controller = 4;
         
@@ -56,18 +63,18 @@ public final class Constants {
                                    teleop_translation_i = 0,
                                    teleop_translation_tolerance = 1;
         
-        public static final double turn_slow_ratio = 2; // because slowing down rotation and translation by the same factor is insane
+        public static final double turn_slow_ratio = 1; // because slowing down rotation and translation by the same factor is insane
                                     // ex. it its 4, then 0.6 translation ratio goes to a 0.9 turning ratio
         
         /* Pivot Constants */
 
         public static final double pivot_p = .015, 
                                    pivot_i = 0, 
-                                   pivot_g = 0.015, 
-                                   pivot_e = 1.1, 
+                                   pivot_g = 0.018, 
+                                   pivot_e = 1.05, 
                                    pivot_zero = 115;
         
-        public static final double starting_angle = -7, // thanks to certain people, it's not -9.255644, // all in degrees
+        public static final double starting_angle = -9.255644, // thanks to certain people, it's not -9.255644, // all in degrees
                                    intake_angle = 59.006106, 
                                    amp_angle = 125.388397, 
 
@@ -90,7 +97,7 @@ public final class Constants {
         
         /* Outtaking Constants */
 
-        public static final double max_flywheel_acceleration_time = 2, 
+        public static final double max_flywheel_acceleration_time = 4, 
                                    min_outtake_time = 1, 
                                    min_amp_time = 2;
 
@@ -253,13 +260,13 @@ public final class Constants {
         public static final SensorDirectionValue cancoderInvert = chosenModule.cancoderInvert;
 
         /* Swerve Current Limiting */
-        public static final int angleCurrentLimit = 10;
-        public static final int angleCurrentThreshold = 20;
+        public static final int angleCurrentLimit = 30;
+        public static final int angleCurrentThreshold = 35;
         public static final double angleCurrentThresholdTime = 0.1;
         public static final boolean angleEnableCurrentLimit = true;
 
-        public static final int driveCurrentLimit = 15;
-        public static final int driveCurrentThreshold = 20;
+        public static final int driveCurrentLimit = 30;
+        public static final int driveCurrentThreshold = 35;
         public static final double driveCurrentThresholdTime = 0.1;
         public static final boolean driveEnableCurrentLimit = true;
 
@@ -358,9 +365,9 @@ public final class Constants {
                                    swerve_min_manual_translation = 0.05, 
                                    swerve_min_manual_rotation = 0.02,
 
-                                   teleop_swerve_slow_factor = 0.5, 
+                                   teleop_swerve_slow_factor = 0.2, 
                                    
-                                   vision_tolerance = 15, 
+                                   vision_tolerance = 5, 
                                    
                                    teleop_rotation_percent = 0.75, 
                                    swerve_bumper_turn_sensitivity = 0.35; // ratio of teleop swerve rotation speed vs maximum swerve rotation speed
@@ -451,7 +458,7 @@ public final class Constants {
 
         /* Subsystem Variables */
 
-        public static final double pivot_angle_tolerance = 5;
+        public static final double pivot_angle_tolerance = 0.8;
 
     }
 
@@ -487,7 +494,8 @@ public final class Constants {
         public static final boolean flywheel_motors_opposite = false; // they should turn in the same direction
 
         public static final double flywheel_shooting_rpm = 4500, 
-                                   flywheel_amp_rpm = 800;
+                                   flywheel_amp_rpm = 800,
+                                   flywheel_intake_rpm = -400;
 
     }
 
@@ -512,7 +520,7 @@ public final class Constants {
                                    
                                    hang_motors_max_percent_output_per_second = 3, 
                                    
-                                   hang_motors_gear_ratio = 1.0, // doesn't really matter because its a linear relationship
+                                   hang_motors_gear_ratio = 25.0, // doesn't really matter because its a linear relationship
                                    
                                    hang_motors_calibration_time = 0.25, 
                                    
@@ -520,9 +528,9 @@ public final class Constants {
 
         /* Subsystem Variables */
         
-        public static final boolean hang_motors_opposite = true; // they should turn in opposite directions
+        public static final boolean hang_motors_opposite = false; // they should turn in opposite directions
 
-        public static final double hanging_position = 64000;
+        public static final double hanging_position = 1800;
 
     }
 
