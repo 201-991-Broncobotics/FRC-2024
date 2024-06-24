@@ -56,6 +56,7 @@ public class ShootingMath {
         Rotation2d angle = Rotation2d.fromRadians(angle_radians);
         log("Auto Aim Pivot Angle (deg)", angle.getDegrees());
         log("Exit Velocity", v);
+        log("Distance from Speaker", d);
 
         return angle;
     }
