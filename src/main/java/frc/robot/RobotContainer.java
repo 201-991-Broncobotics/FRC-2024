@@ -119,8 +119,8 @@ public class RobotContainer {
             )
         );
 
-        operator.povUp().whileTrue(Commands.run(() -> ShootingMath.v += 0.01));
-        operator.povDown().whileTrue(Commands.run(() -> ShootingMath.v -= 0.01));
+        operator.povUp().whileTrue(Commands.run(() -> ShootingMath.flywheel_rpm_offset += 50));
+        operator.povDown().whileTrue(Commands.run(() -> ShootingMath.flywheel_rpm_offset -= 50));
 
         conveyor.setDefaultCommand(new DormantConveyor(conveyor));
         flywheel.setDefaultCommand(new DormantFlywheel(flywheel));

@@ -58,7 +58,7 @@ public class AutonomousCommands {
   }
 
   static Command prepareShoot(Conveyor conveyor, Swerve swerve, Flywheel flywheel, Pivot pivot) {
-    var prepare = Commands.runOnce(() -> {Variables.bypass_angling = true; pivot.setTarget(ShootingMath.pivotAngle().getDegrees()); flywheel.outtake();}, flywheel);    
+    var prepare = Commands.runOnce(() -> {Variables.bypass_angling = true; pivot.setTarget(ShootingMath.pivotAngle().getDegrees()); flywheel.autoOuttake();}, flywheel);    
 
     var whileWaiting = Commands.parallel(
         Commands.run(() -> {
@@ -93,7 +93,7 @@ public class AutonomousCommands {
     ).raceWith(Commands.run(() -> {
       pivot.setTarget(ShootingMath.pivotAngle().getDegrees());
       pivot.pidPower();
-      flywheel.outtake();
+      flywheel.autoOuttake();
     }, pivot, flywheel));
   }
 }

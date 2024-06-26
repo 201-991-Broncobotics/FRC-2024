@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.Constants.GeneralConstants.*;
+import frc.robot.autonomous.ShootingMath; // might be breaking something
 
 import java.util.function.DoubleSupplier;
 
@@ -66,6 +67,11 @@ public class Flywheel extends SubsystemBase {
     public void outtake() {
         targetRPS = flywheel_shooting_rpm / 60;
         log("Flywheel State", "Outtaking");
+    }
+
+    public void autoOuttake() {
+        targetRPS = ShootingMath.targetShootingRPM() / 60;
+        log("Flywheel State", "Auto-Outtaking");
     }
 
     public void amp() {
