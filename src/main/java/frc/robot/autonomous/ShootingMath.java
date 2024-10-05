@@ -11,7 +11,7 @@ public class ShootingMath {
     // all in meters and seconds
     public static final Translation2d redSpeaker = new Translation2d(16.3322, 5.5);
     public static final Translation2d blueSpeaker = new Translation2d(0.2286, 5.5);
-    public static final double speaker_height = 2.04311 + 0.0508; // speaker height
+    public static final double speaker_height = 2.04311 + 0.100; // speaker height
 
     public static final double g = 9.81;
     public static double v = 11.2; // exit velocity, in m/s

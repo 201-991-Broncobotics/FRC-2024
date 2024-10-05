@@ -209,7 +209,7 @@ public class Swerve extends SubsystemBase {
                 if (Math.abs(pie.getTarget() - current_heading) > 180) {
                     pie.resetTarget(current_heading + normalizeAngle(pie.getTarget() - current_heading));
                 }
-                rotation = pie.update(current_heading);
+                rotation = -1 * pie.update(current_heading); // negative
             }
         } else {
             pie.resetTarget(current_heading);

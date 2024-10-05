@@ -40,7 +40,7 @@ public class RobotContainer {
     private final Trigger zeroGyro = new JoystickButton(driver_XBox, XboxController.Button.kStart.value).or(new JoystickButton(driver_TFlightHotasOne, joystickZeroGyroButton));
     // private final Trigger makeX = new JoystickButton(driver_XBox, xBoxMakeXButton).or(new JoystickButton(driver_TFlightHotasOne, joystickMakeXButton));
 
-    private final Trigger robotCentric = new JoystickButton(driver_XBox, XboxController.Button.kY.value);
+    // final Trigger robotCentric = new JoystickButton(driver_XBox, XboxController.Button.kY.value);
 
     /* Custom Triggers */
 
@@ -64,7 +64,7 @@ public class RobotContainer {
                     () -> -driver_TFlightHotasOne.getRawAxis(joystickRotationAxis)-driver_XBox.getRawAxis(xBoxRotationAxis), 
                     () -> false, 
                     () -> -driver_TFlightHotasOne.getPOV()-driver_XBox.getPOV() + 1, 
-                    () -> {
+                    () -> { 
                         if (driver_TFlightHotasOne.getRawButton(joystickSlowButton)) {
                             return teleop_swerve_slow_factor; // also sets direct angle I guess?
                         } else {

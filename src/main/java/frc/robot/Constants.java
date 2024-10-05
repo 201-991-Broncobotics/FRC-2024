@@ -22,10 +22,10 @@ public final class Constants {
 
         /* For these, align all the wheels so their gears are facing toward RSL Side */
 
-        public static final double CANCoder0_zero = -47.81, // Front Left
-                                   CANCoder1_zero = -47.15, // Front Right
-                                   CANCoder2_zero = -128.5, // Back Left
-                                   CANCoder3_zero = -88; // Back Right
+        public static final double CANCoder0_zero = 132.0, // Front Left
+                                   CANCoder1_zero = -36.7, // Front Right
+                                   CANCoder2_zero = 55.7, // Back Left
+                                   CANCoder3_zero = -93.6; // Back Right
         
         public static final boolean useCANCoders = true;
         
@@ -35,7 +35,7 @@ public final class Constants {
                                    drive_static_voltage = 0.32, 
                                    drive_equilibrium_voltage = 1.51, 
                                    drive_acceleration_voltage = 0.27, // SYSID values: KS, KV, KA; they are automatically divided by 12 later
-                                   max_linear_speed = 10, // feet per second; theoretical max is 13.5
+                                   max_linear_speed = 6, // feet per second; theoretical max is 13.5
                                    max_angular_speed = 360; // degrees per second; theoretical max is theoretical maximum is max_linear_speed * 46.6436741705 which is roughly 629.6896013018
 
         /* PathPlanner PID Constants */
@@ -136,7 +136,7 @@ public final class Constants {
                                 joystickTranslationAxis = 1, 
                                 joystickStrafeAxis = 0, 
 
-                                joystickRotationAxis = 5, 
+                                joystickRotationAxis = 4, 
 
                                 joystickSlowButton = 1,
 

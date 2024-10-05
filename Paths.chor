@@ -41,6 +41,15 @@
                     "translationConstrained": true,
                     "headingConstrained": true,
                     "controlIntervalCount": 40
+                },
+                {
+                    "x": 3.8085825443267822,
+                    "y": 6.197078227996826,
+                    "heading": 0,
+                    "isInitialGuess": false,
+                    "translationConstrained": true,
+                    "headingConstrained": true,
+                    "controlIntervalCount": 40
                 }
             ],
             "trajectory": [
@@ -310,19 +319,22 @@
                     "scope": [
                         "first"
                     ],
-                    "type": "StopPoint"
+                    "type": "StopPoint",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         "last"
                     ],
-                    "type": "StopPoint"
+                    "type": "StopPoint",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         2
                     ],
-                    "type": "WptZeroVelocity"
+                    "type": "WptZeroVelocity",
+                    "direction": 0
                 }
             ],
             "usesControlIntervalGuessing": true,
@@ -389,7 +401,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "s1 to c3 to s1": {
             "waypoints": [
@@ -1126,27 +1138,31 @@
                     "scope": [
                         "first"
                     ],
-                    "type": "StopPoint"
+                    "type": "StopPoint",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         "last"
                     ],
-                    "type": "StopPoint"
+                    "type": "StopPoint",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         2,
                         3
                     ],
-                    "type": "StraightLine"
+                    "type": "StraightLine",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         2,
                         4
                     ],
-                    "type": "ZeroAngularVelocity"
+                    "type": "ZeroAngularVelocity",
+                    "direction": 0
                 },
                 {
                     "scope": [
@@ -1154,13 +1170,15 @@
                         4
                     ],
                     "type": "MaxVelocity",
+                    "direction": 0,
                     "velocity": 1
                 },
                 {
                     "scope": [
                         5
                     ],
-                    "type": "WptZeroVelocity"
+                    "type": "WptZeroVelocity",
+                    "direction": 0
                 }
             ],
             "usesControlIntervalGuessing": true,
@@ -1227,7 +1245,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "s1 to c1 to s1": {
             "waypoints": [
@@ -1703,6 +1721,7 @@
                         2
                     ],
                     "type": "MaxVelocity",
+                    "direction": 0,
                     "velocity": 1
                 },
                 {
@@ -1710,13 +1729,15 @@
                         1,
                         2
                     ],
-                    "type": "StraightLine"
+                    "type": "StraightLine",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         4
                     ],
-                    "type": "WptZeroVelocity"
+                    "type": "WptZeroVelocity",
+                    "direction": 0
                 }
             ],
             "usesControlIntervalGuessing": true,
@@ -1783,7 +1804,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "s1 to c3 to s2": {
             "waypoints": [
@@ -2257,13 +2278,15 @@
                     "scope": [
                         "first"
                     ],
-                    "type": "StopPoint"
+                    "type": "StopPoint",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         "last"
                     ],
-                    "type": "StopPoint"
+                    "type": "StopPoint",
+                    "direction": 0
                 },
                 {
                     "scope": [
@@ -2271,6 +2294,7 @@
                         3
                     ],
                     "type": "MaxVelocity",
+                    "direction": 0,
                     "velocity": 1.5
                 },
                 {
@@ -2278,28 +2302,32 @@
                         2,
                         3
                     ],
-                    "type": "StraightLine"
+                    "type": "StraightLine",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         2,
                         3
                     ],
-                    "type": "StraightLine"
+                    "type": "StraightLine",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         2,
                         3
                     ],
-                    "type": "ZeroAngularVelocity"
+                    "type": "ZeroAngularVelocity",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         0,
                         1
                     ],
-                    "type": "ZeroAngularVelocity"
+                    "type": "ZeroAngularVelocity",
+                    "direction": 0
                 }
             ],
             "usesControlIntervalGuessing": true,
@@ -2366,7 +2394,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "s2 to c2 to s3": {
             "waypoints": [
@@ -2620,27 +2648,31 @@
                     "scope": [
                         "first"
                     ],
-                    "type": "StopPoint"
+                    "type": "StopPoint",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         "last"
                     ],
-                    "type": "StopPoint"
+                    "type": "StopPoint",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         1,
                         2
                     ],
-                    "type": "ZeroAngularVelocity"
+                    "type": "ZeroAngularVelocity",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         1,
                         2
                     ],
-                    "type": "StraightLine"
+                    "type": "StraightLine",
+                    "direction": 0
                 }
             ],
             "usesControlIntervalGuessing": true,
@@ -2701,7 +2733,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "s3 to f2 to s4": {
             "waypoints": [
@@ -3402,34 +3434,39 @@
                     "scope": [
                         "first"
                     ],
-                    "type": "StopPoint"
+                    "type": "StopPoint",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         "last"
                     ],
-                    "type": "StopPoint"
+                    "type": "StopPoint",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         0,
                         0
                     ],
-                    "type": "ZeroAngularVelocity"
+                    "type": "ZeroAngularVelocity",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         2,
                         3
                     ],
-                    "type": "StraightLine"
+                    "type": "StraightLine",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         2,
                         3
                     ],
-                    "type": "ZeroAngularVelocity"
+                    "type": "ZeroAngularVelocity",
+                    "direction": 0
                 },
                 {
                     "scope": [
@@ -3437,6 +3474,7 @@
                         3
                     ],
                     "type": "MaxVelocity",
+                    "direction": 0,
                     "velocity": 1.5
                 }
             ],
@@ -3516,7 +3554,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "s4 to c1": {
             "waypoints": [
@@ -4193,27 +4231,31 @@
                     "scope": [
                         "first"
                     ],
-                    "type": "StopPoint"
+                    "type": "StopPoint",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         "last"
                     ],
-                    "type": "StopPoint"
+                    "type": "StopPoint",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         1,
                         2
                     ],
-                    "type": "StraightLine"
+                    "type": "StraightLine",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         1,
                         2
                     ],
-                    "type": "ZeroAngularVelocity"
+                    "type": "ZeroAngularVelocity",
+                    "direction": 0
                 }
             ],
             "usesControlIntervalGuessing": true,
@@ -4254,7 +4296,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "s3 to f1 to s4": {
             "waypoints": [
@@ -4807,34 +4849,39 @@
                     "scope": [
                         "first"
                     ],
-                    "type": "StopPoint"
+                    "type": "StopPoint",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         "last"
                     ],
-                    "type": "StopPoint"
+                    "type": "StopPoint",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         0,
                         0
                     ],
-                    "type": "ZeroAngularVelocity"
+                    "type": "ZeroAngularVelocity",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         1,
                         2
                     ],
-                    "type": "StraightLine"
+                    "type": "StraightLine",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         1,
                         2
                     ],
-                    "type": "ZeroAngularVelocity"
+                    "type": "ZeroAngularVelocity",
+                    "direction": 0
                 }
             ],
             "usesControlIntervalGuessing": true,
@@ -4907,7 +4954,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "as to s5": {
             "waypoints": [
@@ -5280,27 +5327,31 @@
                     "scope": [
                         "first"
                     ],
-                    "type": "StopPoint"
+                    "type": "StopPoint",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         "last"
                     ],
-                    "type": "StopPoint"
+                    "type": "StopPoint",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         1,
                         2
                     ],
-                    "type": "StraightLine"
+                    "type": "StraightLine",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         1,
                         2
                     ],
-                    "type": "ZeroAngularVelocity"
+                    "type": "ZeroAngularVelocity",
+                    "direction": 0
                 }
             ],
             "usesControlIntervalGuessing": true,
@@ -5322,7 +5373,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "s5 to f1 to s5": {
             "waypoints": [
@@ -5875,27 +5926,31 @@
                     "scope": [
                         "first"
                     ],
-                    "type": "StopPoint"
+                    "type": "StopPoint",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         "last"
                     ],
-                    "type": "StopPoint"
+                    "type": "StopPoint",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         1,
                         2
                     ],
-                    "type": "ZeroAngularVelocity"
+                    "type": "ZeroAngularVelocity",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         1,
                         2
                     ],
-                    "type": "StraightLine"
+                    "type": "StraightLine",
+                    "direction": 0
                 }
             ],
             "usesControlIntervalGuessing": true,
@@ -5968,7 +6023,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "s5 to f2 to s5": {
             "waypoints": [
@@ -6521,27 +6576,31 @@
                     "scope": [
                         "first"
                     ],
-                    "type": "StopPoint"
+                    "type": "StopPoint",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         "last"
                     ],
-                    "type": "StopPoint"
+                    "type": "StopPoint",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         1,
                         2
                     ],
-                    "type": "StraightLine"
+                    "type": "StraightLine",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         1,
                         2
                     ],
-                    "type": "ZeroAngularVelocity"
+                    "type": "ZeroAngularVelocity",
+                    "direction": 0
                 }
             ],
             "usesControlIntervalGuessing": true,
@@ -6620,7 +6679,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "s5 to f3 to s5": {
             "waypoints": [
@@ -7420,27 +7479,31 @@
                     "scope": [
                         "first"
                     ],
-                    "type": "StopPoint"
+                    "type": "StopPoint",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         "last"
                     ],
-                    "type": "StopPoint"
+                    "type": "StopPoint",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         2,
                         3
                     ],
-                    "type": "StraightLine"
+                    "type": "StraightLine",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         2,
                         3
                     ],
-                    "type": "ZeroAngularVelocity"
+                    "type": "ZeroAngularVelocity",
+                    "direction": 0
                 }
             ],
             "usesControlIntervalGuessing": true,
@@ -7525,7 +7588,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "nas to s6": {
             "waypoints": [
@@ -7759,13 +7822,15 @@
                     "scope": [
                         "first"
                     ],
-                    "type": "StopPoint"
+                    "type": "StopPoint",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         "last"
                     ],
-                    "type": "StopPoint"
+                    "type": "StopPoint",
+                    "direction": 0
                 }
             ],
             "usesControlIntervalGuessing": true,
@@ -7787,7 +7852,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "s6 to f5 to s6": {
             "waypoints": [
@@ -8394,27 +8459,31 @@
                     "scope": [
                         "first"
                     ],
-                    "type": "StopPoint"
+                    "type": "StopPoint",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         "last"
                     ],
-                    "type": "StopPoint"
+                    "type": "StopPoint",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         1,
                         2
                     ],
-                    "type": "StraightLine"
+                    "type": "StraightLine",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         1,
                         2
                     ],
-                    "type": "ZeroAngularVelocity"
+                    "type": "ZeroAngularVelocity",
+                    "direction": 0
                 }
             ],
             "usesControlIntervalGuessing": true,
@@ -8481,7 +8550,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "s6 to f4 to s6": {
             "waypoints": [
@@ -9254,20 +9323,23 @@
                     "scope": [
                         "first"
                     ],
-                    "type": "StopPoint"
+                    "type": "StopPoint",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         "last"
                     ],
-                    "type": "StopPoint"
+                    "type": "StopPoint",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         2,
                         3
                     ],
-                    "type": "ZeroAngularVelocity"
+                    "type": "ZeroAngularVelocity",
+                    "direction": 0
                 },
                 {
                     "scope": [
@@ -9347,7 +9419,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "s6 to f3 to s7 around stage": {
             "waypoints": [
@@ -10376,27 +10448,31 @@
                     "scope": [
                         "first"
                     ],
-                    "type": "StopPoint"
+                    "type": "StopPoint",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         "last"
                     ],
-                    "type": "StopPoint"
+                    "type": "StopPoint",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         2,
                         3
                     ],
-                    "type": "StraightLine"
+                    "type": "StraightLine",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         2,
                         3
                     ],
-                    "type": "ZeroAngularVelocity"
+                    "type": "ZeroAngularVelocity",
+                    "direction": 0
                 }
             ],
             "usesControlIntervalGuessing": true,
@@ -10481,7 +10557,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "s7 to f2 to s7": {
             "waypoints": [
@@ -10962,27 +11038,31 @@
                     "scope": [
                         "first"
                     ],
-                    "type": "StopPoint"
+                    "type": "StopPoint",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         "last"
                     ],
-                    "type": "StopPoint"
+                    "type": "StopPoint",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         1,
                         2
                     ],
-                    "type": "StraightLine"
+                    "type": "StraightLine",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         1,
                         2
                     ],
-                    "type": "ZeroAngularVelocity"
+                    "type": "ZeroAngularVelocity",
+                    "direction": 0
                 }
             ],
             "usesControlIntervalGuessing": true,
@@ -11062,7 +11142,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "s7 to f1 to s7": {
             "waypoints": [
@@ -11570,27 +11650,31 @@
                     "scope": [
                         "first"
                     ],
-                    "type": "StopPoint"
+                    "type": "StopPoint",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         "last"
                     ],
-                    "type": "StopPoint"
+                    "type": "StopPoint",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         1,
                         2
                     ],
-                    "type": "StraightLine"
+                    "type": "StraightLine",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         1,
                         2
                     ],
-                    "type": "ZeroAngularVelocity"
+                    "type": "ZeroAngularVelocity",
+                    "direction": 0
                 }
             ],
             "usesControlIntervalGuessing": true,
@@ -11670,7 +11754,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "as to s7": {
             "waypoints": [
@@ -12079,27 +12163,31 @@
                     "scope": [
                         "first"
                     ],
-                    "type": "StopPoint"
+                    "type": "StopPoint",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         "last"
                     ],
-                    "type": "StopPoint"
+                    "type": "StopPoint",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         1,
                         2
                     ],
-                    "type": "StraightLine"
+                    "type": "StraightLine",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         1,
                         2
                     ],
-                    "type": "ZeroAngularVelocity"
+                    "type": "ZeroAngularVelocity",
+                    "direction": 0
                 }
             ],
             "usesControlIntervalGuessing": true,
@@ -12121,7 +12209,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "s7 to f3 to s7": {
             "waypoints": [
@@ -12923,27 +13011,31 @@
                     "scope": [
                         "first"
                     ],
-                    "type": "StopPoint"
+                    "type": "StopPoint",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         "last"
                     ],
-                    "type": "StopPoint"
+                    "type": "StopPoint",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         2,
                         3
                     ],
-                    "type": "StraightLine"
+                    "type": "StraightLine",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         2,
                         3
                     ],
-                    "type": "ZeroAngularVelocity"
+                    "type": "ZeroAngularVelocity",
+                    "direction": 0
                 }
             ],
             "usesControlIntervalGuessing": true,
@@ -13023,7 +13115,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "s6 to f3 to s6": {
             "waypoints": [
@@ -13924,27 +14016,31 @@
                     "scope": [
                         "first"
                     ],
-                    "type": "StopPoint"
+                    "type": "StopPoint",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         "last"
                     ],
-                    "type": "StopPoint"
+                    "type": "StopPoint",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         3,
                         4
                     ],
-                    "type": "StraightLine"
+                    "type": "StraightLine",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         3,
                         4
                     ],
-                    "type": "ZeroAngularVelocity"
+                    "type": "ZeroAngularVelocity",
+                    "direction": 0
                 }
             ],
             "usesControlIntervalGuessing": true,
@@ -14024,7 +14120,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "s6 to f3 to s6 US": {
             "waypoints": [
@@ -14824,27 +14920,31 @@
                     "scope": [
                         "first"
                     ],
-                    "type": "StopPoint"
+                    "type": "StopPoint",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         "last"
                     ],
-                    "type": "StopPoint"
+                    "type": "StopPoint",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         2,
                         3
                     ],
-                    "type": "StraightLine"
+                    "type": "StraightLine",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         2,
                         3
                     ],
-                    "type": "ZeroAngularVelocity"
+                    "type": "ZeroAngularVelocity",
+                    "direction": 0
                 }
             ],
             "usesControlIntervalGuessing": true,
@@ -14947,7 +15047,7 @@
                     }
                 }
             ],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "move 4ft": {
             "waypoints": [
@@ -15100,13 +15200,15 @@
                     "scope": [
                         "first"
                     ],
-                    "type": "StopPoint"
+                    "type": "StopPoint",
+                    "direction": 0
                 },
                 {
                     "scope": [
                         "last"
                     ],
-                    "type": "StopPoint"
+                    "type": "StopPoint",
+                    "direction": 0
                 }
             ],
             "usesControlIntervalGuessing": true,
@@ -15114,7 +15216,7 @@
             "usesDefaultFieldObstacles": true,
             "circleObstacles": [],
             "eventMarkers": [],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         }
     },
     "splitTrajectoriesAtStopPoints": false,
