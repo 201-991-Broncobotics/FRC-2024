@@ -366,6 +366,7 @@ public class Swerve extends SubsystemBase {
 
         log("Pigeon Yaw", getGyroYaw().getDegrees());
         log("Pose Estimator Yaw ", getHeading().getDegrees());
+        log("test if being called", Math.random());
         
         double angle_current = 0;
         double drive_current = 0;

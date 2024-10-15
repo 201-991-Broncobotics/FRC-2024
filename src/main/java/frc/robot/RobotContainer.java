@@ -71,7 +71,7 @@ public class RobotContainer {
                             return 1 - 0.75 * driver_XBox.getRawAxis(XboxController.Axis.kLeftTrigger.value);
                         }
                     }, // what we multiply translation speed by; rotation speed is NOT affected
-                    () -> (Variables.bypass_rotation || driver_TFlightHotasOne.getRawButton(joystickDirectAngleButton) || driver_XBox.getRawAxis(XboxController.Axis.kRightTrigger.value) > 0.2)
+                    () -> (Variables.bypass_rotation || driver_XBox.getRawAxis(XboxController.Axis.kRightTrigger.value) > 0.2)
                 )
             );
         } else if (fancy_drive) {
@@ -179,7 +179,6 @@ public class RobotContainer {
             new WaitCommand(3.0), 
             new InstantCommand(() -> intake.stop())
         ).handleInterrupt(intake::stop));
-        new JoystickButton(driver_TFlightHotasOne, 8).toggleOnTrue(new InstantCommand(() -> intake.stop()));
 
         // right bumper auto pivots, hotas 2 auto directs
 

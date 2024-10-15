@@ -18,6 +18,7 @@ import edu.wpi.first.util.datalog.StructLogEntry;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Variables;
 
 import static frc.robot.Constants.GeneralConstants.*;
@@ -64,8 +65,10 @@ public class Limelight { // Not technically a subsystem; everything should be st
       Pose2d swervePose = Swerve.getPose();
       ChassisSpeeds speeds = swerve.getRobotRelativeSpeeds();
       double poseDifference = swervePose.getTranslation().getDistance(pose.getTranslation());
+      log("Limelight targets", tagCount);
+      SmartDashboard.putNumberArray("data", data);
 
-      if (translation.getNorm() < 0.1 || tagCount == 0) {
+      if (translation.getNorm() < 0.1 ) {
         log("Limelight State", "No Data");
         log("Limelight xyStds", 1000);
         log("Limelight degStds", 1000);

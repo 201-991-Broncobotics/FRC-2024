@@ -22,10 +22,10 @@ public final class Constants {
 
         /* For these, align all the wheels so their gears are facing toward RSL Side */
 
-        public static final double CANCoder0_zero = 132.0, // Front Left
-                                   CANCoder1_zero = -36.7, // Front Right
-                                   CANCoder2_zero = 55.7, // Back Left
-                                   CANCoder3_zero = -93.6; // Back Right
+        public static final double CANCoder0_zero = -50.4, // Front Left
+                                   CANCoder1_zero = 62.8, // Front Right
+                                   CANCoder2_zero = -113.5, // Back Left
+                                   CANCoder3_zero = -158.7; // Back Right
         
         public static final boolean useCANCoders = true;
         
@@ -140,10 +140,10 @@ public final class Constants {
 
                                 joystickSlowButton = 1,
 
-                                joystickDirectAngleButton = 2, 
+                                //joystickDirectAngleButton = 2, 
 
                                 joystickZeroGyroButton = 4, 
-                                joystickMakeXButton = 2, 
+                               // joystickMakeXButton = 2, 
                                 joystickDriveToAmpButton = 4; // if we push the slider forward it cancels commands
                                 // .getPOV() is the same for joystick; joystick is a T.Flight Hotas One
 
@@ -155,7 +155,7 @@ public final class Constants {
     public static final class GeneralConstants {
 
         public static final boolean fancy_drive = true, 
-                                    tFlightHotasOne_drive = true;
+                                    tFlightHotasOne_drive = false;
         
         public static final double joystick_deadzone = 0.2,
                                    axis_exponent = 1.3;
