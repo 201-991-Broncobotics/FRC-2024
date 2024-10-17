@@ -26,7 +26,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.0
+            "waitTime": 4.0
           }
         },
         {
@@ -42,6 +42,12 @@
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 4.0
+          }
+        },
+        {
           "type": "named",
           "data": {
             "name": "shoot"
@@ -51,6 +57,12 @@
           "type": "path",
           "data": {
             "pathName": "s1 to c3 to s1"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 4.0
           }
         },
         {
